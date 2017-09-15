@@ -3,6 +3,11 @@
 
 #include "../../config.h"
 
+// turn off unneeded features
+#ifndef NO_DEBUG
+#define NO_DEBUG
+#endif
+
 // for tap dance
 #define TAPPING_TERM 200
 
