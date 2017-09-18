@@ -1,15 +1,15 @@
-#ifndef CONFIG_USER_H
-#define CONFIG_USER_H
-
-#include "../../config.h"
-
 // turn off unneeded features
 #ifndef NO_DEBUG
 #define NO_DEBUG
 #endif
 
-// for tap dance
-#define TAPPING_TERM 200
+#ifndef CONFIG_USER_H
+#define CONFIG_USER_H
+
+#include "../../config.h"
+
+#define TAPPING_TERM 200 // for tap dance
+//#define PERMISSIVE_HOLD // makes tap and hold keys work better for fast typers who don't want tapping term set above 500
 
 #ifdef AUDIO_ENABLE
     #define STARTUP_SONG SONG(PLANCK_SOUND)
