@@ -3,14 +3,15 @@
 #define NO_DEBUG
 #endif
 
+#define TAPPING_TERM 200 // for tap dance
+#define PERMISSIVE_HOLD // makes tap and hold keys work better for fast typers who don't want tapping term set above 500
+
 #ifndef CONFIG_USER_H
 #define CONFIG_USER_H
 
 #include "../../config.h"
 
-#define TAPPING_TERM 200 // for tap dance
-//#define PERMISSIVE_HOLD // makes tap and hold keys work better for fast typers who don't want tapping term set above 500
-
+// Audio {{{1
 #ifdef AUDIO_ENABLE
     #define STARTUP_SONG SONG(PLANCK_SOUND)
     // #define STARTUP_SONG SONG(NO_SOUND)
@@ -48,3 +49,7 @@
 //#define MIDI_TONE_KEYCODE_OCTAVES 2
 
 #endif
+// }}}1
+
+/* vim: set fdm=marker: */
+
