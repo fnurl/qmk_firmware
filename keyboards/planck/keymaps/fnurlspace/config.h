@@ -1,10 +1,11 @@
-// turn off unneeded features
+// disable debuging for a smaller firmware image
 #ifndef NO_DEBUG
 #define NO_DEBUG
 #endif
 
-#define TAPPING_TERM 200 // for tap dance
-#define PERMISSIVE_HOLD // makes tap and hold keys work better for fast typers who don't want tapping term set above 500
+#define TAPPING_TERM 200    // Defines how many ms before keyup for the event to count as a tap
+#define PERMISSIVE_HOLD     // Ignore TAPPING_TERM if key was used as a modifier even within TAPPING_TERM
+#define TAPPING_FORCE_HOLD  // When holding a dual role modifier, prioritize modifier role over key repeat
 
 #ifndef CONFIG_USER_H
 #define CONFIG_USER_H

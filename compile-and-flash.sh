@@ -3,8 +3,9 @@
 # author: @fnurl, 2017-09-22
 
 
+scriptname="$(basename $0)"
+
 display_usage() {
-    scriptname="$(basename $0)"
     echo "Usage: $scriptname <keyboard> <subproject> <keymap>"
     echo "<keyboard>      keyboard type e.g. planck, letssplit"
     echo "<subproject>    revision or submodel e.g. ez, infinity, rev1, rev4"
