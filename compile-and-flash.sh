@@ -18,7 +18,7 @@ display_usage() {
 num_req_args=3
 
 # run with single argument (help or reset)
-if [[ "$#" -ne $num_req_args ]]; then
+if [[ "$#" -lt $num_req_args ]]; then
     display_usage
     exit 0
 fi
@@ -28,8 +28,10 @@ subproject=$2
 keymap=$3
 firmware="${keyboard}_${subproject}_${keymap}.hex"
 
-echo "Cleaning..."
-make SILENT=true "${keyboard}-${subproject}-${keymap}-clean" || exit $?
+if [[ $# -eq 4 && $4 == "clean" ]];then
+  echo "Cleaning..."
+  make SILENT=true "${keyboard}-${subproject}-${keymap}-clean" || exit $?
+fi
 
 echo "Compiling..."
 make SILENT=true "${keyboard}-${subproject}-${keymap}-all" || exit $?
