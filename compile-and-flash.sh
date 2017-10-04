@@ -33,6 +33,13 @@ if [[ $# -eq 4 && $4 == "clean" ]];then
   make SILENT=true "${keyboard}-${subproject}-${keymap}-clean" || exit $?
 fi
 
+
+if [[ $# -eq 4 && $4 == "avr" ]];then
+  echo "Cleaning..."
+  make SILENT=true "${keyboard}-${subproject}-${keymap}-clean" || exit $?
+fi
+
+
 echo "Compiling..."
 make SILENT=true "${keyboard}-${subproject}-${keymap}-all" || exit $?
 
