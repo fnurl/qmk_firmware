@@ -1,9 +1,10 @@
 #ifndef LETS_SPLIT_H
 #define LETS_SPLIT_H
 
+#include QMK_SUBPROJECT_H
+
 #include "quantum.h"
 
-#include QMK_SUBPROJECT_H
 
 // Used to create a keymap using only KC_ prefixed keys
 #define KC_KEYMAP( \

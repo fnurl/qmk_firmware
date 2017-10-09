@@ -1,6 +1,5 @@
 /*
 Copyright 2012 Jun Wako <wakojun@gmail.com>
-Copyright 2015 Jack Humbert
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -21,11 +20,54 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 #include "config_common.h"
 
-#ifdef SUBPROJECT_rev1
-    #include "rev1/config.h"
-#endif
-#ifdef SUBPROJECT_rev2
-    #include "rev2/config.h"
-#endif
+/* USB Device descriptor parameter */
+#define VENDOR_ID       0xFEED
+#define PRODUCT_ID      0x3060
+#define MANUFACTURER    Wootpatoot
+#define PRODUCT         Lets Split
+#define DESCRIPTION     A split keyboard for the cheap makers
+
+/* key matrix size */
+// Rows are doubled-up
+#define MATRIX_ROWS 8
+#define MATRIX_COLS 6
+
+/* Lets Split PCB pin-out in revision subproject */
+
+/* COL2ROW or ROW2COL */
+#define DIODE_DIRECTION COL2ROW
+
+/* Set 0 if debouncing isn't needed */
+#define DEBOUNCING_DELAY 5
+
+/* Mechanical locking support. Use KC_LCAP, KC_LNUM or KC_LSCR instead in keymap */
+#define LOCKING_SUPPORT_ENABLE
+/* Locking resynchronize hack */
+#define LOCKING_RESYNC_ENABLE
+
+/* key combination for command */
+#define IS_COMMAND() ( \
+    keyboard_report->mods == (MOD_BIT(KC_LSHIFT) | MOD_BIT(KC_RSHIFT)) \
+)
+
+/*
+ * Feature disable options
+ *  These options are also useful to firmware size reduction.
+ */
+
+/* disable debug print */
+// #define NO_DEBUG
+
+/* disable print */
+// #define NO_PRINT
+
+/* disable action features */
+//#define NO_ACTION_LAYER
+//#define NO_ACTION_TAPPING
+//#define NO_ACTION_ONESHOT
+//#define NO_ACTION_MACRO
+//#define NO_ACTION_FUNCTION
+
+#include QMK_SUBPROJECT_CONFIG_H
 
 #endif
