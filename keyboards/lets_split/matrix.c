@@ -46,7 +46,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     static bool debouncing = false;
 #endif
 
-// Lets split matrix
 #if (MATRIX_COLS <= 8)
 #    define print_matrix_header()  print("\nr/c 01234567\n")
 #    define print_matrix_row(row)  print_bin_reverse8(matrix_get_row(row))
@@ -55,25 +54,19 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #else
 #    error "Currently only supports 8 COLS"
 #endif
-
-// Lets split additions
-#define ERROR_DISCONNECT_COUNT 5
-#define ROWS_PER_HAND (MATRIX_ROWS/2)
-static uint8_t error_count = 0;
 static matrix_row_t matrix_debouncing[MATRIX_ROWS];
 
-#ifdef MATRIX_MASKED
-    extern const matrix_row_t matrix_mask[];
-#endif
+#define ERROR_DISCONNECT_COUNT 5
 
-#if (DIODE_DIRECTION == ROW2COL) || (DIODE_DIRECTION == COL2ROW)
+#define ROWS_PER_HAND (MATRIX_ROWS/2)
+
+static uint8_t error_count = 0;
+
 static const uint8_t row_pins[MATRIX_ROWS] = MATRIX_ROW_PINS;
 static const uint8_t col_pins[MATRIX_COLS] = MATRIX_COL_PINS;
-#endif
 
 /* matrix state(1:on, 0:off) */
 static matrix_row_t matrix[MATRIX_ROWS];
-
 static matrix_row_t matrix_debouncing[MATRIX_ROWS];
 
 #if (DIODE_DIRECTION == COL2ROW)
@@ -89,16 +82,6 @@ static matrix_row_t matrix_debouncing[MATRIX_ROWS];
     static void unselect_col(uint8_t col);
     static void select_col(uint8_t col);
 #endif
-
-__attribute__ ((weak))
-void matrix_init_quantum(void) {
-    matrix_init_kb();
-}
-
-__attribute__ ((weak))
-void matrix_scan_quantum(void) {
-    matrix_scan_kb();
-}
 
 __attribute__ ((weak))
 void matrix_init_kb(void) {
@@ -132,16 +115,15 @@ uint8_t matrix_cols(void)
 
 void matrix_init(void)
 {
-    /*debug_enable = true;*/
-    /*debug_matrix = true;*/
-    /*debug_mouse = true;*/
+#ifdef DISABLE_JTAG
+  // JTAG disable for PORT F. write JTD bit twice within four cycles.
+  MCUCR |= (1<<JTD);
+  MCUCR |= (1<<JTD);
+#endif
 
-    // To use PORTF disable JTAG with writing JTD bit twice within four cycles.
-    #if  (defined(__AVR_AT90USB1286__) || defined(__AVR_AT90USB1287__) || defined(__AVR_ATmega32U4__))
-        MCUCR |= _BV(JTD);
-        MCUCR |= _BV(JTD);
-    #endif
-
+    debug_enable = true;
+    debug_matrix = true;
+    debug_mouse = true;
     // initialize row and col
 #if (DIODE_DIRECTION == COL2ROW)
     unselect_rows();
@@ -167,7 +149,6 @@ uint8_t _matrix_scan(void)
 {
     int offset = isLeftHand ? 0 : (ROWS_PER_HAND);
 #if (DIODE_DIRECTION == COL2ROW)
-
     // Set row, read cols
     for (uint8_t current_row = 0; current_row < ROWS_PER_HAND; current_row++) {
 #       if (DEBOUNCING_DELAY > 0)
