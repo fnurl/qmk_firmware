@@ -55,7 +55,9 @@ enum {
     TD_NAVCMD         = 9,
     TD_HYPMEH         = 10,
     TD_CMDHYP         = 11,
-    TD_NVCMHP         = 12
+    TD_NVCMHP         = 12,
+    TD_NVHPCM         = 13,
+    TD_RSFTLB         = 14
 };
 
 // Tap dance aliases (use in layout) {{{3
@@ -72,6 +74,8 @@ enum {
 #define TDHYPME TD(TD_HYPMEH)
 #define TDCMDHY TD(TD_CMDHYP)
 #define TDNVCMH TD(TD_NVCMHP)
+#define TDNVHCM TD(TD_NVHPCM)
+#define TDRSFLB TD(TD_RSFTLB)
 
 // Aliases to use in keymaps {{{2
 // Fillers to make layering more clear {{{3
@@ -125,16 +129,16 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   |--------+--------+--------+--------+--------+--------| |--------+--------+--------+--------+--------+--------|
   |CTRL/ESC|   A    |   S    |   D    |   F    |   G    | |   H    |   J    |   K    |   L    |   Ö    |   Ä    |
   |--------+--------+--------+--------+--------+--------| |--------+--------+--------+--------+--------+--------|
-  | Shift  |   Z    |   X    |   C    |   V    |   B    | |   N    |   M    |   ,    |   .    |   /    | Shift  |
+  | Shift  |   Z    |   X    |   C    |   V    |   B    | |   N    |   M    |   ,    |   .    |   /    |ShftLchB|
   |--------+--------+--------+--------+--------+--------| |--------+--------+--------+--------+--------+--------|
-  |  DEL   | BCKSPC |  FN    |  LALT  |TD:CMDHY| PL/SPC | | PR/SPC |TD:NCMHY|TD:HYPME|  ALT   |        | ADJUST |
+  |  DEL   | BCKSPC |  FN    |  LALT  |TD:CMDHY| PL/SPC | | PR/SPC |TD:NHYCM|TD:HYPME|  ALT   |        | ADJUST |
   `-----------------------------------------------------+ +-----------------------------------------------------'
 */
 [_QWERTY] = KEYMAP( \
     KC_TAB , KC_Q   , KC_W   , KC_E   , KC_R   , KC_T    ,  KC_Y   , KC_U   , KC_I   , KC_O   , KC_P   , KC_P7  ,\
     ESC_CTL, KC_A   , KC_S   , KC_D   , KC_F   , KC_G    ,  KC_H   , KC_J   , KC_K   , KC_L   , KC_P9  , KC_P8  ,\
-    KC_LSFT, KC_Z   , KC_X   , KC_C   , KC_V   , KC_B    ,  KC_N   , KC_M   , KC_COMM, KC_DOT , KC_SLSH, TDRCAPS,\
-    KC_DEL , KC_BSPC, FN     , KC_LALT, KC_LGUI, PL_SPC  ,  PR_SPC , TDNVCMH, TDHYPME, KC_RALT, XXXXXX , ADJUST  \
+    KC_LSFT, KC_Z   , KC_X   , KC_C   , KC_V   , KC_B    ,  KC_N   , KC_M   , KC_COMM, KC_DOT , KC_SLSH, TDRSFLB,\
+    KC_DEL , KC_BSPC, FN     , KC_LALT, TDCMDHY, PL_SPC  ,  PR_SPC , TDNVHCM, TDHYPME, KC_RALT, XXXXXX , ADJUST  \
 ),
 
 /* HYPER layer {{{2
@@ -159,7 +163,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   ,-----------------------------------------------------+ +-----------------------------------------------------.
   |   ~    |    1   |   2    |   3    |   4    |   5    | |   6    |   7    |   8    |   9    |   0    |   `    |
   |--------+--------+--------+--------+--------+--------+ +--------+--------+--------+--------+--------+--------|
-  |  CTRL  |        |   <    |   {    |   (    |   [    | |   *    |   $    |   =    |   &    |   %    |        |
+  |  CTRL  |        |   <    |   {    |   (    |   [    | |   *    |   $    |   =    |   &    |   %    |  BSPC  |
   |--------+--------+--------+--------+--------+--------+ +--------+--------+--------+--------+--------+--------|
   |        |        |        |        |        |        | |   ;    |   "    |   '    |   |    |   \    |        |
   |--------+--------+--------+--------+--------+--------+ +--------+--------+--------+--------+--------+--------|
@@ -168,8 +172,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 */
 [_PLEFT] = KEYMAP( \
     KC_TILD, KC_1   , KC_2   , KC_3   , KC_4   , KC_5    ,  KC_6   , KC_7   , KC_8   , KC_9   , KC_0   , KC_GRV ,\
-    KC_LCTL, XXXXXX , KC_LABK, KC_LCBR, KC_LPRN, KC_LBRC ,  KC_ASTR, KC_DLR , KC_EQL , KC_AMPR, KC_PERC, XXXXXX ,\
-    ______ , XXXXXX , XXXXXX , XXXXXX , XXXXXX , XXXXXX  ,  KC_SCLN, KC_DQUO, KC_QUOT, KC_PIPE, KC_BSLS, ______ ,\
+    KC_LCTL, XXXXXX , KC_LABK, KC_LCBR, KC_LPRN, KC_LBRC ,  KC_ASTR, KC_DLR , KC_EQL , KC_AMPR, KC_PERC, KC_BSPC,\
+    ______ , XXXXXX , XXXXXX , KC_UNDS, KC_MINS, KC_COLN ,  KC_SCLN, KC_DQUO, KC_QUOT, KC_PIPE, KC_BSLS, ______ ,\
     ______ , ______ , ______ , ______ , ______ , ______  ,  KC_ENT , ______ , ______ , ______ , ______ , ______  \
 ),
 
@@ -177,7 +181,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   ,-----------------------------------------------------+ +-----------------------------------------------------.
   |   ~    |   1    |   2    |   3    |   4    |   5    | |   6    |   7    |   8    |   9    |   0    |   `    |
   |--------+--------+--------+--------+--------+--------+ +--------+--------+--------+--------+--------+--------|
-  |  CTRL  |   !    |   @    |   #    |   ^    |   +    | |   ]    |   )    |   }    |   >    |        |        |
+  |  CTRL  |   !    |   @    |   #    |   ^    |   +    | |   ]    |   )    |   }    |   >    |        |  BSPC  |
   |--------+--------+--------+--------+--------+--------+ +--------+--------+--------+--------+--------+--------|
   |        |        |        |   _    |   -    |   :    | |        |        |        |        |        |        |
   |--------+--------+--------+--------+--------+--------+ +--------+--------+--------+--------+--------+--------|
@@ -186,8 +190,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  */
 [_PRIGHT] = KEYMAP( \
     KC_TILD, KC_1   , KC_2   , KC_3   , KC_4   , KC_5    ,  KC_6   , KC_7   , KC_8   , KC_9   , KC_0   , KC_GRV ,\
-    KC_LCTL, KC_EXLM, KC_AT  , KC_HASH, KC_CIRC, KC_PLUS ,  KC_RBRC, KC_RPRN, KC_RCBR, KC_RABK, XXXXXX , XXXXXX ,\
-    ______ , XXXXXX , XXXXXX , KC_UNDS, KC_MINS, KC_COLN ,  XXXXXX , XXXXXX , XXXXXX , XXXXXX , XXXXXX , ______ ,\
+    KC_LCTL, KC_EXLM, KC_AT  , KC_HASH, KC_CIRC, KC_PLUS ,  KC_RBRC, KC_RPRN, KC_RCBR, KC_RABK, XXXXXX , KC_BSPC,\
+    ______ , XXXXXX , XXXXXX , KC_UNDS, KC_MINS, KC_COLN ,  KC_SCLN, KC_DQUO, KC_QUOT, KC_PIPE, KC_BSLS, ______ ,\
     ______ , ______ , ______ , ______ , ______ , KC_BSPC ,  ______ , ______ , ______ , ______ , ______ , ______  \
 ),
 
@@ -230,18 +234,18 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 /* Game layer (left side) {{{2
   ,-----------------------------------------------------+ +-----------------------------------------------------.
-  |        |        |  I     |        |        |        | |        |        |  W     |        |        | BCKSPC |
+  |        |        |        |        |        |        | |        |        |        |        |        | BCKSPC |
   |--------+--------+--------+--------+--------+--------+ +--------+--------+--------+--------+--------+--------|
-  |  H     |  J     |  K     |  L     |        |        | |  CTRL  |  A     |  S     |  D     |        |        |
+  |        |        |        |        |        |        | |        |        |        |        |        | ENTER  |
   |--------+--------+--------+--------+--------+--------+ +--------+--------+--------+--------+--------+--------|
-  |  N     |        |        |        |        |        | |  Shift |        |        |        |        | ENTER  |
+  |        |        |        |        |        |        | |        |        |        |        |        |        |
   |--------+--------+--------+--------+--------+--------+ +--------+--------+--------+--------+--------+--------|
-  | PR/SPC |TD:NAVLK|        |        |        |        | |  SPC   |        |        |        |        |        |
+  | SPACE  |NUM_MOD |        |        |        |        | |        |        |        |        |        |        |
   `-----------------------------------------------------+ +-----------------------------------------------------'
 */
 [_GAME] = KEYMAP( \
     ______ , ______ , ______ , ______ , ______ , ______  ,  ______ , ______ , ______ , ______ , ______ , KC_BSPC,\
-    KC_ESC , ______ , ______ , ______ , ______ , ______  ,  ______ , ______ , ______ , ______ , ______ , KC_ENT ,\
+    KC_LCTL, ______ , ______ , ______ , ______ , ______  ,  ______ , ______ , ______ , ______ , ______ , KC_ENT ,\
     ______ , ______ , ______ , ______ , ______ , ______  ,  ______ , ______ , ______ , ______ , ______ , ______ ,\
     KC_SPC , NUM_MOD, ______ , ______ , ______ , ______  ,  ______ , ______ , ______ , ______ , ______ , ______  \
 ),
@@ -297,7 +301,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     XXXXXX , RESET  , XXXXXX , XXXXXX , XXXXXX , XXXXXX  ,  XXXXXX , XXXXXX , XXXXXX , XXXXXX , XXXXXX , XXXXXX ,\
     XXXXXX , XXXXXX , XXXXXX , XXXXXX , XXXXXX , XXXXXX  ,  XXXXXX , XXXXXX , XXXXXX , XXXXXX , XXXXXX , XXXXXX ,\
     ______ , XXXXXX , XXXXXX , XXXXXX , XXXXXX , XXXXXX  ,  XXXXXX , XXXXXX , XXXXXX , XXXXXX , XXXXXX , ______ ,\
-    ______ , ______ , ______ , ______ , FN     , ______  ,  ______ , NAV    , ______ , ______ , ______ , ______  \
+    ______ , ______ , FN     , ______ , XXXXXX , ______  ,  ______ , NAV    , ______ , ______ , ______ , ______  \
 ),
 
 /* Planck Layer (FN + NAV) {{{2
@@ -315,7 +319,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   XXXXXX , RESET  , XXXXXX , XXXXXX , XXXXXX , XXXXXX , XXXXXX , XXXXXX , XXXXXX , XXXXXX , XXXXXX , XXXXXX ,\
   XXXXXX , AU_ON  , MU_ON  , MUV_IN , MU_MOD , XXXXXX , XXXXXX , XXXXXX , XXXXXX , XXXXXX , XXXXXX , XXXXXX ,\
   ______ , AU_OFF , MU_OFF , MUV_DE , XXXXXX , XXXXXX , XXXXXX , XXXXXX , XXXXXX , XXXXXX , XXXXXX , ______ ,\
-  ______ , ______ , ______ , ______ , FN     , ______ , ______ , NAV    , ______ , ______ , ______ , ______  \
+  ______ , ______ , FN     , ______ , XXXXXX , ______ , ______ , NAV    , ______ , ______ , ______ , ______  \
 ),
 
 };
@@ -325,13 +329,13 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 // Notification sounds {{{2
 #define NAV_ON_SONG    M__NOTE(_D5, 2),
 #define NAV_OFF_SONG   M__NOTE(_D4, 2),
-#define HYPER_ON_SONG  M__NOTE(_F5, 2),
-#define HYPER_OFF_SONG M__NOTE(_F4, 2),
+#define HYPER_ON_SONG  M__NOTE(_G5, 2),
+#define HYPER_OFF_SONG M__NOTE(_G4, 2),
 #define GAME_ON_SONG   M__NOTE(_A5, 2),
 #define GAME_OFF_SONG  M__NOTE(_A4, 2),
-#define CAPS_SONG      M__NOTE(_G5, 2),
+#define CAPS_SONG      M__NOTE(_E5, 2),
 #define MEH_ON_SONG    M__NOTE(_FS5, 2),
-#define CMD_ON_SONG    M__NOTE(_G5, 2),
+#define CMD_ON_SONG    M__NOTE(_F5, 2),
 
 // Create song arrays {{{2
 #ifdef AUDIO_ENABLE
@@ -342,8 +346,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   float hyper_on_song[][2]  = SONG(HYPER_ON_SONG);
   float hyper_off_song[][2] = SONG(HYPER_OFF_SONG);
   float caps_song[][2]      = SONG(CAPS_SONG);
-  float meh_on_song[][2]         = SONG(MEH_ON_SONG);
-  float cmd_on_song[][2]         = SONG(CMD_ON_SONG);
+  float meh_on_song[][2]    = SONG(MEH_ON_SONG);
+  float cmd_on_song[][2]    = SONG(CMD_ON_SONG);
 #endif
 
 //}}}1
@@ -544,6 +548,56 @@ void navcmdhyper_dance_reset(qk_tap_dance_state_t *state, void *user_data) {
   }
 }
 
+// navhypercmd_dance_finished() - nav, cmd and hyper {{{2
+void navhypercmd_dance_finished(qk_tap_dance_state_t *state, void *user_data) {
+  switch (state->count) {
+    // Tapping/holding once is for NAV-layer.
+    case 1:
+      layer_on(_NAV);
+      break;
+    case 2:
+      // Tapping twice + hold = momentary hyper
+      #ifdef AUDIO_ENABLE
+      stop_all_notes();
+      PLAY_SONG(hyper_on_song);
+      #endif
+      register_code(KC_LGUI);
+      register_code(KC_LALT);
+      register_code(KC_LCTL);
+      register_code(KC_LSFT);
+      break;
+    case 3:
+      // Tapping thrice + hold = momentary cmd
+      #ifdef AUDIO_ENABLE
+      stop_all_notes();
+      PLAY_SONG(cmd_on_song);
+      #endif
+      register_code(KC_LGUI);
+      break;
+  }
+}
+
+// navhypercmd_dance_finished(gj_dance_reset() - release _NAV, CMD or HYPER {{{2
+void navhypercmd_dance_reset(qk_tap_dance_state_t *state, void *user_data) {
+  switch (state->count) {
+    case 1:
+      // deactivate momentary NAV layer
+      layer_off(_NAV);
+      break;
+    case 2:
+      // otherwise release hyper modifiers
+      unregister_code(KC_LGUI);
+      unregister_code(KC_LALT);
+      unregister_code(KC_LCTL);
+      unregister_code(KC_LSFT);
+      break;
+    case 3:
+      // otherwise release cmd modifier
+      unregister_code(KC_LGUI);
+      break;
+  }
+}
+
 // cmdhyper_dance_finished() - CMD when held, HYPER when double tapped + held {{{2
 void cmdhyper_dance_finished(qk_tap_dance_state_t *state, void *user_data) {
   switch (state->count) {
@@ -715,8 +769,10 @@ qk_tap_dance_action_t tap_dance_actions[] = {
     [TD_HYPER_ONESHOT]  = ACTION_TAP_DANCE_FN_ADVANCED(NULL , hyper_and_hyperos_dance_finished , hyper_and_hyperos_dance_reset),
     [TD_NAVCMD]         = ACTION_TAP_DANCE_FN_ADVANCED(NULL , navcmd_dance_finished            , navcmd_dance_reset),
     [TD_NVCMHP]         = ACTION_TAP_DANCE_FN_ADVANCED(NULL , navcmdhyper_dance_finished       , navcmdhyper_dance_reset),
+    [TD_NVHPCM]         = ACTION_TAP_DANCE_FN_ADVANCED(NULL , navhypercmd_dance_finished       , navhypercmd_dance_reset),
     [TD_CMDHYP]         = ACTION_TAP_DANCE_FN_ADVANCED(NULL , cmdhyper_dance_finished          , cmdhyper_dance_reset),
-    [TD_HYPMEH]         = ACTION_TAP_DANCE_FN_ADVANCED(NULL , hypermeh_dance_finished          , hypermeh_dance_reset)
+    [TD_HYPMEH]         = ACTION_TAP_DANCE_FN_ADVANCED(NULL , hypermeh_dance_finished          , hypermeh_dance_reset),
+    [TD_RSFTLB]         = ACTION_TAP_DANCE_DOUBLE(KC_RSFT   , LGUI(KC_SPC))
 };
 // }}}1
 
