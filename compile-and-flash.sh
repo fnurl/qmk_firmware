@@ -2,6 +2,12 @@
 
 # author: @fnurl, 2017-09-22
 
+# 2018-02-20, now we can just use
+# make lets_split/rev2:fnurlspace:avrdude
+
+make lets_split/rev2:fnurlspace:avrdude
+exit
+
 
 scriptname="$(basename $0)"
 
