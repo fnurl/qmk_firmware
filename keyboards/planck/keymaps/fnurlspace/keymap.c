@@ -54,10 +54,11 @@ enum {
     TD_NAVHYPER       = 8,
     TD_NAVCMD         = 9,
     TD_HYPMEH         = 10,
-    TD_CMDHYP         = 11,
-    TD_NVCMHP         = 12,
-    TD_NVHPCM         = 13,
-    TD_RSFTLB         = 14
+    TD_HYPER          = 11,
+    TD_CMDHYP         = 12,
+    TD_NVCMHP         = 13,
+    TD_NVHPCM         = 14,
+    TD_RSFTLB         = 15
 };
 
 // Tap dance aliases (use in layout) {{{3
@@ -72,6 +73,7 @@ enum {
 #define TDHYPNV TD(TD_NAVHYPER)
 #define TDNVCMD TD(TD_NAVCMD)
 #define TDHYPME TD(TD_HYPMEH)
+#define TDHYPER TD(TD_HYPER)
 #define TDCMDHY TD(TD_CMDHYP)
 #define TDNVCMH TD(TD_NVCMHP)
 #define TDNVHCM TD(TD_NVHPCM)
@@ -129,16 +131,16 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   |--------+--------+--------+--------+--------+--------| |--------+--------+--------+--------+--------+--------|
   |CTRL/ESC|   A    |   S    |   D    |   F    |   G    | |   H    |   J    |   K    |   L    |   Ö    |   Ä    |
   |--------+--------+--------+--------+--------+--------| |--------+--------+--------+--------+--------+--------|
-  | Shift  |   Z    |   X    |   C    |   V    |   B    | |   N    |   M    |   ,    |   .    |   /    |ShftLchB|
+  | Shift  |   Z    |   X    |   C    |   V    |   B    | |   N    |   M    |   ,    |   .    |   /    | Shift  |
   |--------+--------+--------+--------+--------+--------| |--------+--------+--------+--------+--------+--------|
-  |  DEL   | BCKSPC |  FN    |  LALT  |TD:CMDHY| PL/SPC | | PR/SPC |TD:NHYCM|TD:HYPME|  ALT   |        | ADJUST |
+  |  CTRL  | BCKSPC |  FN    |  LALT  |TD:CMDHY| PL/SPC | | PR/SPC |TD:NHYCM|  CMD   |  ALT   |        | ADJUST |
   `-----------------------------------------------------+ +-----------------------------------------------------'
 */
 [_QWERTY] = KEYMAP( \
     KC_TAB , KC_Q   , KC_W   , KC_E   , KC_R   , KC_T    ,  KC_Y   , KC_U   , KC_I   , KC_O   , KC_P   , KC_P7  ,\
     ESC_CTL, KC_A   , KC_S   , KC_D   , KC_F   , KC_G    ,  KC_H   , KC_J   , KC_K   , KC_L   , KC_P9  , KC_P8  ,\
-    KC_LSFT, KC_Z   , KC_X   , KC_C   , KC_V   , KC_B    ,  KC_N   , KC_M   , KC_COMM, KC_DOT , KC_SLSH, TDRSFLB,\
-    KC_DEL , KC_BSPC, FN     , KC_LALT, TDCMDHY, PL_SPC  ,  PR_SPC , TDNVHCM, TDHYPME, KC_RALT, XXXXXX , ADJUST  \
+    KC_LSFT, KC_Z   , KC_X   , KC_C   , KC_V   , KC_B    ,  KC_N   , KC_M   , KC_COMM, KC_DOT , KC_SLSH, KC_RSFT,\
+    KC_LCTL, KC_BSPC, FN     , KC_LALT, TDCMDHY, PL_SPC  ,  PR_SPC , TDNVHCM, KC_RGUI, KC_RALT, XXXXXX , ADJUST  \
 ),
 
 /* HYPER layer {{{2
@@ -165,7 +167,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   |--------+--------+--------+--------+--------+--------+ +--------+--------+--------+--------+--------+--------|
   |  CTRL  |        |   <    |   {    |   (    |   [    | |   *    |   $    |   =    |   &    |   %    |  BSPC  |
   |--------+--------+--------+--------+--------+--------+ +--------+--------+--------+--------+--------+--------|
-  |        |        |        |        |        |        | |   ;    |   "    |   '    |   |    |   \    |        |
+  |        |        |        |   _    |   -    |   :    | |   ;    |   "    |   '    |   |    |   \    |        |
   |--------+--------+--------+--------+--------+--------+ +--------+--------+--------+--------+--------+--------|
   |        |        |        |        |        |        | | DB/ENT |        |        |        |        |        |
   `-----------------------------------------------------+ +-----------------------------------------------------'
@@ -183,16 +185,16 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   |--------+--------+--------+--------+--------+--------+ +--------+--------+--------+--------+--------+--------|
   |  CTRL  |   !    |   @    |   #    |   ^    |   +    | |   ]    |   )    |   }    |   >    |        |  BSPC  |
   |--------+--------+--------+--------+--------+--------+ +--------+--------+--------+--------+--------+--------|
-  |        |        |        |   _    |   -    |   :    | |        |        |        |        |        |        |
+  |        |        |        |   _    |   -    |   :    | |   ;    |   "    |   '    |   |    |   \    |        |
   |--------+--------+--------+--------+--------+--------+ +--------+--------+--------+--------+--------+--------|
-  |        |        |        |        |        |  BSPC  | |        |        |        |        |        |        |
+  |        |  DEL   |        |        |        |  BSPC  | |        |        |        |        |        |        |
   `-----------------------------------------------------+ +-----------------------------------------------------'
  */
 [_PRIGHT] = KEYMAP( \
     KC_TILD, KC_1   , KC_2   , KC_3   , KC_4   , KC_5    ,  KC_6   , KC_7   , KC_8   , KC_9   , KC_0   , KC_GRV ,\
     KC_LCTL, KC_EXLM, KC_AT  , KC_HASH, KC_CIRC, KC_PLUS ,  KC_RBRC, KC_RPRN, KC_RCBR, KC_RABK, XXXXXX , KC_BSPC,\
     ______ , XXXXXX , XXXXXX , KC_UNDS, KC_MINS, KC_COLN ,  KC_SCLN, KC_DQUO, KC_QUOT, KC_PIPE, KC_BSLS, ______ ,\
-    ______ , ______ , ______ , ______ , ______ , KC_BSPC ,  ______ , ______ , ______ , ______ , ______ , ______  \
+    ______ , KC_DEL , ______ , ______ , ______ , KC_BSPC ,  ______ , ______ , ______ , ______ , ______ , ______  \
 ),
 
 /* FN Layer {{{2
@@ -203,14 +205,14 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   |--------+--------+--------+--------+--------+--------+ +--------+--------+--------+--------+--------+--------|
   |        |        |        |        |        |        | |        |        |        |        |        |        |
   |--------+--------+--------+--------+--------+--------+ +--------+--------+--------+--------+--------+--------|
-  |        |        |        |        |        |        | |        | NAV    |        |        |        |        |
+  |        |  DEL   |        |        |        |        | |        | NAV    |        |        |        |        |
   `-----------------------------------------------------+ +-----------------------------------------------------'
 */
 [_FN] = KEYMAP( \
     XXXXXX , KC_F1  , KC_F2  , KC_F3  , KC_F4  , KC_F5   ,  KC_F6  , KC_F7  , KC_F8  , KC_F9  , KC_F10 , KC_F11 ,\
     KC_LCTL, XXXXXX , XXXXXX , XXXXXX , XXXXXX , GAME    ,  XXXXXX , XXXXXX , XXXXXX , XXXXXX , XXXXXX , KC_F12 ,\
     ______ , XXXXXX , XXXXXX , XXXXXX , XXXXXX , XXXXXX  ,  XXXXXX , XXXXXX , XXXXXX , XXXXXX , XXXXXX , ______ ,\
-    ______ , ______ , ______ , ______ , ______ , XXXXXX  ,  XXXXXX , NAV    , ______ , ______ , ______ , ______  \
+    ______ , KC_DEL , ______ , ______ , ______ , XXXXXX  ,  XXXXXX , NAV    , ______ , ______ , ______ , ______  \
 ),
 
 
@@ -220,7 +222,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   |--------+--------+--------+--------+--------+--------+ +--------+--------+--------+--------+--------+--------|
   |        |  MUTE  |  V DN  |  V UP  |FILEMAN |  GAME  | |        |  LEFT  |  DOWN  | RIGHT  |  PgDn  |zOU<C-->|
   |--------+--------+--------+--------+--------+--------+ +--------+--------+--------+--------+--------+--------|
-  |        |  PREV  |  PLAY  |  NEXT  |        |        | |        |Mouse 2 |Mouse 1 |        |        |        |
+  |        |  PREV  |  PLAY  |  NEXT  |        |        | |        |        |        |        |        |        |
   |--------+--------+--------+--------+--------+--------+ +--------+--------+--------+--------+--------+--------|
   |        |        |  FN    |        |        |        | |        |        |        |        |        |        |
   `-----------------------------------------------------+ +-----------------------------------------------------'
@@ -228,7 +230,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 [_NAV] = KEYMAP( \
     XXXXXX , XXXXXX , VIMSAVE, XXXXXX , XXXXXX , TERM    ,  XXXXXX , PRV_TAB, KC_UP  , NXT_TAB, KC_PGUP, Z_IN   ,\
     KC_LCTL, KC_MUTE, KC_VOLD, KC_VOLU, FILEMAN, GAME    ,  XXXXXX , KC_LEFT, KC_DOWN, KC_RGHT, KC_PGDN, Z_OUT  ,\
-    ______ , KC_MRWD, KC_MPLY, KC_MFFD, XXXXXX , XXXXXX  ,  XXXXXX , KC_BTN2, KC_BTN1, XXXXXX , XXXXXX , ______ ,\
+    ______ , KC_MRWD, KC_MPLY, KC_MFFD, XXXXXX , XXXXXX  ,  XXXXXX , XXXXXX , XXXXXX , XXXXXX , XXXXXX , ______ ,\
     ______ , ______ , FN     , ______ , ______ , XXXXXX  ,  XXXXXX , ______ , ______ , ______ , ______ , ______  \
 ),
 
@@ -385,6 +387,36 @@ void nav_and_lock_dance_reset(qk_tap_dance_state_t *state, void *user_data) {
     layer_off(_NAV);
   }
 }
+
+// hyper_layer_finished() HYPER when tapped once and held, and activate _HYPER layer
+// for escape to work
+void hyper_layer_finished(qk_tap_dance_state_t *state, void *user_data) {
+  switch (state->count) {
+    // Tapping/holding once is for momentary HYPER and turning off HYPER layer
+    case 1:
+      // momentary hyper
+      register_code(KC_LGUI);
+      register_code(KC_LALT);
+      register_code(KC_LCTL);
+      register_code(KC_LSFT);
+      layer_on(_HYPER);
+      break;
+  }
+}
+
+// hyper_layer_reset() - release HYPER mod and deactivate _HYPER layer {{{2
+void hyper_layer_reset(qk_tap_dance_state_t *state, void *user_data) {
+  if (state->count == 1) {
+    // release HYPER
+    unregister_code(KC_LGUI);
+    unregister_code(KC_LALT);
+    unregister_code(KC_LCTL);
+    unregister_code(KC_LSFT);
+    // deactivate _HYPER layer
+    layer_off(_HYPER);
+  }
+}
+
 
 // hyper_and_hyperos_finished() HYPER when tapped once and held, HYPER One-shot when double tapped and held {{{2
 void hyper_and_hyperos_dance_finished(qk_tap_dance_state_t *state, void *user_data) {
@@ -772,6 +804,7 @@ qk_tap_dance_action_t tap_dance_actions[] = {
     [TD_NVHPCM]         = ACTION_TAP_DANCE_FN_ADVANCED(NULL , navhypercmd_dance_finished       , navhypercmd_dance_reset),
     [TD_CMDHYP]         = ACTION_TAP_DANCE_FN_ADVANCED(NULL , cmdhyper_dance_finished          , cmdhyper_dance_reset),
     [TD_HYPMEH]         = ACTION_TAP_DANCE_FN_ADVANCED(NULL , hypermeh_dance_finished          , hypermeh_dance_reset),
+    [TD_HYPER]          = ACTION_TAP_DANCE_FN_ADVANCED(NULL , hyper_layer_finished             , hyper_layer_reset),
     [TD_RSFTLB]         = ACTION_TAP_DANCE_DOUBLE(KC_RSFT   , LGUI(KC_SPC))
 };
 // }}}1

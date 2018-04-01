@@ -134,14 +134,14 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   |--------+--------+--------+--------+--------+--------| |--------+--------+--------+--------+--------+--------|
   | Shift  |   Z    |   X    |   C    |   V    |   B    | |   N    |   M    |   ,    |   .    |   /    |ShftLchB|
   |--------+--------+--------+--------+--------+--------| |--------+--------+--------+--------+--------+--------|
-  |  DEL   | BCKSPC |  FN    |  LALT  |TD:CMDHY| PL/SPC | | PR/SPC |TD:NHYCM|  HYPER |  RCMD  |  RALT  | ADJUST |
+  |  DEL   | BCKSPC |  FN    |  LALT  |TD:CMDHY| PL/SPC | | PR/SPC |TD:NHYCM|  HYPER |  RCMD  | BCKSPC | ADJUST |
   `-----------------------------------------------------+ +-----------------------------------------------------'
 */
 [_QWERTY] = KEYMAP( \
     KC_TAB , KC_Q   , KC_W   , KC_E   , KC_R   , KC_T    ,  KC_Y   , KC_U   , KC_I   , KC_O   , KC_P   , KC_P7  ,\
     ESC_CTL, KC_A   , KC_S   , KC_D   , KC_F   , KC_G    ,  KC_H   , KC_J   , KC_K   , KC_L   , KC_P9  , KC_P8  ,\
-    KC_LSFT, KC_Z   , KC_X   , KC_C   , KC_V   , KC_B    ,  KC_N   , KC_M   , KC_COMM, KC_DOT , KC_SLSH, TDRSFLB,\
-    KC_DEL , KC_BSPC, FN     , KC_LALT, TDCMDHY, PL_SPC  ,  PR_SPC , TDNVHCM, TDHYPER, KC_RGUI, KC_RALT, ADJUST  \
+    KC_LSFT, KC_Z   , KC_X   , KC_C   , KC_V   , KC_B    ,  KC_N   , KC_M   , KC_COMM, KC_DOT , KC_SLSH, KC_RSFT,\
+    KC_LCTL, KC_BSPC, FN     , KC_LALT, TDCMDHY, PL_SPC  ,  PR_SPC , TDNVHCM, KC_RGUI, KC_RALT, KC_BSPC, ADJUST  \
 ),
 
 /* HYPER layer {{{2
@@ -201,7 +201,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     KC_TILD, KC_1   , KC_2   , KC_3   , KC_4   , KC_5    ,  KC_6   , KC_7   , KC_8   , KC_9   , KC_0   , KC_GRV ,\
     KC_LCTL, KC_EXLM, KC_AT  , KC_HASH, KC_CIRC, KC_PLUS ,  KC_RBRC, KC_RPRN, KC_RCBR, KC_RABK, XXXXXX , KC_BSPC,\
     ______ , XXXXXX , XXXXXX , KC_UNDS, KC_MINS, KC_COLN ,  KC_SCLN, KC_DQUO, KC_QUOT, KC_PIPE, KC_BSLS, ______ ,\
-    ______ , ______ , ______ , ______ , ______ , KC_BSPC ,  ______ , ______ , ______ , ______ , ______ , ______  \
+    ______ , KC_DEL , ______ , ______ , ______ , KC_BSPC ,  ______ , ______ , ______ , ______ , ______ , ______  \
 ),
 
 /* FN Layer {{{2
@@ -219,7 +219,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     XXXXXX , KC_F1  , KC_F2  , KC_F3  , KC_F4  , KC_F5   ,  KC_F6  , KC_F7  , KC_F8  , KC_F9  , KC_F10 , KC_F11 ,\
     KC_LCTL, XXXXXX , XXXXXX , XXXXXX , XXXXXX , GAME    ,  XXXXXX , XXXXXX , XXXXXX , XXXXXX , XXXXXX , KC_F12 ,\
     ______ , XXXXXX , XXXXXX , XXXXXX , XXXXXX , XXXXXX  ,  XXXXXX , XXXXXX , XXXXXX , XXXXXX , XXXXXX , ______ ,\
-    ______ , ______ , ______ , ______ , ______ , XXXXXX  ,  XXXXXX , NAV    , ______ , ______ , ______ , ______  \
+    ______ , KC_DEL , ______ , ______ , ______ , XXXXXX  ,  XXXXXX , NAV    , ______ , ______ , ______ , ______  \
 ),
 
 
