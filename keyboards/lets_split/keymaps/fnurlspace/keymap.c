@@ -78,6 +78,7 @@ enum tap_dances {
     TD_HYPMEH,
     TD_HYPER,
     TD_CMDHYP,
+    TD_CMDNAV,
     TD_NVCMHP,
     TD_NVHPCM,
     TD_RSFTLB
@@ -97,6 +98,7 @@ enum tap_dances {
 #define TDHYPME TD(TD_HYPMEH)
 #define TDHYPER TD(TD_HYPER)
 #define TDCMDHY TD(TD_CMDHYP)
+#define TDCMDNV TD(TD_CMDNAV)
 #define TDNVCMH TD(TD_NVCMHP)
 #define TDNVHCM TD(TD_NVHPCM)
 #define TDRSFLB TD(TD_RSFTLB)
@@ -155,14 +157,14 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   |--------+--------+--------+--------+--------+--------| |--------+--------+--------+--------+--------+--------|
   | Shift  |   Z    |   X    |   C    |   V    |   B    | |   N    |   M    |   ,    |   .    |   /    |ShftLchB|
   |--------+--------+--------+--------+--------+--------| |--------+--------+--------+--------+--------+--------|
-  |  DEL   | BCKSPC |  FN    |  LALT  |TD:CMDHY| PL/SPC | | PR/SPC |TD:NHYCM|  RCMD  |  RALT  | BROKEN | ADJUST |
+  |  DEL   | BCKSPC |  FN    |  LALT  |TD:CMDNV| PL/SPC | | PR/SPC |TD:NHYCM|  RCMD  |  RALT  | BROKEN | ADJUST |
   `-----------------------------------------------------+ +-----------------------------------------------------'
 */
 [_QWERTY] = KEYMAP( \
     KC_TAB , KC_Q   , KC_W   , KC_E   , KC_R   , KC_T    ,  KC_Y   , KC_U   , KC_I   , KC_O   , KC_P   , KC_P7  ,\
     ESC_CTL, KC_A   , KC_S   , KC_D   , KC_F   , KC_G    ,  KC_H   , KC_J   , KC_K   , KC_L   , KC_P9  , KC_P8  ,\
     KC_LSFT, KC_Z   , KC_X   , KC_C   , KC_V   , KC_B    ,  KC_N   , KC_M   , KC_COMM, KC_DOT , KC_SLSH, KC_RSFT,\
-    KC_LCTL, KC_BSPC, FN     , KC_LALT, TDCMDHY, PL_SPC  ,  PR_SPC , TDNVHCM, KC_RGUI, KC_BSPC, XXXXXX , ADJUST  \
+    KC_LCTL, KC_BSPC, FN     , KC_LALT, TDCMDNV, PL_SPC  ,  PR_SPC , TDNVHCM, KC_RGUI, KC_BSPC, XXXXXX , ADJUST  \
 ),
 
 /* HYPER layer {{{2
@@ -256,8 +258,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   `-----------------------------------------------------+ +-----------------------------------------------------'
  */
 [_NAV] = KEYMAP( \
-    XXXXXX , XXXXXX , VIMSAVE, XXXXXX , XXXXXX , TERM    ,  XXXXXX , Z_IN   , PRV_TAB, KC_UP  , NXT_TAB, KC_PGUP,\
-    KC_LCTL, KC_MUTE, KC_VOLD, KC_VOLU, FILEMAN, GAME    ,  XXXXXX , Z_OUT  , KC_LEFT, KC_DOWN, KC_RGHT, KC_PGDN,\
+    XXXXXX , XXXXXX , VIMSAVE, XXXXXX , XXXXXX , TERM    ,  XXXXXX , PRV_TAB, KC_UP  , NXT_TAB, KC_PGUP, Z_IN   ,\
+    KC_LCTL, KC_MUTE, KC_VOLD, KC_VOLU, FILEMAN, GAME    ,  XXXXXX , KC_LEFT, KC_DOWN, KC_RGHT, KC_PGDN, Z_OUT  ,\
     ______ , KC_MRWD, KC_MPLY, KC_MFFD, XXXXXX , XXXXXX  ,  XXXXXX , XXXXXX , XXXXXX , XXXXXX , XXXXXX , ______ ,\
     ______ , ______ , FN     , ______ , ______ , XXXXXX  ,  XXXXXX , ______ , ______ , ______ , ______ , ______  \
 ),
@@ -658,6 +660,49 @@ void navhypercmd_dance_reset(qk_tap_dance_state_t *state, void *user_data) {
   }
 }
 
+// cmdnav_dance_finished() - cmd when held, nav toggle when double tapped {{{2
+void cmdnav_dance_finished(qk_tap_dance_state_t *state, void *user_data) {
+  switch (state->count) {
+    // Tapping/holding once is for CMD, and turning of _NAV toggle
+    // so we register CMD and turn off _NAV
+    case 1:
+      register_code(KC_LGUI);
+      layer_off(_NAV);
+      break;
+    case 2:
+      // Tapping twice = toggle _NAV (look if its on)
+      if (IS_LAYER_ON(_NAV)) {
+        // toggle off
+        layer_off(_NAV);
+        #ifdef AUDIO_ENABLE
+        stop_all_notes();
+        PLAY_SONG(nav_off_song);
+        #endif
+      } else {
+        // toggle on
+        layer_on(_NAV);
+        #ifdef AUDIO_ENABLE
+        stop_all_notes();
+        PLAY_SONG(nav_on_song);
+        #endif
+      }
+      break;
+  }
+}
+
+// cmdnav_reset() - release cmd {{{2
+void cmdnav_dance_reset(qk_tap_dance_state_t *state, void *user_data) {
+  switch (state->count) {
+    case 1:
+      // if only one tap or hold release, unregister LCMD
+      unregister_code(KC_LGUI);
+      break;
+    // releasing CMD when _NAV is on should not do anything.
+    //case 2:
+    //  break;
+  }
+}
+
 // cmdhyper_dance_finished() - CMD when held, HYPER when double tapped + held {{{2
 void cmdhyper_dance_finished(qk_tap_dance_state_t *state, void *user_data) {
   switch (state->count) {
@@ -831,6 +876,7 @@ qk_tap_dance_action_t tap_dance_actions[] = {
     [TD_NVCMHP]         = ACTION_TAP_DANCE_FN_ADVANCED(NULL , navcmdhyper_dance_finished       , navcmdhyper_dance_reset),
     [TD_NVHPCM]         = ACTION_TAP_DANCE_FN_ADVANCED(NULL , navhypercmd_dance_finished       , navhypercmd_dance_reset),
     [TD_CMDHYP]         = ACTION_TAP_DANCE_FN_ADVANCED(NULL , cmdhyper_dance_finished          , cmdhyper_dance_reset),
+    [TD_CMDNAV]         = ACTION_TAP_DANCE_FN_ADVANCED(NULL , cmdnav_dance_finished            , cmdnav_dance_reset),
     [TD_HYPMEH]         = ACTION_TAP_DANCE_FN_ADVANCED(NULL , hypermeh_dance_finished          , hypermeh_dance_reset),
     [TD_HYPER]          = ACTION_TAP_DANCE_FN_ADVANCED(NULL , hyper_layer_finished             , hyper_layer_reset),
     [TD_RSFTLB]         = ACTION_TAP_DANCE_DOUBLE(KC_RSFT   , LGUI(KC_SPC))
