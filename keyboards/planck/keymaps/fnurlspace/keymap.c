@@ -95,7 +95,7 @@ enum {
 #define PL_SPC   LT(_PLEFT,  KC_SPC)
 #define PR_SPC   LT(_PRIGHT, KC_SPC)
 
-// Dual-role modiliers: MT = modifier when held, keycode when tapped {{{3
+// Dual-role modifiers: MT = modifier when held, keycode when tapped {{{3
 #define ESC_CTL MT(MOD_LCTL, KC_ESC)
 #define AE_CTL  MT(MOD_LCTL, KC_P8)
 #define F_CTL   MT(MOD_LCTL, KC_F)
@@ -116,6 +116,8 @@ enum {
 #define OCC     LGUI(LCTL(KC_LALT))
 #define TERM    LGUI(KC_ESC)
 #define FILEMAN LALT(KC_ESC)
+#define CMDPGDN LGUI(KC_PGDN)
+#define CMDPGUP LGUI(KC_PGUP)
 
 // Layer keys {{{3
 #define ADJUST MO(_ADJUST)
@@ -201,17 +203,17 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   ,-----------------------------------------------------+ +-----------------------------------------------------.
   |        |   F1   |   F2   |   F3   |   F4   |   F5   | |   F6   |   F7   |   F8   |   F9   |  F10   |  F11   |
   |--------+--------+--------+--------+--------+--------+ +--------+--------+--------+--------+--------+--------|
-  |        |        |        |        |        |        | |        |        |        |        |        |  F12   |
+  |        |CMDPGUP |        |        |        |        | |        |        |        |        |        |  F12   |
   |--------+--------+--------+--------+--------+--------+ +--------+--------+--------+--------+--------+--------|
-  |        |        |        |        |        |        | |        |        |        |        |        |        |
+  |        |CMDPGDN |        |        |        |        | |        |        |        |        |        |        |
   |--------+--------+--------+--------+--------+--------+ +--------+--------+--------+--------+--------+--------|
   |        |  DEL   |        |        |        |        | |        | NAV    |        |        |        |        |
   `-----------------------------------------------------+ +-----------------------------------------------------'
 */
 [_FN] = KEYMAP( \
     XXXXXX , KC_F1  , KC_F2  , KC_F3  , KC_F4  , KC_F5   ,  KC_F6  , KC_F7  , KC_F8  , KC_F9  , KC_F10 , KC_F11 ,\
-    KC_LCTL, XXXXXX , XXXXXX , XXXXXX , XXXXXX , GAME    ,  XXXXXX , XXXXXX , XXXXXX , XXXXXX , XXXXXX , KC_F12 ,\
-    ______ , XXXXXX , XXXXXX , XXXXXX , XXXXXX , XXXXXX  ,  XXXXXX , XXXXXX , XXXXXX , XXXXXX , XXXXXX , ______ ,\
+    KC_LCTL, CMDPGUP, XXXXXX , XXXXXX , XXXXXX , GAME    ,  XXXXXX , XXXXXX , XXXXXX , XXXXXX , XXXXXX , KC_F12 ,\
+    ______ , CMDPGDN, XXXXXX , XXXXXX , XXXXXX , XXXXXX  ,  XXXXXX , XXXXXX , XXXXXX , XXXXXX , XXXXXX , ______ ,\
     ______ , KC_DEL , ______ , ______ , ______ , XXXXXX  ,  XXXXXX , NAV    , ______ , ______ , ______ , ______  \
 ),
 
@@ -228,8 +230,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   `-----------------------------------------------------+ +-----------------------------------------------------'
  */
 [_NAV] = KEYMAP( \
-    XXXXXX , XXXXXX , VIMSAVE, XXXXXX , XXXXXX , TERM    ,  XXXXXX , PRV_TAB, KC_UP  , NXT_TAB, KC_PGUP, Z_IN   ,\
-    KC_LCTL, KC_MUTE, KC_VOLD, KC_VOLU, FILEMAN, GAME    ,  XXXXXX , KC_LEFT, KC_DOWN, KC_RGHT, KC_PGDN, Z_OUT  ,\
+    XXXXXX , XXXXXX , VIMSAVE, XXXXXX , XXXXXX , TERM    ,  XXXXXX , Z_IN   , PRV_TAB, KC_UP  , NXT_TAB, KC_PGUP,\
+    KC_LCTL, KC_MUTE, KC_VOLD, KC_VOLU, FILEMAN, GAME    ,  XXXXXX , Z_OUT  , KC_LEFT, KC_DOWN, KC_RGHT, KC_PGDN,\
     ______ , KC_MRWD, KC_MPLY, KC_MFFD, XXXXXX , XXXXXX  ,  XXXXXX , XXXXXX , XXXXXX , XXXXXX , XXXXXX , ______ ,\
     ______ , ______ , FN     , ______ , ______ , XXXXXX  ,  XXXXXX , ______ , ______ , ______ , ______ , ______  \
 ),

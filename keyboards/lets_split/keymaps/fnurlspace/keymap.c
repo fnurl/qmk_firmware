@@ -1,6 +1,7 @@
 /* 
  * fnurlspace layout for 40% ortholinear keyboards
- * Jody Foo 2017
+ * Jody Foo 2017, 2018
+ * last modified: 2018-04-01
  */
 
 /* Features:
@@ -31,6 +32,7 @@ enum fnurlspace_layers {
 };
 
 // Custom keycodes, used in process_record_user() {{{2
+// QWERTY = SAFE_RANGE adds all the standard keys first to the enumeration.
 enum custom_keycodes {
   QWERTY = SAFE_RANGE,
   FN,
@@ -43,23 +45,42 @@ enum custom_keycodes {
 };
 
 // Tap Dance aliases and IDs {{{2
-enum {
-    TD_GUI_LAUNCHBAR  = 0,
-    TD_TAB_CYCLE_APPS = 1,
-    TD_AA_CYCLE_APPS  = 2,
-    TD_AE_CYCLE_WIN   = 3,
-    TD_RCAPSLOCK      = 4,
-    TD_LCAPSLOCK      = 5,
-    TD_NAVLOCK        = 6,
-    TD_HYPER_ONESHOT  = 7,
-    TD_NAVHYPER       = 8,
-    TD_NAVCMD         = 9,
-    TD_HYPMEH         = 10,
-    TD_HYPER          = 11,
-    TD_CMDHYP         = 12,
-    TD_NVCMHP         = 13,
-    TD_NVHPCM         = 14,
-    TD_RSFTLB         = 15
+// enum {
+//     TD_GUI_LAUNCHBAR  = 0,
+//     TD_TAB_CYCLE_APPS = 1,
+//     TD_AA_CYCLE_APPS  = 2,
+//     TD_AE_CYCLE_WIN   = 3,
+//     TD_RCAPSLOCK      = 4,
+//     TD_LCAPSLOCK      = 5,
+//     TD_NAVLOCK        = 6,
+//     TD_HYPER_ONESHOT  = 7,
+//     TD_NAVHYPER       = 8,
+//     TD_NAVCMD         = 9,
+//     TD_HYPMEH         = 10,
+//     TD_HYPER          = 11,
+//     TD_CMDHYP         = 12,
+//     TD_NVCMHP         = 13,
+//     TD_NVHPCM         = 14,
+//     TD_RSFTLB         = 15
+// };
+
+enum tap_dances {
+    TD_GUI_LAUNCHBAR,
+    TD_TAB_CYCLE_APPS,
+    TD_AA_CYCLE_APPS,
+    TD_AE_CYCLE_WIN,
+    TD_RCAPSLOCK,
+    TD_LCAPSLOCK,
+    TD_NAVLOCK,
+    TD_HYPER_ONESHOT,
+    TD_NAVHYPER,
+    TD_NAVCMD,
+    TD_HYPMEH,
+    TD_HYPER,
+    TD_CMDHYP,
+    TD_NVCMHP,
+    TD_NVHPCM,
+    TD_RSFTLB
 };
 
 // Tap dance aliases (use in layout) {{{3
@@ -82,7 +103,6 @@ enum {
 
 // Aliases to use in keymaps {{{2
 // Fillers to make layering more clear {{{3
-//#define XXXXXX   KC_NO
 #define XXXXXX   NONE
 #define ______   KC_TRNS
 
@@ -97,6 +117,7 @@ enum {
 #define PR_SPC   LT(_PRIGHT, KC_SPC)
 
 // Dual-role modiliers: MT = modifier when held, keycode when tapped {{{3
+// bad idea using character keys as dual role keys. hard to type.
 #define ESC_CTL MT(MOD_LCTL, KC_ESC)
 #define AE_CTL  MT(MOD_LCTL, KC_P8)
 #define F_CTL   MT(MOD_LCTL, KC_F)
@@ -118,7 +139,7 @@ enum {
 #define TERM    LGUI(KC_ESC)
 #define FILEMAN LALT(KC_ESC)
 
-// Layer keys {{{3
+// Momentary layer keys {{{3
 #define ADJUST MO(_ADJUST)
 
 // }}}1
@@ -134,14 +155,14 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   |--------+--------+--------+--------+--------+--------| |--------+--------+--------+--------+--------+--------|
   | Shift  |   Z    |   X    |   C    |   V    |   B    | |   N    |   M    |   ,    |   .    |   /    |ShftLchB|
   |--------+--------+--------+--------+--------+--------| |--------+--------+--------+--------+--------+--------|
-  |  DEL   | BCKSPC |  FN    |  LALT  |TD:CMDHY| PL/SPC | | PR/SPC |TD:NHYCM|  HYPER |  RCMD  | BCKSPC | ADJUST |
+  |  DEL   | BCKSPC |  FN    |  LALT  |TD:CMDHY| PL/SPC | | PR/SPC |TD:NHYCM|  RCMD  |  RALT  | BROKEN | ADJUST |
   `-----------------------------------------------------+ +-----------------------------------------------------'
 */
 [_QWERTY] = KEYMAP( \
     KC_TAB , KC_Q   , KC_W   , KC_E   , KC_R   , KC_T    ,  KC_Y   , KC_U   , KC_I   , KC_O   , KC_P   , KC_P7  ,\
     ESC_CTL, KC_A   , KC_S   , KC_D   , KC_F   , KC_G    ,  KC_H   , KC_J   , KC_K   , KC_L   , KC_P9  , KC_P8  ,\
     KC_LSFT, KC_Z   , KC_X   , KC_C   , KC_V   , KC_B    ,  KC_N   , KC_M   , KC_COMM, KC_DOT , KC_SLSH, KC_RSFT,\
-    KC_LCTL, KC_BSPC, FN     , KC_LALT, TDCMDHY, PL_SPC  ,  PR_SPC , TDNVHCM, KC_RGUI, KC_RALT, KC_BSPC, ADJUST  \
+    KC_LCTL, KC_BSPC, FN     , KC_LALT, TDCMDHY, PL_SPC  ,  PR_SPC , TDNVHCM, KC_RGUI, KC_BSPC, XXXXXX , ADJUST  \
 ),
 
 /* HYPER layer {{{2
@@ -235,8 +256,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   `-----------------------------------------------------+ +-----------------------------------------------------'
  */
 [_NAV] = KEYMAP( \
-    XXXXXX , XXXXXX , VIMSAVE, XXXXXX , XXXXXX , TERM    ,  XXXXXX , PRV_TAB, KC_UP  , NXT_TAB, KC_PGUP, Z_IN   ,\
-    KC_LCTL, KC_MUTE, KC_VOLD, KC_VOLU, FILEMAN, GAME    ,  XXXXXX , KC_LEFT, KC_DOWN, KC_RGHT, KC_PGDN, Z_OUT  ,\
+    XXXXXX , XXXXXX , VIMSAVE, XXXXXX , XXXXXX , TERM    ,  XXXXXX , Z_IN   , PRV_TAB, KC_UP  , NXT_TAB, KC_PGUP,\
+    KC_LCTL, KC_MUTE, KC_VOLD, KC_VOLU, FILEMAN, GAME    ,  XXXXXX , Z_OUT  , KC_LEFT, KC_DOWN, KC_RGHT, KC_PGDN,\
     ______ , KC_MRWD, KC_MPLY, KC_MFFD, XXXXXX , XXXXXX  ,  XXXXXX , XXXXXX , XXXXXX , XXXXXX , XXXXXX , ______ ,\
     ______ , ______ , FN     , ______ , ______ , XXXXXX  ,  XXXXXX , ______ , ______ , ______ , ______ , ______  \
 ),
@@ -939,4 +960,4 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 }
 // }}}1
 
-/* vim: set fdm=marker: */
+/* vim: set fdm=marker commentstring=//\ %s: */
