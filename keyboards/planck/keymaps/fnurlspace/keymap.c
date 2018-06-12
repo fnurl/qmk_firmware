@@ -1,6 +1,7 @@
 /* 
  * fnurlspace layout for 40% ortholinear keyboards
- * Jody Foo 2017
+ * Jody Foo 2017, 2018
+ * last modified: 2018-06-12
  */
 
 /* Features:
@@ -30,6 +31,7 @@ enum fnurlspace_layers {
 };
 
 // Custom keycodes, used in process_record_user() {{{2
+// QWERTY = SAFE_RANGE adds all the standard keys first to the enumeration.
 enum custom_keycodes {
   QWERTY = SAFE_RANGE,
   FN,
@@ -42,23 +44,24 @@ enum custom_keycodes {
 };
 
 // Tap Dance aliases and IDs {{{2
-enum {
-    TD_GUI_LAUNCHBAR  = 0,
-    TD_TAB_CYCLE_APPS = 1,
-    TD_AA_CYCLE_APPS  = 2,
-    TD_AE_CYCLE_WIN   = 3,
-    TD_RCAPSLOCK      = 4,
-    TD_LCAPSLOCK      = 5,
-    TD_NAVLOCK        = 6,
-    TD_HYPER_ONESHOT  = 7,
-    TD_NAVHYPER       = 8,
-    TD_NAVCMD         = 9,
-    TD_HYPMEH         = 10,
-    TD_HYPER          = 11,
-    TD_CMDHYP         = 12,
-    TD_NVCMHP         = 13,
-    TD_NVHPCM         = 14,
-    TD_RSFTLB         = 15
+enum tap_dances {
+    TD_GUI_LAUNCHBAR,
+    TD_TAB_CYCLE_APPS,
+    TD_AA_CYCLE_APPS,
+    TD_AE_CYCLE_WIN,
+    TD_RCAPSLOCK,
+    TD_LCAPSLOCK,
+    TD_NAVLOCK,
+    TD_HYPER_ONESHOT,
+    TD_NAVHYPER,
+    TD_NAVCMD,
+    TD_HYPMEH,
+    TD_HYPER,
+    TD_CMDHYP,
+    TD_CMDNAV,
+    TD_NVCMHP,
+    TD_NVHPCM,
+    TD_RSFTLB
 };
 
 // Tap dance aliases (use in layout) {{{3
@@ -75,13 +78,13 @@ enum {
 #define TDHYPME TD(TD_HYPMEH)
 #define TDHYPER TD(TD_HYPER)
 #define TDCMDHY TD(TD_CMDHYP)
+#define TDCMDNV TD(TD_CMDNAV)
 #define TDNVCMH TD(TD_NVCMHP)
 #define TDNVHCM TD(TD_NVHPCM)
 #define TDRSFLB TD(TD_RSFTLB)
 
 // Aliases to use in keymaps {{{2
 // Fillers to make layering more clear {{{3
-//#define XXXXXX   KC_NO
 #define XXXXXX   NONE
 #define ______   KC_TRNS
 
@@ -95,7 +98,8 @@ enum {
 #define PL_SPC   LT(_PLEFT,  KC_SPC)
 #define PR_SPC   LT(_PRIGHT, KC_SPC)
 
-// Dual-role modifiers: MT = modifier when held, keycode when tapped {{{3
+// Dual-role modiliers: MT = modifier when held, keycode when tapped {{{3
+// bad idea using character keys as dual role keys. hard to type.
 #define ESC_CTL MT(MOD_LCTL, KC_ESC)
 #define AE_CTL  MT(MOD_LCTL, KC_P8)
 #define F_CTL   MT(MOD_LCTL, KC_F)
@@ -119,7 +123,7 @@ enum {
 #define CMDPGDN LGUI(KC_PGDN)
 #define CMDPGUP LGUI(KC_PGUP)
 
-// Layer keys {{{3
+// Momentary layer keys {{{3
 #define ADJUST MO(_ADJUST)
 
 // }}}1
@@ -135,14 +139,14 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   |--------+--------+--------+--------+--------+--------| |--------+--------+--------+--------+--------+--------|
   | Shift  |   Z    |   X    |   C    |   V    |   B    | |   N    |   M    |   ,    |   .    |   /    | Shift  |
   |--------+--------+--------+--------+--------+--------| |--------+--------+--------+--------+--------+--------|
-  |  CTRL  | BCKSPC |  FN    |  LALT  |TD:CMDHY| PL/SPC | | PR/SPC |TD:NHYCM|  CMD   |  ALT   |        | ADJUST |
+  |  CTRL  | BCKSPC |  FN    |  LALT  |TD:CMDNV| PL/SPC | | PR/SPC |TD:NHYCM|  CMD   |  ALT   |        | ADJUST |
   `-----------------------------------------------------+ +-----------------------------------------------------'
 */
 [_QWERTY] = KEYMAP( \
     KC_TAB , KC_Q   , KC_W   , KC_E   , KC_R   , KC_T    ,  KC_Y   , KC_U   , KC_I   , KC_O   , KC_P   , KC_P7  ,\
     ESC_CTL, KC_A   , KC_S   , KC_D   , KC_F   , KC_G    ,  KC_H   , KC_J   , KC_K   , KC_L   , KC_P9  , KC_P8  ,\
     KC_LSFT, KC_Z   , KC_X   , KC_C   , KC_V   , KC_B    ,  KC_N   , KC_M   , KC_COMM, KC_DOT , KC_SLSH, KC_RSFT,\
-    KC_LCTL, KC_BSPC, FN     , KC_LALT, TDCMDHY, PL_SPC  ,  PR_SPC , TDNVHCM, KC_RGUI, KC_RALT, XXXXXX , ADJUST  \
+    KC_LCTL, KC_BSPC, FN     , KC_LALT, TDCMDNV, PL_SPC  ,  PR_SPC , TDNVHCM, KC_RGUI, KC_RALT, XXXXXX , ADJUST  \
 ),
 
 /* HYPER layer {{{2
@@ -156,11 +160,17 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   |        |        |        |        |        |        | |        |        |        |        |        |        |
   `-----------------------------------------------------+ +-----------------------------------------------------'
 */
-[_HYPER] = KEYMAP( \
+/*[_HYPER] = KEYMAP( \
     ______ , ______ , ______ , ______ , ______ , ______  ,  ______ , ______ , ______ , ______ , ______ , HYPEROS,\
     KC_ESC , ______ , ______ , ______ , ______ , ______  ,  ______ , ______ , ______ , ______ , HYPEROS, HYPEROS,\
     HYPEROS, ______ , ______ , ______ , ______ , ______  ,  ______ , ______ , ______ , ______ , ______ , HYPEROS,\
     HYPEROS, ______ , ______ , ______ , ______ , ______  ,  ______ , ______ , ______ , ______ , ______ , HYPEROS \
+),*/
+[_HYPER] = KEYMAP( \
+    ______ , ______ , ______ , ______ , ______ , ______  ,  ______ , ______ , ______ , ______ , ______ , ______ ,\
+    KC_ESC , ______ , ______ , ______ , ______ , ______  ,  ______ , ______ , ______ , ______ , ______ , ______ ,\
+    ______ , ______ , ______ , ______ , ______ , ______  ,  ______ , ______ , ______ , ______ , ______ , ______ ,\
+    ______ , ______ , ______ , ______ , ______ , ______  ,  ______ , ______ , ______ , ______ , ______ , ______  \
 ),
 
 /* Paren Left Layer {{{2
@@ -230,8 +240,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   `-----------------------------------------------------+ +-----------------------------------------------------'
  */
 [_NAV] = KEYMAP( \
-    XXXXXX , XXXXXX , VIMSAVE, XXXXXX , XXXXXX , TERM    ,  XXXXXX , Z_IN   , PRV_TAB, KC_UP  , NXT_TAB, KC_PGUP,\
-    KC_LCTL, KC_MUTE, KC_VOLD, KC_VOLU, FILEMAN, GAME    ,  XXXXXX , Z_OUT  , KC_LEFT, KC_DOWN, KC_RGHT, KC_PGDN,\
+    XXXXXX , XXXXXX , VIMSAVE, XXXXXX , XXXXXX , TERM    ,  XXXXXX , PRV_TAB, KC_UP  , NXT_TAB, KC_PGUP, Z_IN   ,\
+    KC_LCTL, KC_MUTE, KC_VOLD, KC_VOLU, FILEMAN, GAME    ,  XXXXXX , KC_LEFT, KC_DOWN, KC_RGHT, KC_PGDN, Z_OUT  ,\
     ______ , KC_MRWD, KC_MPLY, KC_MFFD, XXXXXX , XXXXXX  ,  XXXXXX , XXXXXX , XXXXXX , XXXXXX , XXXXXX , ______ ,\
     ______ , ______ , FN     , ______ , ______ , XXXXXX  ,  XXXXXX , ______ , ______ , ______ , ______ , ______  \
 ),
@@ -250,8 +260,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 [_GAME] = KEYMAP( \
     ______ , ______ , ______ , ______ , ______ , ______  ,  ______ , ______ , ______ , ______ , ______ , KC_BSPC,\
     KC_LCTL, ______ , ______ , ______ , ______ , ______  ,  ______ , ______ , ______ , ______ , ______ , KC_ENT ,\
-    ______ , ______ , ______ , ______ , ______ , ______  ,  ______ , ______ , ______ , ______ , ______ , ______ ,\
-    KC_SPC , NUM_MOD, ______ , ______ , ______ , ______  ,  ______ , ______ , ______ , ______ , ______ , ______  \
+    ______ , ______ , ______ , ______ , ______ , ______  ,  ______ , ______ , ______ , ______ , KC_UP  , ______ ,\
+    KC_SPC , NUM_MOD, ______ , ______ , ______ , ______  ,  ______ , ______ , ______ , KC_LEFT, KC_DOWN, KC_RGHT \
 ),
 
 /* Game layer (right side) {{{2
@@ -338,20 +348,28 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 #define GAME_ON_SONG   M__NOTE(_A5, 2),
 #define GAME_OFF_SONG  M__NOTE(_A4, 2),
 #define CAPS_SONG      M__NOTE(_E5, 2),
+#define FN_ON_SONG     M__NOTE(_E5, 2),
+#define FN_OFF_SONG    M__NOTE(_E4, 2),
 #define MEH_ON_SONG    M__NOTE(_FS5, 2),
+#define MEH_OFF_SONG   M__NOTE(_FS4, 2),
 #define CMD_ON_SONG    M__NOTE(_F5, 2),
+#define CMD_OFF_SONG   M__NOTE(_F4, 2),
 
 // Create song arrays {{{2
 #ifdef AUDIO_ENABLE
-  float game_on_song[][2]   = SONG(GAME_ON_SONG);
-  float game_off_song[][2]  = SONG(GAME_OFF_SONG);
   float nav_on_song[][2]    = SONG(NAV_ON_SONG);
   float nav_off_song[][2]   = SONG(NAV_OFF_SONG);
   float hyper_on_song[][2]  = SONG(HYPER_ON_SONG);
   float hyper_off_song[][2] = SONG(HYPER_OFF_SONG);
+  float game_on_song[][2]   = SONG(GAME_ON_SONG);
+  float game_off_song[][2]  = SONG(GAME_OFF_SONG);
   float caps_song[][2]      = SONG(CAPS_SONG);
+  float fn_on_song[][2]     = SONG(FN_ON_SONG);
+  float fn_off_song[][2]    = SONG(FN_OFF_SONG);
   float meh_on_song[][2]    = SONG(MEH_ON_SONG);
+  float meh_off_song[][2]   = SONG(MEH_OFF_SONG);
   float cmd_on_song[][2]    = SONG(CMD_ON_SONG);
+  float cmd_off_song[][2]   = SONG(CMD_OFF_SONG);
 #endif
 
 //}}}1
@@ -363,6 +381,10 @@ void nav_and_lock_dance_finished(qk_tap_dance_state_t *state, void *user_data) {
     // Tapping/holding once is for the momentary NAV layer
     case 1:
       layer_on(_NAV);
+      #ifdef AUDIO_ENABLE
+      stop_all_notes();
+      PLAY_SONG(nav_on_song);
+      #endif
       break;
     case 2:
       // Tap twice or holding after twice: toggle NAVLOCK
@@ -387,6 +409,10 @@ void nav_and_lock_dance_finished(qk_tap_dance_state_t *state, void *user_data) {
 void nav_and_lock_dance_reset(qk_tap_dance_state_t *state, void *user_data) {
   if (state->count == 1) {
     layer_off(_NAV);
+    #ifdef AUDIO_ENABLE
+    stop_all_notes();
+    PLAY_SONG(nav_off_song);
+    #endif
   }
 }
 
@@ -402,6 +428,10 @@ void hyper_layer_finished(qk_tap_dance_state_t *state, void *user_data) {
       register_code(KC_LCTL);
       register_code(KC_LSFT);
       layer_on(_HYPER);
+      #ifdef AUDIO_ENABLE
+      stop_all_notes();
+      PLAY_SONG(hyper_on_song);
+      #endif
       break;
   }
 }
@@ -416,6 +446,10 @@ void hyper_layer_reset(qk_tap_dance_state_t *state, void *user_data) {
     unregister_code(KC_LSFT);
     // deactivate _HYPER layer
     layer_off(_HYPER);
+    #ifdef AUDIO_ENABLE
+    stop_all_notes();
+    PLAY_SONG(hyper_off_song);
+    #endif
   }
 }
 
@@ -443,10 +477,10 @@ void hyper_and_hyperos_dance_finished(qk_tap_dance_state_t *state, void *user_da
     case 2:
       // Second tap always activates HYPER layer
       layer_on(_HYPER);
-	  #ifdef AUDIO_ENABLE
-	  stop_all_notes();
-	  PLAY_SONG(hyper_on_song);
-	  #endif
+      #ifdef AUDIO_ENABLE
+      stop_all_notes();
+      PLAY_SONG(hyper_on_song);
+      #endif
       break;
   }
 }
@@ -459,6 +493,10 @@ void hyper_and_hyperos_dance_reset(qk_tap_dance_state_t *state, void *user_data)
     unregister_code(KC_LALT);
     unregister_code(KC_LCTL);
     unregister_code(KC_LSFT);
+    #ifdef AUDIO_ENABLE
+    stop_all_notes();
+    PLAY_SONG(hyper_off_song);
+    #endif
   }
 }
 
@@ -471,14 +509,14 @@ void navhyper_dance_finished(qk_tap_dance_state_t *state, void *user_data) {
       break;
     case 2:
       // Tapping twice + hold = momentary hyper
-      #ifdef AUDIO_ENABLE
-      stop_all_notes();
-      PLAY_SONG(hyper_on_song);
-      #endif
       register_code(KC_LGUI);
       register_code(KC_LALT);
       register_code(KC_LCTL);
       register_code(KC_LSFT);
+      #ifdef AUDIO_ENABLE
+      stop_all_notes();
+      PLAY_SONG(hyper_on_song);
+      #endif
       break;
   }
 }
@@ -489,6 +527,10 @@ void navhyper_dance_reset(qk_tap_dance_state_t *state, void *user_data) {
     case 1:
       // deactivate momentary NAV layer
       layer_off(_NAV);
+      #ifdef AUDIO_ENABLE
+      stop_all_notes();
+      PLAY_SONG(nav_off_song);
+      #endif
       break;
     case 2:
       // otherwise release hyper modifiers
@@ -496,6 +538,10 @@ void navhyper_dance_reset(qk_tap_dance_state_t *state, void *user_data) {
       unregister_code(KC_LALT);
       unregister_code(KC_LCTL);
       unregister_code(KC_LSFT);
+      #ifdef AUDIO_ENABLE
+      stop_all_notes();
+      PLAY_SONG(hyper_off_song);
+      #endif
       break;
   }
 }
@@ -506,6 +552,10 @@ void navcmd_dance_finished(qk_tap_dance_state_t *state, void *user_data) {
     // Tapping/holding once is for NAV-layer.
     case 1:
       layer_on(_NAV);
+      #ifdef AUDIO_ENABLE
+      stop_all_notes();
+      PLAY_SONG(nav_on_song);
+      #endif
       break;
     case 2:
       // Tapping twice + hold = momentary cmd
@@ -524,6 +574,10 @@ void navcmd_dance_reset(qk_tap_dance_state_t *state, void *user_data) {
     case 1:
       // deactivate momentary NAV layer
       layer_off(_NAV);
+      #ifdef AUDIO_ENABLE
+      stop_all_notes();
+      PLAY_SONG(nav_off_song);
+      #endif
       break;
     case 2:
       // otherwise release cmd modifier
@@ -541,22 +595,22 @@ void navcmdhyper_dance_finished(qk_tap_dance_state_t *state, void *user_data) {
       break;
     case 2:
       // Tapping twice + hold = momentary cmd
+      register_code(KC_LGUI);
       #ifdef AUDIO_ENABLE
       stop_all_notes();
       PLAY_SONG(cmd_on_song);
       #endif
-      register_code(KC_LGUI);
       break;
     case 3:
       // Tapping twice + hold = momentary hyper
-      #ifdef AUDIO_ENABLE
-      stop_all_notes();
-      PLAY_SONG(hyper_on_song);
-      #endif
       register_code(KC_LGUI);
       register_code(KC_LALT);
       register_code(KC_LCTL);
       register_code(KC_LSFT);
+      #ifdef AUDIO_ENABLE
+      stop_all_notes();
+      PLAY_SONG(hyper_on_song);
+      #endif
       break;
   }
 }
@@ -567,6 +621,10 @@ void navcmdhyper_dance_reset(qk_tap_dance_state_t *state, void *user_data) {
     case 1:
       // deactivate momentary NAV layer
       layer_off(_NAV);
+      #ifdef AUDIO_ENABLE
+      stop_all_notes();
+      PLAY_SONG(nav_off_song);
+      #endif
       break;
     case 2:
       // otherwise release cmd modifier
@@ -578,6 +636,10 @@ void navcmdhyper_dance_reset(qk_tap_dance_state_t *state, void *user_data) {
       unregister_code(KC_LALT);
       unregister_code(KC_LCTL);
       unregister_code(KC_LSFT);
+      #ifdef AUDIO_ENABLE
+      stop_all_notes();
+      PLAY_SONG(hyper_off_song);
+      #endif
       break;
   }
 }
@@ -588,25 +650,29 @@ void navhypercmd_dance_finished(qk_tap_dance_state_t *state, void *user_data) {
     // Tapping/holding once is for NAV-layer.
     case 1:
       layer_on(_NAV);
+      #ifdef AUDIO_ENABLE
+      stop_all_notes();
+      PLAY_SONG(nav_on_song);
+      #endif
       break;
     case 2:
       // Tapping twice + hold = momentary hyper
-      #ifdef AUDIO_ENABLE
-      stop_all_notes();
-      PLAY_SONG(hyper_on_song);
-      #endif
       register_code(KC_LGUI);
       register_code(KC_LALT);
       register_code(KC_LCTL);
       register_code(KC_LSFT);
+      #ifdef AUDIO_ENABLE
+      stop_all_notes();
+      PLAY_SONG(hyper_on_song);
+      #endif
       break;
     case 3:
       // Tapping thrice + hold = momentary cmd
+      register_code(KC_LGUI);
       #ifdef AUDIO_ENABLE
       stop_all_notes();
       PLAY_SONG(cmd_on_song);
       #endif
-      register_code(KC_LGUI);
       break;
   }
 }
@@ -617,6 +683,10 @@ void navhypercmd_dance_reset(qk_tap_dance_state_t *state, void *user_data) {
     case 1:
       // deactivate momentary NAV layer
       layer_off(_NAV);
+      #ifdef AUDIO_ENABLE
+      stop_all_notes();
+      PLAY_SONG(nav_off_song);
+      #endif
       break;
     case 2:
       // otherwise release hyper modifiers
@@ -624,11 +694,69 @@ void navhypercmd_dance_reset(qk_tap_dance_state_t *state, void *user_data) {
       unregister_code(KC_LALT);
       unregister_code(KC_LCTL);
       unregister_code(KC_LSFT);
+      #ifdef AUDIO_ENABLE
+      stop_all_notes();
+      PLAY_SONG(hyper_off_song);
+      #endif
       break;
     case 3:
       // otherwise release cmd modifier
       unregister_code(KC_LGUI);
+      #ifdef AUDIO_ENABLE
+      stop_all_notes();
+      PLAY_SONG(cmd_off_song);
+      #endif
       break;
+  }
+}
+
+// cmdnav_dance_finished() - cmd when held, nav toggle when double tapped {{{2
+void cmdnav_dance_finished(qk_tap_dance_state_t *state, void *user_data) {
+  switch (state->count) {
+    // Tapping/holding once is for CMD, and turning of _NAV toggle
+    // so we register CMD and turn off _NAV
+    case 1:
+      register_code(KC_LGUI);
+      if (IS_LAYER_ON(_NAV)) {
+        // toggle off
+        layer_off(_NAV);
+        #ifdef AUDIO_ENABLE
+        stop_all_notes();
+        PLAY_SONG(nav_off_song);
+        #endif
+      }
+      break;
+    case 2:
+      // Tapping twice = toggle _NAV (look if its on)
+      if (IS_LAYER_ON(_NAV)) {
+        // toggle off
+        layer_off(_NAV);
+        #ifdef AUDIO_ENABLE
+        stop_all_notes();
+        PLAY_SONG(nav_off_song);
+        #endif
+      } else {
+        // toggle on
+        layer_on(_NAV);
+        #ifdef AUDIO_ENABLE
+        stop_all_notes();
+        PLAY_SONG(nav_on_song);
+        #endif
+      }
+      break;
+  }
+}
+
+// cmdnav_reset() - release cmd {{{2
+void cmdnav_dance_reset(qk_tap_dance_state_t *state, void *user_data) {
+  switch (state->count) {
+    case 1:
+      // if only one tap or hold release, unregister LCMD
+      unregister_code(KC_LGUI);
+      break;
+    // releasing CMD when _NAV is on should not do anything.
+    //case 2:
+    //  break;
   }
 }
 
@@ -641,14 +769,14 @@ void cmdhyper_dance_finished(qk_tap_dance_state_t *state, void *user_data) {
       break;
     case 2:
       // Tapping twice + hold = momentary HYPER
-      #ifdef AUDIO_ENABLE
-      stop_all_notes();
-      PLAY_SONG(hyper_on_song);
-      #endif
       register_code(KC_LGUI);
       register_code(KC_LALT);
       register_code(KC_LSFT);
       register_code(KC_LCTL);
+      #ifdef AUDIO_ENABLE
+      stop_all_notes();
+      PLAY_SONG(hyper_on_song);
+      #endif
       break;
   }
 }
@@ -666,6 +794,10 @@ void cmdhyper_dance_reset(qk_tap_dance_state_t *state, void *user_data) {
       unregister_code(KC_LALT);
       unregister_code(KC_LSFT);
       unregister_code(KC_LCTL);
+      #ifdef AUDIO_ENABLE
+      stop_all_notes();
+      PLAY_SONG(hyper_off_song);
+      #endif
       break;
   }
 }
@@ -679,17 +811,21 @@ void hypermeh_dance_finished(qk_tap_dance_state_t *state, void *user_data) {
       register_code(KC_LALT);
       register_code(KC_LCTL);
       register_code(KC_LSFT);
+      #ifdef AUDIO_ENABLE
+      stop_all_notes();
+      PLAY_SONG(hyper_on_song);
+      #endif
       break;
     case 2:
       // Tapping twice + hold = momentary MEH
       // add meh modifiers
+      register_code(KC_LGUI);
+      register_code(KC_LALT);
+      register_code(KC_LSFT);
       #ifdef AUDIO_ENABLE
       stop_all_notes();
       PLAY_SONG(meh_on_song);
       #endif
-      register_code(KC_LGUI);
-      register_code(KC_LALT);
-      register_code(KC_LSFT);
       break;
   }
 }
@@ -703,12 +839,20 @@ void hypermeh_dance_reset(qk_tap_dance_state_t *state, void *user_data) {
       unregister_code(KC_LALT);
       unregister_code(KC_LCTL);
       unregister_code(KC_LSFT);
+      #ifdef AUDIO_ENABLE
+      stop_all_notes();
+      PLAY_SONG(hyper_off_song);
+      #endif
       break;
     case 2:
       // otherwise release meh modifier
       unregister_code(KC_LGUI);
       unregister_code(KC_LALT);
       unregister_code(KC_LSFT);
+      #ifdef AUDIO_ENABLE
+      stop_all_notes();
+      PLAY_SONG(meh_off_song);
+      #endif
       break;
   }
 }
@@ -758,6 +902,10 @@ void fnhyper_dance_reset(qk_tap_dance_state_t *state, void *user_data) {
   // should be activated.
   if (state->count == 1) {
     layer_off(_FN);
+    #ifdef AUDIO_ENABLE
+    stop_all_notes();
+    PLAY_SONG(fn_off_song);
+    #endif
   }
 }
 
@@ -805,6 +953,7 @@ qk_tap_dance_action_t tap_dance_actions[] = {
     [TD_NVCMHP]         = ACTION_TAP_DANCE_FN_ADVANCED(NULL , navcmdhyper_dance_finished       , navcmdhyper_dance_reset),
     [TD_NVHPCM]         = ACTION_TAP_DANCE_FN_ADVANCED(NULL , navhypercmd_dance_finished       , navhypercmd_dance_reset),
     [TD_CMDHYP]         = ACTION_TAP_DANCE_FN_ADVANCED(NULL , cmdhyper_dance_finished          , cmdhyper_dance_reset),
+    [TD_CMDNAV]         = ACTION_TAP_DANCE_FN_ADVANCED(NULL , cmdnav_dance_finished            , cmdnav_dance_reset),
     [TD_HYPMEH]         = ACTION_TAP_DANCE_FN_ADVANCED(NULL , hypermeh_dance_finished          , hypermeh_dance_reset),
     [TD_HYPER]          = ACTION_TAP_DANCE_FN_ADVANCED(NULL , hyper_layer_finished             , hyper_layer_reset),
     [TD_RSFTLB]         = ACTION_TAP_DANCE_DOUBLE(KC_RSFT   , LGUI(KC_SPC))
@@ -825,9 +974,11 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     case FN:      // _FN layer + tri layer {{{2
       if (record->event.pressed) {
         layer_on(_FN);
+	// _PLANCK on Planck, _ADJUST on lets split
         update_tri_layer(_FN, _NAV, _PLANCK);
       } else {
         layer_off(_FN);
+	// _PLANCK on Planck, _ADJUST on lets split
         update_tri_layer(_FN, _NAV, _PLANCK);
       }
       return false;
@@ -835,9 +986,11 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     case NAV:     // _NAV layer + tri layer {{{2
       if (record->event.pressed) {
         layer_on(_NAV);
+	// _PLANCK on Planck, _ADJUST on lets split
         update_tri_layer(_FN, _NAV, _PLANCK);
       } else {
         layer_off(_NAV);
+	// _PLANCK on Planck, _ADJUST on lets split
         update_tri_layer(_FN, _NAV, _PLANCK);
       }
       return false;
@@ -934,4 +1087,4 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 }
 // }}}1
 
-/* vim: set fdm=marker: */
+/* vim: set fdm=marker commentstring=//\ %s: */
