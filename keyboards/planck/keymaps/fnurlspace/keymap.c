@@ -232,9 +232,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 /* Navigation layer {{{2
   ,-----------------------------------------------------+ +-----------------------------------------------------.
-  |        | VIMSAVE|        |CMDLARR |CMDRARR |  TERM  | |        |PREV TAB|   UP   |NEXT TAB|  PgUp  |zIN<C-+>|
+  |        | VIMSAVE|        |CMDLARR |CMDRARR |  TERM  | |        |PREV TAB|   UP   |NEXT TAB|  PgUp  |zOU<C-->|
   |--------+--------+--------+--------+--------+--------+ +--------+--------+--------+--------+--------+--------|
-  |        |  MUTE  |  V DN  |  V UP  |FILEMAN |  GAME  | |        |  LEFT  |  DOWN  | RIGHT  |  PgDn  |zOU<C-->|
+  |        |  MUTE  |  V DN  |  V UP  |FILEMAN |  GAME  | |        |  LEFT  |  DOWN  | RIGHT  |  PgDn  |zIN<C-+>|
   |--------+--------+--------+--------+--------+--------+ +--------+--------+--------+--------+--------+--------|
   |        |  PREV  |  PLAY  |  NEXT  |        |        | |        |CMDLARR |        |CMDRARR |        |        |
   |--------+--------+--------+--------+--------+--------+ +--------+--------+--------+--------+--------+--------|
@@ -242,8 +242,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   `-----------------------------------------------------+ +-----------------------------------------------------'
  */
 [_NAV] = KEYMAP( \
-    XXXXXX , XXXXXX , VIMSAVE, CMDLARR, CMDRARR, TERM    ,  XXXXXX , PRV_TAB, KC_UP  , NXT_TAB, KC_PGUP, Z_IN   ,\
-    KC_LCTL, KC_MUTE, KC_VOLD, KC_VOLU, FILEMAN, GAME    ,  XXXXXX , KC_LEFT, KC_DOWN, KC_RGHT, KC_PGDN, Z_OUT  ,\
+    XXXXXX , XXXXXX , VIMSAVE, CMDLARR, CMDRARR, TERM    ,  XXXXXX , PRV_TAB, KC_UP  , NXT_TAB, KC_PGUP, Z_OUT  ,\
+    KC_LCTL, KC_MUTE, KC_VOLD, KC_VOLU, FILEMAN, GAME    ,  XXXXXX , KC_LEFT, KC_DOWN, KC_RGHT, KC_PGDN, Z_IN   ,\
     ______ , KC_MRWD, KC_MPLY, KC_MFFD, XXXXXX , XXXXXX  ,  XXXXXX , CMDLARR, XXXXXX , CMDRARR, XXXXXX , ______ ,\
     ______ , ______ , FN     , ______ , ______ , XXXXXX  ,  XXXXXX , ______ , ______ , ______ , ______ , ______  \
 ),
