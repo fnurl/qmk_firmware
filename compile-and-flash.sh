@@ -76,9 +76,8 @@ subproject=$2
 keymap=$3
 firmware="${keyboard}_${subproject}_${keymap}.hex"
 
-echo "NOTE TO SELF: To reset keyboard/put in DFU mode, press <adjust>-q"
-echo "using fnurlspace layout, <adjust> is the rightmost key on the"
-echo "fourth (bottom) row"
+echo "NOTE TO SELF: To reset keyboard/put in DFU mode, press the q key from the hardware layer."
+echo "using fnurlspace layout, the hardware layer is activated by pressing FN and NAV at the same time."
 echo ""
 echo "Option: ${option}..."
 # 2018-02-20, now we can just use

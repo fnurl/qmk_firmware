@@ -158,7 +158,8 @@ enum tap_dances {
 // Keymap Layers {{{1
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
-/* Base layer: ANSI-SE (special US-ANSI with [Å, Ä, Ö] remapped in OS to [KC_P7, KC_P8, KC_P9] {{{2
+/* Base layer: ANSI-SE (special US-ANSI with `[`, `'`, and `;` mapped to `KC_P7`, `KC_P8`, `KC_P9` {{{2
+   For use in OS where keypad [7, 8, 9] have been remapped to [Å, Ä, Ö] 
   ,-----------------------------------------------------+ +-----------------------------------------------------.
   |  Tab   |   Q    |   W    |   E    |   R    |   T    | |   Y    |   U    |   I    |   O    |   P    |   Å    |
   |--------+--------+--------+--------+--------+--------| |--------+--------+--------+--------+--------+--------|
@@ -166,50 +167,50 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   |--------+--------+--------+--------+--------+--------| |--------+--------+--------+--------+--------+--------|
   | Shift  |   Z    |   X    |   C    |   V    |   B    | |   N    |   M    |   ,    |   .    |   /    | Shift  |
   |--------+--------+--------+--------+--------+--------| |--------+--------+--------+--------+--------+--------|
-  |  CTRL  |        |  FN    |  LALT  |TD:CMDHY| PL/SPC | | PR/SPC |TD:NVHYP|  CMD   |  ALT   | ENTER  | BCKSPC |
+  |  CTRL  |  ESC   |  FN    |  LALT  |TD:CMDHY| PL/SPC | | PR/SPC |  NAV   |  CMD   |  ALT   | ENTER  | BCKSPC |
   `-----------------------------------------------------+ +-----------------------------------------------------'
 */
 [_QWERTY_ANSISE] = LAYOUT_ortho_4x12(
    KC_TAB , KC_Q   , KC_W   , KC_E   , KC_R   , KC_T    ,  KC_Y   , KC_U   , KC_I   , KC_O   , KC_P   , KC_P7  ,\
    ESC_CTL, KC_A   , KC_S   , KC_D   , KC_F   , KC_G    ,  KC_H   , KC_J   , KC_K   , KC_L   , KC_P9  , KC_P8  ,\
    KC_LSFT, KC_Z   , KC_X   , KC_C   , KC_V   , KC_B    ,  KC_N   , KC_M   , KC_COMM, KC_DOT , KC_SLSH, KC_RSFT,\
-   KC_LCTL, XXXXXX , FN     , KC_LALT, TDCMDHY, PL_SPC  ,  PR_SPC , TDNVHYP, KC_RGUI, KC_RALT, HW_KEY , KC_BSPC \
+   KC_LCTL, KC_ESC , FN     , KC_LALT, TDCMDHY, PL_SPC  ,  PR_SPC , NAV    , KC_RGUI, KC_RALT, KC_ENT , KC_BSPC \
 ),
 
-/* Base layer: US-ANSI (STANDARD) {{{2
+/* Base layer: ANSI-US (standard US ANSI) {{{2
   ,-----------------------------------------------------+ +-----------------------------------------------------.
-  |  Tab   |   Q    |   W    |   E    |   R    |   T    | |   Y    |   U    |   I    |   O    |   P    | BCKSPC |
+  |  Tab   |   Q    |   W    |   E    |   R    |   T    | |   Y    |   U    |   I    |   O    |   P    |   [    |
   |--------+--------+--------+--------+--------+--------| |--------+--------+--------+--------+--------+--------|
   |CTRL/ESC|   A    |   S    |   D    |   F    |   G    | |   H    |   J    |   K    |   L    |   ;    |   '    |
   |--------+--------+--------+--------+--------+--------| |--------+--------+--------+--------+--------+--------|
   | Shift  |   Z    |   X    |   C    |   V    |   B    | |   N    |   M    |   ,    |   .    |   /    | Shift  |
   |--------+--------+--------+--------+--------+--------| |--------+--------+--------+--------+--------+--------|
-  |  CTRL  |        |  FN    |  LALT  |TD:CMDHY| PL/SPC | | PR/SPC |TD:NVHYP|  CMD   |  ALT   | ENTER  | BCKSPC |
+  |  CTRL  |  ESC   |  FN    |  LALT  |TD:CMDHY| PL/SPC | | PR/SPC |  NAV   |  CMD   |  ALT   | ENTER  | BCKSPC |
   `-----------------------------------------------------+ +-----------------------------------------------------'
 */
 [_QWERTY_ANSIUS] = LAYOUT_ortho_4x12(
-   KC_TAB , KC_Q   , KC_W   , KC_E   , KC_R   , KC_T    ,  KC_Y   , KC_U   , KC_I   , KC_O   , KC_P   , KC_BSPC,\
-   ESC_CTL, KC_A   , KC_S   , KC_D   , KC_F   , KC_G    ,  KC_H   , KC_J   , KC_K   , KC_L   , KC_SCLN, KC_QUOT,\
-   KC_LSFT, KC_Z   , KC_X   , KC_C   , KC_V   , KC_B    ,  KC_N   , KC_M   , KC_COMM, KC_DOT , KC_SLSH, KC_RSFT,\
-   KC_LCTL, XXXXXX , FN     , KC_LALT, TDCMDHY, PL_SPC  ,  PR_SPC , TDNVHYP, KC_RGUI, KC_RALT, HW_KEY , KC_BSPC \
+   ______ , ______ , ______ , ______ , ______ , ______  ,  ______ , ______ , ______ , ______ , ______ , KC_LBRC,\
+   ______ , ______ , ______ , ______ , ______ , ______  ,  ______ , ______ , ______ , ______ , KC_SCLN, KC_QUOT,\
+   ______ , ______ , ______ , ______ , ______ , ______  ,  ______ , ______ , ______ , ______ , ______ , ______ ,\
+   ______ , ______ , ______ , ______ , ______ , ______  ,  ______ , ______ , ______ , ______ , ______ , ______  \
 ),
 
 /* Paren Left Layer {{{2
   ,-----------------------------------------------------+ +-----------------------------------------------------.
   |   ~    |    1   |   2    |   3    |   4    |   5    | |   6    |   7    |   8    |   9    |   0    |   `    |
   |--------+--------+--------+--------+--------+--------+ +--------+--------+--------+--------+--------+--------|
-  |  CTRL  |        |   <    |   {    |   (    |   [    | |   *    |   $    |   =    |   &    |   %    |        |
+  |        |        |   <    |   {    |   (    |   [    | |   *    |   $    |   =    |   &    |   %    |        |
   |--------+--------+--------+--------+--------+--------+ +--------+--------+--------+--------+--------+--------|
   |        |        |        |   _    |   -    |   :    | |   ;    |   "    |   '    |   |    |   \    |        |
   |--------+--------+--------+--------+--------+--------+ +--------+--------+--------+--------+--------+--------|
-  |        |        |        |        |        | PL/SPC | | DB/ENT |        |        |        |        |        |
+  |        |        |        |        |        |        | | DB/ENT |        |        |        |        |        |
   `-----------------------------------------------------+ +-----------------------------------------------------'
 */
 [_PLEFT] = LAYOUT_ortho_4x12(
    KC_TILD, KC_1   , KC_2   , KC_3   , KC_4   , KC_5    ,  KC_6   , KC_7   , KC_8   , KC_9   , KC_0   , KC_GRV ,\
-   KC_LCTL, XXXXXX , KC_LABK, KC_LCBR, KC_LPRN, KC_LBRC ,  KC_ASTR, KC_DLR , KC_EQL , KC_AMPR, KC_PERC, XXXXXX ,\
+   XXXXXX , XXXXXX , KC_LABK, KC_LCBR, KC_LPRN, KC_LBRC ,  KC_ASTR, KC_DLR , KC_EQL , KC_AMPR, KC_PERC, XXXXXX ,\
    ______ , XXXXXX , XXXXXX , KC_UNDS, KC_MINS, KC_COLN ,  KC_SCLN, KC_DQUO, KC_QUOT, KC_PIPE, KC_BSLS, ______ ,\
-   ______ , ______ , ______ , ______ , ______ , ______  ,  KC_ENT , ______ , ______ , ______ , ______ , ______  \
+   ______ , ______ , ______ , ______ , ______ , ______  ,  KC_ENT , ______ , ______ , ______ , XXXXXX , XXXXXX  \
 ),
 
 /* Paren Right Layer {{{2
@@ -220,14 +221,14 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   |--------+--------+--------+--------+--------+--------+ +--------+--------+--------+--------+--------+--------|
   |        |        |        |   _    |   -    |   :    | |   ;    |   "    |   '    |   |    |   \    |        |
   |--------+--------+--------+--------+--------+--------+ +--------+--------+--------+--------+--------+--------|
-  |        |        |        |        |        |  BSPC  | | PR/SPC |        |        |        |        |        |
+  |        |        |        |        |        |  BSPC  | |        |        |        |        |        |        |
   `-----------------------------------------------------+ +-----------------------------------------------------'
  */
 [_PRIGHT] = LAYOUT_ortho_4x12(
     KC_TILD, KC_1   , KC_2   , KC_3   , KC_4   , KC_5    ,  KC_6   , KC_7   , KC_8   , KC_9   , KC_0   , KC_GRV ,\
-    KC_LCTL, KC_EXLM, KC_AT  , KC_HASH, KC_CIRC, KC_PLUS ,  KC_RBRC, KC_RPRN, KC_RCBR, KC_RABK, XXXXXX , XXXXXX ,\
+    XXXXXX , KC_EXLM, KC_AT  , KC_HASH, KC_CIRC, KC_PLUS ,  KC_RBRC, KC_RPRN, KC_RCBR, KC_RABK, XXXXXX , XXXXXX ,\
     ______ , XXXXXX , XXXXXX , KC_UNDS, KC_MINS, KC_COLN ,  KC_SCLN, KC_DQUO, KC_QUOT, KC_PIPE, KC_BSLS, ______ ,\
-    ______ , ______ , ______ , ______ , ______ , KC_BSPC ,  ______ , ______ , ______ , ______ , ______ , ______  \
+    ______ , ______ , ______ , ______ , ______ , KC_BSPC ,  ______ , ______ , ______ , ______ , XXXXXX , XXXXXX  \
 ),
 
 /* FN Layer {{{2
@@ -238,32 +239,14 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   |--------+--------+--------+--------+--------+--------+ +--------+--------+--------+--------+--------+--------|
   |        |CMDPGDN |        |        |        |        | |        |        |        |        |        |        |
   |--------+--------+--------+--------+--------+--------+ +--------+--------+--------+--------+--------+--------|
-  |        |        |        |        |        |        | |        |        |        |        |        |        |
+  |        |        |        |        |        |        | |        |        |        |        | KP ENT |  DEL   |
   `-----------------------------------------------------+ +-----------------------------------------------------'
 */
 [_FN] = LAYOUT_ortho_4x12(
    XXXXXX , KC_F1  , KC_F2  , KC_F3  , KC_F4  , KC_F5   ,  KC_F6  , KC_F7  , KC_F8  , KC_F9  , KC_F10 , KC_F11 ,\
-   KC_LCTL, CMDPGUP, XXXXXX , XXXXXX , XXXXXX , XXXXXX  ,  XXXXXX , XXXXXX , XXXXXX , XXXXXX , XXXXXX , KC_F12 ,\
+   XXXXXX , CMDPGUP, XXXXXX , XXXXXX , XXXXXX , XXXXXX  ,  XXXXXX , XXXXXX , XXXXXX , XXXXXX , XXXXXX , KC_F12 ,\
    ______ , CMDPGDN, XXXXXX , XXXXXX , XXXXXX , XXXXXX  ,  XXXXXX , XXXXXX , XXXXXX , XXXXXX , XXXXXX , ______ ,\
-   ______ , ______ , ______ , ______ , ______ , XXXXXX  ,  XXXXXX , ______ , ______ , ______ , ______ , ______  \
-),
-
-/* Navigation layer {{{2
-  ,-----------------------------------------------------+ +-----------------------------------------------------.
-  |        | VIMSAVE|        | CMDLARR| CMDRARR| TERM   | |        |PREV TAB|   UP   |NEXT TAB|  PgUp  |zOU<C-->|
-  |--------+--------+--------+--------+--------+--------+ +--------+--------+--------+--------+--------+--------|
-  |        |  MUTE  |  V DN  |  V UP  | FILEMAN| GAME1  | | GAME2  |  LEFT  |  DOWN  | RIGHT  |  PgDn  |zIN<C-+>|
-  |--------+--------+--------+--------+--------+--------+ +--------+--------+--------+--------+--------+--------|
-  |        |  PREV  |  PLAY  |  NEXT  |        | ANSIUS | |        |CMDLARR |        |CMDRARR |        |        |
-  |--------+--------+--------+--------+--------+--------+ +--------+--------+--------+--------+--------+--------|
-  |        |        |  FN    |        |        |        | |        |        |        |        |        | HW_KEY |
-  `-----------------------------------------------------+ +-----------------------------------------------------'
- */
-[_NAV] = LAYOUT_ortho_4x12(
-   XXXXXX , XXXXXX , VIMSAVE, CMDLARR, CMDRARR, TERM    ,  XXXXXX , PRV_TAB, KC_UP  , NXT_TAB, KC_PGUP, Z_OUT  ,\
-   KC_LCTL, KC_MUTE, KC_VOLD, KC_VOLU, FILEMAN, GAME1   ,  XXXXXX , KC_LEFT, KC_DOWN, KC_RGHT, KC_PGDN, Z_IN   ,\
-   ______ , KC_MRWD, KC_MPLY, KC_MFFD, XXXXXX , ANSIUS  ,  XXXXXX , CMDLARR, XXXXXX , CMDRARR, XXXXXX , ______ ,\
-   ______ , ______ , ______ , ______ , ______ , XXXXXX  ,  XXXXXX , ______ , ______ , ______ , ______ , HW_KEY \
+   ______ , XXXXXX , ______ , ______ , ______ , ______  ,  ______ , ______ , ______ , ______ , KC_PENT, KC_DEL  \
 ),
 
 /* HYPER and HYPER ONE SHOT layers {{{2
@@ -301,11 +284,29 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
    ______ , ______ , ______ , ______ , ______ , ______  ,  ______ , ______ , ______ , ______ , ______ , ______  \
 ),
 
-/* Game layer (left side) {{{2
+/* Navigation layer {{{2
   ,-----------------------------------------------------+ +-----------------------------------------------------.
-  |        |        |        |        |        |        | |        |        |        |        |        | BCKSPC |
+  |        |        |        | CMDLARR| CMDRARR|        | |        |PREV TAB|   UP   |NEXT TAB|  PgUp  |zOU<C-->|
   |--------+--------+--------+--------+--------+--------+ +--------+--------+--------+--------+--------+--------|
-  | L_CTRL |        |        |        |        |        | |        |        |        |        |        | ENTER  |
+  |        |  MUTE  |  V DN  |  V UP  |        | GAME1  | | GAME2  |  LEFT  |  DOWN  | RIGHT  |  PgDn  |zIN<C-+>|
+  |--------+--------+--------+--------+--------+--------+ +--------+--------+--------+--------+--------+--------|
+  |        |  PREV  |  PLAY  |  NEXT  |        | ANSIUS | |        |CMDLARR |        |CMDRARR |        |        |
+  |--------+--------+--------+--------+--------+--------+ +--------+--------+--------+--------+--------+--------|
+  |        |        |        |        |        |        | |        |        |        |        |        |        |
+  `-----------------------------------------------------+ +-----------------------------------------------------'
+ */
+[_NAV] = LAYOUT_ortho_4x12(
+   XXXXXX , XXXXXX , XXXXXX , CMDLARR, CMDRARR, XXXXXX  ,  XXXXXX , PRV_TAB, KC_UP  , NXT_TAB, KC_PGUP, Z_OUT  ,\
+   XXXXXX , KC_MUTE, KC_VOLD, KC_VOLU, XXXXXX , GAME1   ,  XXXXXX , KC_LEFT, KC_DOWN, KC_RGHT, KC_PGDN, Z_IN   ,\
+   ______ , KC_MRWD, KC_MPLY, KC_MFFD, XXXXXX , ANSIUS  ,  XXXXXX , CMDLARR, XXXXXX , CMDRARR, XXXXXX , ______ ,\
+   ______ , XXXXXX , ______ , ______ , ______ , ______  ,  ______ , ______ , ______ , ______ , XXXXXX , XXXXXX \
+),
+
+/* Game layer {{{2
+  ,-----------------------------------------------------+ +-----------------------------------------------------.
+  |        |        |        |        |        |        | |        |        |        |        |        |        |
+  |--------+--------+--------+--------+--------+--------+ +--------+--------+--------+--------+--------+--------|
+  | L_CTRL |        |        |        |        |        | |        |        |        |        |        |        |
   |--------+--------+--------+--------+--------+--------+ +--------+--------+--------+--------+--------+--------|
   |        |        |        |        |        |        | |        |        |        |        |        |   UP   |
   |--------+--------+--------+--------+--------+--------+ +--------+--------+--------+--------+--------+--------|
@@ -313,8 +314,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   `-----------------------------------------------------+ +-----------------------------------------------------'
 */
 [_GAME1] = LAYOUT_ortho_4x12(
-   ______ , ______ , ______ , ______ , ______ , ______  ,  ______ , ______ , ______ , ______ , ______ , KC_BSPC,\
-   KC_LCTL, ______ , ______ , ______ , ______ , ______  ,  ______ , ______ , ______ , ______ , ______ , KC_ENT ,\
+   ______ , ______ , ______ , ______ , ______ , ______  ,  ______ , ______ , ______ , ______ , ______ , ______ ,\
+   KC_LCTL, ______ , ______ , ______ , ______ , ______  ,  ______ , ______ , ______ , ______ , ______ , ______ ,\
    ______ , ______ , ______ , ______ , ______ , ______  ,  ______ , ______ , ______ , ______ , ______ , KC_UP  ,\
    KC_SPC , NUM1MOD, ______ , ______ , ______ , ______  ,  ______ , ______ , ______ , KC_LEFT, KC_RGHT, KC_DOWN \
 ),
@@ -341,20 +342,20 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 /* Numeric Layer 1 {{{2
   ,-----------------------------------------------------+ +-----------------------------------------------------.
-  |   0    |   1    |   2    |   3    |   4    |   5    | |   6    |   7    |   8    |   9    |   0    |        |
+  |   `    |   1    |   2    |   3    |   4    |   5    | |   6    |   7    |   8    |   9    |   0    |        |
   |--------+--------+--------+--------+--------+--------+ +--------+--------+--------+--------+--------+--------|
   |  ESC   |   4    |   5    |   6    |        |        | |        |        |        |        |        |        |
   |--------+--------+--------+--------+--------+--------+ +--------+--------+--------+--------+--------+--------|
-  |        |   7    |   8    |   9    |   0    |        | |        |        |        |        |        |        |
+  | ENTER  |   7    |   8    |   9    |   0    |        | |        |        |        |        |        |        |
   |--------+--------+--------+--------+--------+--------+ +--------+--------+--------+--------+--------+--------|
-  |        |        |   0    |        |        |        | |        |        |        |        |        |        |
+  | BCKSPC |        |   0    |        |        |        | |        |        |        |        |        |        |
   `-----------------------------------------------------+ +-----------------------------------------------------'
 */
 [_NUM1] = LAYOUT_ortho_4x12(
-   KC_0   , KC_1   , KC_2   , KC_3   , KC_4   , KC_5    ,  KC_6   , KC_7   , KC_8   , KC_9   , KC_0   , XXXXXX ,\
+   KC_GRV , KC_1   , KC_2   , KC_3   , KC_4   , KC_5    ,  KC_6   , KC_7   , KC_8   , KC_9   , KC_0   , XXXXXX ,\
    KC_ESC , KC_4   , KC_5   , KC_6   , XXXXXX , XXXXXX  ,  XXXXXX , XXXXXX , XXXXXX , XXXXXX , XXXXXX , XXXXXX ,\
-   ______ , KC_7   , KC_8   , KC_9   , KC_0   , XXXXXX  ,  XXXXXX , XXXXXX , XXXXXX , XXXXXX , XXXXXX , XXXXXX ,\
-   ______ , NUM1MOD, KC_0   , ______ , ______ , ______  ,  ______ , ______ , ______ , ______ , ______ , ______  \
+   KC_ENT , KC_7   , KC_8   , KC_9   , KC_0   , XXXXXX  ,  XXXXXX , XXXXXX , XXXXXX , XXXXXX , XXXXXX , XXXXXX ,\
+   KC_BSPC, ______ , KC_0   , ______ , ______ , ______  ,  ______ , ______ , ______ , ______ , ______ , ______  \
 ),
 
 /* Numeric Layer 2 {{{2
@@ -385,14 +386,14 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   |--------+--------+--------+--------+--------+--------+ +--------+--------+--------+--------+--------+--------|
   |        |        |        |        |        |        | |        |        |        |        |        |        |
   |--------+--------+--------+--------+--------+--------+ +--------+--------+--------+--------+--------+--------|
-  |        |        | FN     |        |        |        | |        | NAV    |        |        | HW_KEY | HW_KEY |
+  |        |        |        |        |        |        | |        |        |        |        |        |        |
   `-----------------------------------------------------+ +-----------------------------------------------------'
  */
 [_ADJUST] = LAYOUT_ortho_4x12(
    XXXXXX , RESET  , XXXXXX , XXXXXX , XXXXXX , XXXXXX  ,  XXXXXX , XXXXXX , XXXXXX , XXXXXX , XXXXXX , XXXXXX ,\
    XXXXXX , XXXXXX , XXXXXX , XXXXXX , XXXXXX , XXXXXX  ,  XXXXXX , XXXXXX , XXXXXX , XXXXXX , XXXXXX , XXXXXX ,\
    XXXXXX , XXXXXX , XXXXXX , XXXXXX , XXXXXX , XXXXXX  ,  XXXXXX , XXXXXX , XXXXXX , XXXXXX , XXXXXX , XXXXXX ,\
-   XXXXXX , XXXXXX , FN     , XXXXXX , XXXXXX , XXXXXX  ,  XXXXXX , NAV    , XXXXXX , XXXXXX , HW_KEY , HW_KEY  \
+   ______ , ______ , ______ , ______ , ______ , ______  ,  ______ , ______ , ______ , ______ , ______ , ______  \
 ),
 
 /* Planck Layer (FN + NAV) {{{2
@@ -403,14 +404,14 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   |--------+--------+--------+--------+--------+--------|--------+--------+--------+--------+--------+--------|
   |        |AudioOff|MusicOff| Voice- |        |        |        |        |        |        |        |        |
   |--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------|
-  |        |        | FN     |        |        |        |        | NAV    |        |        | HW_KEY | HW_KEY |
+  |        |        |        |        |        |        |        |        |        |        |        |        |
   `-----------------------------------------------------------------------------------------------------------'
  */
 [_PLANCK] = LAYOUT_ortho_4x12(
   XXXXXX , RESET  , XXXXXX , XXXXXX , XXXXXX , XXXXXX , XXXXXX , XXXXXX , XXXXXX , XXXXXX , XXXXXX , XXXXXX ,\
   XXXXXX , AU_ON  , MU_ON  , MUV_IN , MU_MOD , XXXXXX , XXXXXX , XXXXXX , XXXXXX , XXXXXX , XXXXXX , XXXXXX ,\
-  ______ , AU_OFF , MU_OFF , MUV_DE , XXXXXX , XXXXXX , XXXXXX , XXXXXX , XXXXXX , XXXXXX , XXXXXX , ______ ,\
-  ______ , ______ , FN     , ______ , XXXXXX , ______ , ______ , NAV    , ______ , ______ , HW_KEY , HW_KEY  \
+  XXXXXX , AU_OFF , MU_OFF , MUV_DE , XXXXXX , XXXXXX , XXXXXX , XXXXXX , XXXXXX , XXXXXX , XXXXXX , XXXXXX ,\
+  ______ , ______ , ______ , ______ , ______ , ______ , ______ , ______ , ______ , ______ , ______ , ______  \
 ),
 
 };
