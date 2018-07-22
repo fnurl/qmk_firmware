@@ -2,6 +2,7 @@ ifndef QUANTUM_DIR
 	include ../../../../Makefile
 endif
 
+#fnurlspace additions
 AUDIO_ENABLE = no
 BACKLIGHT_ENABLE = no
 KEY_LOCK_ENABLE = no

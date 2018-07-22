@@ -13,8 +13,7 @@
 
 // includes {{{2
 #include QMK_KEYBOARD_H
-#include "action_layer.h"
-#include "eeconfig.h"
+
 extern keymap_config_t keymap_config;
 
 // Enumerate layers {{{2
@@ -170,11 +169,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   |  CTRL  |        |  FN    |  LALT  |TD:CMDHY| PL/SPC | | PR/SPC |TD:NVHYP|  CMD   |  ALT   | ENTER  | BCKSPC |
   `-----------------------------------------------------+ +-----------------------------------------------------'
 */
-[_QWERTY_ANSISE] = KEYMAP( \
-    KC_TAB , KC_Q   , KC_W   , KC_E   , KC_R   , KC_T    ,  KC_Y   , KC_U   , KC_I   , KC_O   , KC_P   , KC_P7  ,\
-    ESC_CTL, KC_A   , KC_S   , KC_D   , KC_F   , KC_G    ,  KC_H   , KC_J   , KC_K   , KC_L   , KC_P9  , KC_P8  ,\
-    KC_LSFT, KC_Z   , KC_X   , KC_C   , KC_V   , KC_B    ,  KC_N   , KC_M   , KC_COMM, KC_DOT , KC_SLSH, KC_RSFT,\
-    KC_LCTL, XXXXXX , FN     , KC_LALT, TDCMDHY, PL_SPC  ,  PR_SPC , TDNVHYP, KC_RGUI, KC_RALT, HW_KEY , KC_BSPC \
+[_QWERTY_ANSISE] = LAYOUT_ortho_4x12(
+   KC_TAB , KC_Q   , KC_W   , KC_E   , KC_R   , KC_T    ,  KC_Y   , KC_U   , KC_I   , KC_O   , KC_P   , KC_P7  ,\
+   ESC_CTL, KC_A   , KC_S   , KC_D   , KC_F   , KC_G    ,  KC_H   , KC_J   , KC_K   , KC_L   , KC_P9  , KC_P8  ,\
+   KC_LSFT, KC_Z   , KC_X   , KC_C   , KC_V   , KC_B    ,  KC_N   , KC_M   , KC_COMM, KC_DOT , KC_SLSH, KC_RSFT,\
+   KC_LCTL, XXXXXX , FN     , KC_LALT, TDCMDHY, PL_SPC  ,  PR_SPC , TDNVHYP, KC_RGUI, KC_RALT, HW_KEY , KC_BSPC \
 ),
 
 /* Base layer: US-ANSI (STANDARD) {{{2
@@ -188,11 +187,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   |  CTRL  |        |  FN    |  LALT  |TD:CMDHY| PL/SPC | | PR/SPC |TD:NVHYP|  CMD   |  ALT   | ENTER  | BCKSPC |
   `-----------------------------------------------------+ +-----------------------------------------------------'
 */
-[_QWERTY_ANSIUS] = KEYMAP( \
-    KC_TAB , KC_Q   , KC_W   , KC_E   , KC_R   , KC_T    ,  KC_Y   , KC_U   , KC_I   , KC_O   , KC_P   , KC_BSPC,\
-    ESC_CTL, KC_A   , KC_S   , KC_D   , KC_F   , KC_G    ,  KC_H   , KC_J   , KC_K   , KC_L   , KC_SCLN, KC_QUOT,\
-    KC_LSFT, KC_Z   , KC_X   , KC_C   , KC_V   , KC_B    ,  KC_N   , KC_M   , KC_COMM, KC_DOT , KC_SLSH, KC_RSFT,\
-    KC_LCTL, XXXXXX , FN     , KC_LALT, TDCMDHY, PL_SPC  ,  PR_SPC , TDNVHYP, KC_RGUI, KC_RALT, HW_KEY , KC_BSPC \
+[_QWERTY_ANSIUS] = LAYOUT_ortho_4x12(
+   KC_TAB , KC_Q   , KC_W   , KC_E   , KC_R   , KC_T    ,  KC_Y   , KC_U   , KC_I   , KC_O   , KC_P   , KC_BSPC,\
+   ESC_CTL, KC_A   , KC_S   , KC_D   , KC_F   , KC_G    ,  KC_H   , KC_J   , KC_K   , KC_L   , KC_SCLN, KC_QUOT,\
+   KC_LSFT, KC_Z   , KC_X   , KC_C   , KC_V   , KC_B    ,  KC_N   , KC_M   , KC_COMM, KC_DOT , KC_SLSH, KC_RSFT,\
+   KC_LCTL, XXXXXX , FN     , KC_LALT, TDCMDHY, PL_SPC  ,  PR_SPC , TDNVHYP, KC_RGUI, KC_RALT, HW_KEY , KC_BSPC \
 ),
 
 /* Paren Left Layer {{{2
@@ -206,11 +205,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   |        |        |        |        |        | PL/SPC | | DB/ENT |        |        |        |        |        |
   `-----------------------------------------------------+ +-----------------------------------------------------'
 */
-[_PLEFT] = KEYMAP( \
-    KC_TILD, KC_1   , KC_2   , KC_3   , KC_4   , KC_5    ,  KC_6   , KC_7   , KC_8   , KC_9   , KC_0   , KC_GRV ,\
-    KC_LCTL, XXXXXX , KC_LABK, KC_LCBR, KC_LPRN, KC_LBRC ,  KC_ASTR, KC_DLR , KC_EQL , KC_AMPR, KC_PERC, XXXXXX ,\
-    ______ , XXXXXX , XXXXXX , KC_UNDS, KC_MINS, KC_COLN ,  KC_SCLN, KC_DQUO, KC_QUOT, KC_PIPE, KC_BSLS, ______ ,\
-    ______ , ______ , ______ , ______ , ______ , ______  ,  KC_ENT , ______ , ______ , ______ , ______ , ______  \
+[_PLEFT] = LAYOUT_ortho_4x12(
+   KC_TILD, KC_1   , KC_2   , KC_3   , KC_4   , KC_5    ,  KC_6   , KC_7   , KC_8   , KC_9   , KC_0   , KC_GRV ,\
+   KC_LCTL, XXXXXX , KC_LABK, KC_LCBR, KC_LPRN, KC_LBRC ,  KC_ASTR, KC_DLR , KC_EQL , KC_AMPR, KC_PERC, XXXXXX ,\
+   ______ , XXXXXX , XXXXXX , KC_UNDS, KC_MINS, KC_COLN ,  KC_SCLN, KC_DQUO, KC_QUOT, KC_PIPE, KC_BSLS, ______ ,\
+   ______ , ______ , ______ , ______ , ______ , ______  ,  KC_ENT , ______ , ______ , ______ , ______ , ______  \
 ),
 
 /* Paren Right Layer {{{2
@@ -224,7 +223,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   |        |        |        |        |        |  BSPC  | | PR/SPC |        |        |        |        |        |
   `-----------------------------------------------------+ +-----------------------------------------------------'
  */
-[_PRIGHT] = KEYMAP( \
+[_PRIGHT] = LAYOUT_ortho_4x12(
     KC_TILD, KC_1   , KC_2   , KC_3   , KC_4   , KC_5    ,  KC_6   , KC_7   , KC_8   , KC_9   , KC_0   , KC_GRV ,\
     KC_LCTL, KC_EXLM, KC_AT  , KC_HASH, KC_CIRC, KC_PLUS ,  KC_RBRC, KC_RPRN, KC_RCBR, KC_RABK, XXXXXX , XXXXXX ,\
     ______ , XXXXXX , XXXXXX , KC_UNDS, KC_MINS, KC_COLN ,  KC_SCLN, KC_DQUO, KC_QUOT, KC_PIPE, KC_BSLS, ______ ,\
@@ -242,11 +241,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   |        |        |        |        |        |        | |        |        |        |        |        |        |
   `-----------------------------------------------------+ +-----------------------------------------------------'
 */
-[_FN] = KEYMAP( \
-    XXXXXX , KC_F1  , KC_F2  , KC_F3  , KC_F4  , KC_F5   ,  KC_F6  , KC_F7  , KC_F8  , KC_F9  , KC_F10 , KC_F11 ,\
-    KC_LCTL, CMDPGUP, XXXXXX , XXXXXX , XXXXXX , XXXXXX  ,  XXXXXX , XXXXXX , XXXXXX , XXXXXX , XXXXXX , KC_F12 ,\
-    ______ , CMDPGDN, XXXXXX , XXXXXX , XXXXXX , XXXXXX  ,  XXXXXX , XXXXXX , XXXXXX , XXXXXX , XXXXXX , ______ ,\
-    ______ , ______ , ______ , ______ , ______ , XXXXXX  ,  XXXXXX , ______ , ______ , ______ , ______ , ______  \
+[_FN] = LAYOUT_ortho_4x12(
+   XXXXXX , KC_F1  , KC_F2  , KC_F3  , KC_F4  , KC_F5   ,  KC_F6  , KC_F7  , KC_F8  , KC_F9  , KC_F10 , KC_F11 ,\
+   KC_LCTL, CMDPGUP, XXXXXX , XXXXXX , XXXXXX , XXXXXX  ,  XXXXXX , XXXXXX , XXXXXX , XXXXXX , XXXXXX , KC_F12 ,\
+   ______ , CMDPGDN, XXXXXX , XXXXXX , XXXXXX , XXXXXX  ,  XXXXXX , XXXXXX , XXXXXX , XXXXXX , XXXXXX , ______ ,\
+   ______ , ______ , ______ , ______ , ______ , XXXXXX  ,  XXXXXX , ______ , ______ , ______ , ______ , ______  \
 ),
 
 /* Navigation layer {{{2
@@ -260,11 +259,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   |        |        |  FN    |        |        |        | |        |        |        |        |        | HW_KEY |
   `-----------------------------------------------------+ +-----------------------------------------------------'
  */
-[_NAV] = KEYMAP( \
-    XXXXXX , XXXXXX , VIMSAVE, CMDLARR, CMDRARR, TERM    ,  XXXXXX , PRV_TAB, KC_UP  , NXT_TAB, KC_PGUP, Z_OUT  ,\
-    KC_LCTL, KC_MUTE, KC_VOLD, KC_VOLU, FILEMAN, GAME1   ,  XXXXXX , KC_LEFT, KC_DOWN, KC_RGHT, KC_PGDN, Z_IN   ,\
-    ______ , KC_MRWD, KC_MPLY, KC_MFFD, XXXXXX , ANSIUS  ,  XXXXXX , CMDLARR, XXXXXX , CMDRARR, XXXXXX , ______ ,\
-    ______ , ______ , ______ , ______ , ______ , XXXXXX  ,  XXXXXX , ______ , ______ , ______ , ______ , HW_KEY \
+[_NAV] = LAYOUT_ortho_4x12(
+   XXXXXX , XXXXXX , VIMSAVE, CMDLARR, CMDRARR, TERM    ,  XXXXXX , PRV_TAB, KC_UP  , NXT_TAB, KC_PGUP, Z_OUT  ,\
+   KC_LCTL, KC_MUTE, KC_VOLD, KC_VOLU, FILEMAN, GAME1   ,  XXXXXX , KC_LEFT, KC_DOWN, KC_RGHT, KC_PGDN, Z_IN   ,\
+   ______ , KC_MRWD, KC_MPLY, KC_MFFD, XXXXXX , ANSIUS  ,  XXXXXX , CMDLARR, XXXXXX , CMDRARR, XXXXXX , ______ ,\
+   ______ , ______ , ______ , ______ , ______ , XXXXXX  ,  XXXXXX , ______ , ______ , ______ , ______ , HW_KEY \
 ),
 
 /* HYPER and HYPER ONE SHOT layers {{{2
@@ -289,17 +288,17 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   |        |        |        |        |        |        | |        |        |        |        |        |        |
   `-----------------------------------------------------+ +-----------------------------------------------------'
 */
-/*[_HYPEROS] = KEYMAP( \
-    ______ , ______ , ______ , ______ , ______ , ______  ,  ______ , ______ , ______ , ______ , ______ , HYPEROS,\
-    KC_ESC , ______ , ______ , ______ , ______ , ______  ,  ______ , ______ , ______ , ______ , HYPEROS, HYPEROS,\
-    HYPEROS, ______ , ______ , ______ , ______ , ______  ,  ______ , ______ , ______ , ______ , ______ , HYPEROS,\
-    HYPEROS, ______ , ______ , ______ , ______ , ______  ,  ______ , ______ , ______ , ______ , ______ , HYPEROS \
+/*[_HYPEROS] = LAYOUT_ortho_4x12(
+   ______ , ______ , ______ , ______ , ______ , ______  ,  ______ , ______ , ______ , ______ , ______ , HYPEROS,\
+   KC_ESC , ______ , ______ , ______ , ______ , ______  ,  ______ , ______ , ______ , ______ , HYPEROS, HYPEROS,\
+   HYPEROS, ______ , ______ , ______ , ______ , ______  ,  ______ , ______ , ______ , ______ , ______ , HYPEROS,\
+   HYPEROS, ______ , ______ , ______ , ______ , ______  ,  ______ , ______ , ______ , ______ , ______ , HYPEROS \
 ),*/
-[_HYPER] = KEYMAP( \
-    ______ , ______ , ______ , ______ , ______ , ______  ,  ______ , ______ , ______ , ______ , ______ , ______ ,\
-    KC_ESC , ______ , ______ , ______ , ______ , ______  ,  ______ , ______ , ______ , ______ , ______ , ______ ,\
-    ______ , ______ , ______ , ______ , ______ , ______  ,  ______ , ______ , ______ , ______ , ______ , ______ ,\
-    ______ , ______ , ______ , ______ , ______ , ______  ,  ______ , ______ , ______ , ______ , ______ , ______  \
+[_HYPER] = LAYOUT_ortho_4x12(
+   ______ , ______ , ______ , ______ , ______ , ______  ,  ______ , ______ , ______ , ______ , ______ , ______ ,\
+   KC_ESC , ______ , ______ , ______ , ______ , ______  ,  ______ , ______ , ______ , ______ , ______ , ______ ,\
+   ______ , ______ , ______ , ______ , ______ , ______  ,  ______ , ______ , ______ , ______ , ______ , ______ ,\
+   ______ , ______ , ______ , ______ , ______ , ______  ,  ______ , ______ , ______ , ______ , ______ , ______  \
 ),
 
 /* Game layer (left side) {{{2
@@ -313,11 +312,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   | SPACE  |NUM1MOD |        |        |        |        | |        |        |        |  LEFT  | RIGHT  |  DOWN  |
   `-----------------------------------------------------+ +-----------------------------------------------------'
 */
-[_GAME1] = KEYMAP( \
-    ______ , ______ , ______ , ______ , ______ , ______  ,  ______ , ______ , ______ , ______ , ______ , KC_BSPC,\
-    KC_LCTL, ______ , ______ , ______ , ______ , ______  ,  ______ , ______ , ______ , ______ , ______ , KC_ENT ,\
-    ______ , ______ , ______ , ______ , ______ , ______  ,  ______ , ______ , ______ , ______ , ______ , KC_UP  ,\
-    KC_SPC , NUM1MOD, ______ , ______ , ______ , ______  ,  ______ , ______ , ______ , KC_LEFT, KC_RGHT, KC_DOWN \
+[_GAME1] = LAYOUT_ortho_4x12(
+   ______ , ______ , ______ , ______ , ______ , ______  ,  ______ , ______ , ______ , ______ , ______ , KC_BSPC,\
+   KC_LCTL, ______ , ______ , ______ , ______ , ______  ,  ______ , ______ , ______ , ______ , ______ , KC_ENT ,\
+   ______ , ______ , ______ , ______ , ______ , ______  ,  ______ , ______ , ______ , ______ , ______ , KC_UP  ,\
+   KC_SPC , NUM1MOD, ______ , ______ , ______ , ______  ,  ______ , ______ , ______ , KC_LEFT, KC_RGHT, KC_DOWN \
 ),
 
 /* Game layer (left/right [wasd]/[ijkl] swapped) {{{2
@@ -332,11 +331,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   `-----------------------------------------------------+ +-----------------------------------------------------'
 */
 /*
-[_GAME2] = KEYMAP( \
-    ______ , ______ , KC_I   , ______ , ______ , ______  ,  ______ , ______ , KC_W   , ______ , ______ , KC_BSPC,\
-    KC_H   , KC_J   , KC_K   , KC_L   , ______ , ______  ,  KC_LCTL, KC_A   , KC_S   , KC_D   , ______ , KC_ENT ,\
-    KC_N   , ______ , ______ , ______ , ______ , ______  ,  KC_LSFT, ______ , ______ , ______ , ______ , KC_UP  ,\
-    PR_SPC , TDNVHYP, ______ , ______ , ______ , ______  ,  KC_SPC , NUM2MOD, ______ , KC_LEFT, KC_RGHT, KC_DOWN \
+[_GAME2] = LAYOUT_ortho_4x12(
+   ______ , ______ , KC_I   , ______ , ______ , ______  ,  ______ , ______ , KC_W   , ______ , ______ , KC_BSPC,\
+   KC_H   , KC_J   , KC_K   , KC_L   , ______ , ______  ,  KC_LCTL, KC_A   , KC_S   , KC_D   , ______ , KC_ENT ,\
+   KC_N   , ______ , ______ , ______ , ______ , ______  ,  KC_LSFT, ______ , ______ , ______ , ______ , KC_UP  ,\
+   PR_SPC , TDNVHYP, ______ , ______ , ______ , ______  ,  KC_SPC , NUM2MOD, ______ , KC_LEFT, KC_RGHT, KC_DOWN \
 ),
 */
 
@@ -351,11 +350,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   |        |        |   0    |        |        |        | |        |        |        |        |        |        |
   `-----------------------------------------------------+ +-----------------------------------------------------'
 */
-[_NUM1] = KEYMAP( \
-    KC_0   , KC_1   , KC_2   , KC_3   , KC_4   , KC_5    ,  KC_6   , KC_7   , KC_8   , KC_9   , KC_0   , XXXXXX ,\
-    KC_ESC , KC_4   , KC_5   , KC_6   , XXXXXX , XXXXXX  ,  XXXXXX , XXXXXX , XXXXXX , XXXXXX , XXXXXX , XXXXXX ,\
-    ______ , KC_7   , KC_8   , KC_9   , KC_0   , XXXXXX  ,  XXXXXX , XXXXXX , XXXXXX , XXXXXX , XXXXXX , XXXXXX ,\
-    ______ , NUM1MOD, KC_0   , ______ , ______ , ______  ,  ______ , ______ , ______ , ______ , ______ , ______  \
+[_NUM1] = LAYOUT_ortho_4x12(
+   KC_0   , KC_1   , KC_2   , KC_3   , KC_4   , KC_5    ,  KC_6   , KC_7   , KC_8   , KC_9   , KC_0   , XXXXXX ,\
+   KC_ESC , KC_4   , KC_5   , KC_6   , XXXXXX , XXXXXX  ,  XXXXXX , XXXXXX , XXXXXX , XXXXXX , XXXXXX , XXXXXX ,\
+   ______ , KC_7   , KC_8   , KC_9   , KC_0   , XXXXXX  ,  XXXXXX , XXXXXX , XXXXXX , XXXXXX , XXXXXX , XXXXXX ,\
+   ______ , NUM1MOD, KC_0   , ______ , ______ , ______  ,  ______ , ______ , ______ , ______ , ______ , ______  \
 ),
 
 /* Numeric Layer 2 {{{2
@@ -370,11 +369,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   `-----------------------------------------------------+ +-----------------------------------------------------'
 */
 /*
-[_NUM2] = KEYMAP( \
-    KC_0   , KC_1   , KC_2   , KC_3   , KC_4   , KC_5    ,  KC_0   , KC_1   , KC_2   , KC_3   , KC_4   , KC_5   ,\
-    KC_ESC , KC_4   , KC_5   , KC_6   , XXXXXX , XXXXXX  ,  KC_ESC , KC_4   , KC_5   , KC_6   , XXXXXX , XXXXXX ,\
-    XXXXXX , KC_7   , KC_8   , KC_9   , XXXXXX , XXXXXX  ,  XXXXXX , KC_7   , KC_8   , KC_9   , XXXXXX , XXXXXX ,\
-    ______ , ______ , ______ , ______ , ______ , ______  ,  ______ , NUM2MOD, ______ , ______ , ______ , ______  \
+[_NUM2] = LAYOUT_ortho_4x12(
+   KC_0   , KC_1   , KC_2   , KC_3   , KC_4   , KC_5    ,  KC_0   , KC_1   , KC_2   , KC_3   , KC_4   , KC_5   ,\
+   KC_ESC , KC_4   , KC_5   , KC_6   , XXXXXX , XXXXXX  ,  KC_ESC , KC_4   , KC_5   , KC_6   , XXXXXX , XXXXXX ,\
+   XXXXXX , KC_7   , KC_8   , KC_9   , XXXXXX , XXXXXX  ,  XXXXXX , KC_7   , KC_8   , KC_9   , XXXXXX , XXXXXX ,\
+   ______ , ______ , ______ , ______ , ______ , ______  ,  ______ , NUM2MOD, ______ , ______ , ______ , ______  \
 ),
 */
 
@@ -389,11 +388,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   |        |        | FN     |        |        |        | |        | NAV    |        |        | HW_KEY | HW_KEY |
   `-----------------------------------------------------+ +-----------------------------------------------------'
  */
-[_ADJUST] = KEYMAP( \
-    XXXXXX , RESET  , XXXXXX , XXXXXX , XXXXXX , XXXXXX  ,  XXXXXX , XXXXXX , XXXXXX , XXXXXX , XXXXXX , XXXXXX ,\
-    XXXXXX , XXXXXX , XXXXXX , XXXXXX , XXXXXX , XXXXXX  ,  XXXXXX , XXXXXX , XXXXXX , XXXXXX , XXXXXX , XXXXXX ,\
-    XXXXXX , XXXXXX , XXXXXX , XXXXXX , XXXXXX , XXXXXX  ,  XXXXXX , XXXXXX , XXXXXX , XXXXXX , XXXXXX , XXXXXX ,\
-    XXXXXX , XXXXXX , FN     , XXXXXX , XXXXXX , XXXXXX  ,  XXXXXX , NAV    , XXXXXX , XXXXXX , HW_KEY , HW_KEY  \
+[_ADJUST] = LAYOUT_ortho_4x12(
+   XXXXXX , RESET  , XXXXXX , XXXXXX , XXXXXX , XXXXXX  ,  XXXXXX , XXXXXX , XXXXXX , XXXXXX , XXXXXX , XXXXXX ,\
+   XXXXXX , XXXXXX , XXXXXX , XXXXXX , XXXXXX , XXXXXX  ,  XXXXXX , XXXXXX , XXXXXX , XXXXXX , XXXXXX , XXXXXX ,\
+   XXXXXX , XXXXXX , XXXXXX , XXXXXX , XXXXXX , XXXXXX  ,  XXXXXX , XXXXXX , XXXXXX , XXXXXX , XXXXXX , XXXXXX ,\
+   XXXXXX , XXXXXX , FN     , XXXXXX , XXXXXX , XXXXXX  ,  XXXXXX , NAV    , XXXXXX , XXXXXX , HW_KEY , HW_KEY  \
 ),
 
 /* Planck Layer (FN + NAV) {{{2
@@ -407,11 +406,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   |        |        | FN     |        |        |        |        | NAV    |        |        | HW_KEY | HW_KEY |
   `-----------------------------------------------------------------------------------------------------------'
  */
-[_PLANCK] = KEYMAP( \
+[_PLANCK] = LAYOUT_ortho_4x12(
   XXXXXX , RESET  , XXXXXX , XXXXXX , XXXXXX , XXXXXX , XXXXXX , XXXXXX , XXXXXX , XXXXXX , XXXXXX , XXXXXX ,\
   XXXXXX , AU_ON  , MU_ON  , MUV_IN , MU_MOD , XXXXXX , XXXXXX , XXXXXX , XXXXXX , XXXXXX , XXXXXX , XXXXXX ,\
   ______ , AU_OFF , MU_OFF , MUV_DE , XXXXXX , XXXXXX , XXXXXX , XXXXXX , XXXXXX , XXXXXX , XXXXXX , ______ ,\
-  ______ , ______ , FN     , ______ , XXXXXX , ______ , ______ , NAV    , ______ , ______ , HW_KEY  , HW_KEY   \
+  ______ , ______ , FN     , ______ , XXXXXX , ______ , ______ , NAV    , ______ , ______ , HW_KEY , HW_KEY  \
 ),
 
 };
@@ -1051,14 +1050,14 @@ qk_tap_dance_action_t tap_dance_actions[] = {
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
   // switch for both keypressed and keyrelease {{{2
   switch (keycode) {
-    case NONE:    // Don't do anything {{{2
+    case NONE:    // Don't do anything {{{3
       if (record->event.pressed) {
         // Do nothing.
         // KC_NO seems to reset layers
       }
       return false;
       break;
-    case ANSIUS:    // Toggle QWERTY_ANSIUS layer {{{2
+    case ANSIUS:    // Toggle QWERTY_ANSIUS layer {{{3
       if (record->event.pressed) {
         if (IS_LAYER_ON(_QWERTY_ANSIUS)) {
           layer_off(_QWERTY_ANSIUS);
@@ -1068,7 +1067,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       }
       return false;
       break;
-    case FN:      // _FN layer + tri layer {{{2
+    case FN:      // _FN layer + tri layer {{{3
       if (record->event.pressed) {
         layer_on(_FN);
 	// _PLANCK on Planck, _ADJUST on lets split
@@ -1082,7 +1081,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       }
       return false;
       break;
-    case NAV:     // _NAV layer + tri layer {{{2
+    case NAV:     // _NAV layer + tri layer {{{3
       if (record->event.pressed) {
         layer_on(_NAV);
 	// _PLANCK on Planck, _ADJUST on lets split
@@ -1096,7 +1095,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       }
       return false;
       break;
-    case GAME1:    // Toggle _GAME1 layer {{{2
+    case GAME1:    // Toggle _GAME1 layer {{{3
       if (record->event.pressed) {
         if (IS_LAYER_ON(_GAME1)) {
           layer_off(_GAME1);
@@ -1114,7 +1113,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       }
       return false;
       break;
-    case NAVLOCK:  // Toggle _NAV layer {{2
+    case NAVLOCK:  // Toggle _NAV layer {{{3
       if (record->event.pressed) {
         if (IS_LAYER_ON(_NAV)) {
           layer_off(_NAV);
@@ -1132,7 +1131,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       }
       return false;
       break;
-    case HYPEROS: // Prime _HYPER one shot {{{2
+    case HYPEROS: // Prime _HYPER one shot {{{3
       if (record->event.pressed) {
         if (IS_LAYER_ON(_HYPER)) {
           layer_off(_HYPER);
@@ -1155,10 +1154,10 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
   if (record->event.pressed) {
     switch (keycode) {
       // Macros
-      case VIMSAVE: // <esc>:w<cr>
+      case VIMSAVE: // <esc>:w<cr>  {{{3
         SEND_STRING(SS_TAP(X_ESCAPE)":w"SS_TAP(X_ENTER)"");
         return false;
-      default:     // Hyper One-shot Layer: add modifiers and go back to default layer (One-shot) 
+      default:     // Hyper One-shot Layer: add modifiers and go back to default layer (One-shot)  {{{3
         if (IS_LAYER_ON(_HYPER)) {
           // turn off hyper layer
           layer_off(_HYPER);
@@ -1182,8 +1181,9 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
           // done processing
           return false;
         }
-    } // end pressed switch
-  } // end pressed
+      // }}}3
+    } // end switch(keycode)
+  } // end event.pressed
   return true;
 }
 // }}}1
