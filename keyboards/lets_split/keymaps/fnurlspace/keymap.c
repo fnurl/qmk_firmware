@@ -26,13 +26,14 @@ enum fnurlspace_layers {
   _FN,
   _NAV,
   _GAME1,
-  _GAME2,
   _NUM1,
-  _NUM2,
   _PLANCK,
   _ADJUST,
   _HYPER
 };
+// left out layers
+//  _GAME2,
+//  _NUM2,
 
 // Hardware specific layers {{{2
 // Used as replacement for keyboard specific layer. Use
@@ -56,10 +57,12 @@ enum custom_keycodes {
   NAVLOCK,
   HYPEROS,
   GAME1,
-  GAME2,
   VIMSAVE,
   NONE
 };
+// left out keycodes
+// GAME2,
+
 
 // Tap Dance aliases and IDs {{{2
 enum tap_dances {
@@ -259,7 +262,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  */
 [_NAV] = KEYMAP( \
     XXXXXX , XXXXXX , VIMSAVE, CMDLARR, CMDRARR, TERM    ,  XXXXXX , PRV_TAB, KC_UP  , NXT_TAB, KC_PGUP, Z_OUT  ,\
-    KC_LCTL, KC_MUTE, KC_VOLD, KC_VOLU, FILEMAN, GAME1   ,  GAME2  , KC_LEFT, KC_DOWN, KC_RGHT, KC_PGDN, Z_IN   ,\
+    KC_LCTL, KC_MUTE, KC_VOLD, KC_VOLU, FILEMAN, GAME1   ,  XXXXXX , KC_LEFT, KC_DOWN, KC_RGHT, KC_PGDN, Z_IN   ,\
     ______ , KC_MRWD, KC_MPLY, KC_MFFD, XXXXXX , ANSIUS  ,  XXXXXX , CMDLARR, XXXXXX , CMDRARR, XXXXXX , ______ ,\
     ______ , ______ , ______ , ______ , ______ , XXXXXX  ,  XXXXXX , ______ , ______ , ______ , ______ , HW_KEY \
 ),
@@ -328,12 +331,14 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   | PR/SPC |TD:NAVHY|        |        |        |        | |  SPC   | NUM2MOD|        |        |        |        |
   `-----------------------------------------------------+ +-----------------------------------------------------'
 */
+/*
 [_GAME2] = KEYMAP( \
     ______ , ______ , KC_I   , ______ , ______ , ______  ,  ______ , ______ , KC_W   , ______ , ______ , KC_BSPC,\
     KC_H   , KC_J   , KC_K   , KC_L   , ______ , ______  ,  KC_LCTL, KC_A   , KC_S   , KC_D   , ______ , KC_ENT ,\
     KC_N   , ______ , ______ , ______ , ______ , ______  ,  KC_LSFT, ______ , ______ , ______ , ______ , KC_UP  ,\
     PR_SPC , TDNVHYP, ______ , ______ , ______ , ______  ,  KC_SPC , NUM2MOD, ______ , KC_LEFT, KC_RGHT, KC_DOWN \
 ),
+*/
 
 /* Numeric Layer 1 {{{2
   ,-----------------------------------------------------+ +-----------------------------------------------------.
@@ -364,12 +369,14 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   |        |        |        |        |        |        | |        |        |        |        |        |        |
   `-----------------------------------------------------+ +-----------------------------------------------------'
 */
+/*
 [_NUM2] = KEYMAP( \
     KC_0   , KC_1   , KC_2   , KC_3   , KC_4   , KC_5    ,  KC_0   , KC_1   , KC_2   , KC_3   , KC_4   , KC_5   ,\
     KC_ESC , KC_4   , KC_5   , KC_6   , XXXXXX , XXXXXX  ,  KC_ESC , KC_4   , KC_5   , KC_6   , XXXXXX , XXXXXX ,\
     XXXXXX , KC_7   , KC_8   , KC_9   , XXXXXX , XXXXXX  ,  XXXXXX , KC_7   , KC_8   , KC_9   , XXXXXX , XXXXXX ,\
     ______ , ______ , ______ , ______ , ______ , ______  ,  ______ , NUM2MOD, ______ , ______ , ______ , ______  \
 ),
+*/
 
 /* Adjust Layer (FN + NAV) {{{2
   ,-----------------------------------------------------+ +-----------------------------------------------------.
@@ -416,8 +423,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 #define NAV_OFF_SONG     M__NOTE(_D4, 2),
 #define HYPER_ON_SONG    M__NOTE(_G5, 2),
 #define HYPER_OFF_SONG   M__NOTE(_G4, 2),
-#define HYPEROS_ON_SONG  M__NOTE(_G5, 2), M__NOTE(_G5, 2),
-#define HYPEROS_OFF_SONG M__NOTE(_G4, 2), M__NOTE(_G4, 2),
+// #define HYPEROS_ON_SONG  M__NOTE(_G5, 2), M__NOTE(_G5, 2),
+// #define HYPEROS_OFF_SONG M__NOTE(_G4, 2), M__NOTE(_G4, 2),
 #define GAME1_ON_SONG    M__NOTE(_A5, 2),
 #define GAME1_OFF_SONG   M__NOTE(_A4, 2),
 #define CAPS_SONG        M__NOTE(_E5, 2),
@@ -434,8 +441,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   float nav_off_song[][2]     = SONG(NAV_OFF_SONG);
   float hyper_on_song[][2]    = SONG(HYPER_ON_SONG);
   float hyper_off_song[][2]   = SONG(HYPER_OFF_SONG);
-  float hyperos_on_song[][2]  = SONG(HYPEROS_ON_SONG);
-  float hyperos_off_song[][2] = SONG(HYPEROS_OFF_SONG);
+  // float hyperos_on_song[][2]  = SONG(HYPEROS_ON_SONG);
+  // float hyperos_off_song[][2] = SONG(HYPEROS_OFF_SONG);
   float game_on_song[][2]     = SONG(GAME1_ON_SONG);
   float game_off_song[][2]    = SONG(GAME1_OFF_SONG);
   float caps_song[][2]        = SONG(CAPS_SONG);
@@ -565,7 +572,7 @@ void hyper_and_hyperos_dance_finished(qk_tap_dance_state_t *state, void *user_da
 
         #ifdef AUDIO_ENABLE
         stop_all_notes();
-        PLAY_SONG(hyperos_off_song);
+        PLAY_SONG(hyper_off_song);
         #endif
       }
       // toggle ON _HYPER layer and "arm" hyper
@@ -578,7 +585,7 @@ void hyper_and_hyperos_dance_finished(qk_tap_dance_state_t *state, void *user_da
 
         #ifdef AUDIO_ENABLE
         stop_all_notes();
-        PLAY_SONG(hyperos_on_song);
+        PLAY_SONG(hyper_on_song);
         #endif
       }
       break;
@@ -1131,13 +1138,13 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
           layer_off(_HYPER);
           #ifdef AUDIO_ENABLE
             stop_all_notes();
-            PLAY_SONG(hyperos_off_song);
+            PLAY_SONG(hyper_off_song);
           #endif
         } else {
           layer_on(_HYPER);
           #ifdef AUDIO_ENABLE
             stop_all_notes();
-            PLAY_SONG(hyperos_on_song);
+            PLAY_SONG(hyper_on_song);
           #endif
         }
       }
