@@ -1,7 +1,7 @@
 /* 
  * fnurlspace layout for 40% ortholinear keyboards
  * Jody Foo 2017, 2018
- * last modified: 2018-06-12
+ * last modified: 2018-07-22
  */
 
 /* Features:
@@ -19,27 +19,44 @@ extern keymap_config_t keymap_config;
 
 // Enumerate layers {{{2
 enum fnurlspace_layers {
-  _QWERTY,
+  _QWERTY_ANSISE,
+  _QWERTY_ANSIUS,
   _PLEFT,
   _PRIGHT,
   _FN,
   _NAV,
-  _GAME,
-  _NUM,
+  _GAME1,
+  _GAME2,
+  _NUM1,
+  _NUM2,
   _PLANCK,
   _ADJUST,
   _HYPER
 };
 
+// Hardware specific layers {{{2
+// Used as replacement for keyboard specific layer. Use
+//
+// #define _HWDLAYER  _ADJUST
+//
+// for the Lets Split and use
+//
+// #define _HWDLAYER  _PLANCK
+//
+// for the Planck.
+#define _HWDLAYER  _ADJUST
+
 // Custom keycodes, used in process_record_user() {{{2
 // QWERTY = SAFE_RANGE adds all the standard keys first to the enumeration.
 enum custom_keycodes {
   QWERTY = SAFE_RANGE,
+  ANSIUS,
   FN,
   NAV,
   NAVLOCK,
   HYPEROS,
-  GAME,
+  GAME1,
+  GAME2,
   VIMSAVE,
   NONE
 };
@@ -67,21 +84,27 @@ enum tap_dances {
 
 // Tap dance aliases (use in layout) {{{3
 #define TDGUILB TD(TD_GUI_LAUNCHBAR)
+
 #define TDTABAP TD(TD_TAB_CYCLE_APPS)
 #define TDAAAPP TD(TD_AA_CYCLE_APPS)
 #define TDAEWIN TD(TD_AE_CYCLE_WIN)
+
 #define TDRCAPS TD(TD_RCAPSLOCK)
 #define TDLCAPS TD(TD_LCAPSLOCK)
-#define TDNAVLK TD(TD_NAVLOCK)
-#define TDHYPOS TD(TD_HYPER_ONESHOT)
-#define TDHYPNV TD(TD_NAVHYPER)
-#define TDNVCMD TD(TD_NAVCMD)
-#define TDHYPME TD(TD_HYPMEH)
+
 #define TDHYPER TD(TD_HYPER)
+#define TDHYPOS TD(TD_HYPER_ONESHOT)
+#define TDHYPME TD(TD_HYPMEH)
+
+#define TDNVCMD TD(TD_NAVCMD)
+#define TDNVCMH TD(TD_NVCMHP)
+#define TDNVHYP TD(TD_NAVHYPER)
+#define TDNVHCM TD(TD_NVHPCM)
+#define TDNAVLK TD(TD_NAVLOCK)
+
 #define TDCMDHY TD(TD_CMDHYP)
 #define TDCMDNV TD(TD_CMDNAV)
-#define TDNVCMH TD(TD_NVCMHP)
-#define TDNVHCM TD(TD_NVHPCM)
+
 #define TDRSFLB TD(TD_RSFTLB)
 
 // Aliases to use in keymaps {{{2
@@ -90,10 +113,12 @@ enum tap_dances {
 #define ______   KC_TRNS
 
 // Layer modifiers {{{3
-#define NUM_MOD MO(_NUM)
+#define HW_KEY  MO(_HWDLAYER)
+#define NUM1MOD MO(_NUM1)
+#define NUM2MOD MO(_NUM2)
 
 // One-shot layers {{{3
-#define OSHYPER OSL(_HYPER)
+//#define OSHYPER OSL(_HYPER) // (not needed?)
 
 // Dual-role layer keys: LT = layer when held, keycode when tapped {{{3
 #define PL_SPC   LT(_PLEFT,  KC_SPC)
@@ -119,22 +144,19 @@ enum tap_dances {
 #define PRV_TAB LGUI(LALT(KC_LEFT))
 #define NXT_TAB LGUI(LALT(KC_RGHT))
 #define CMDLARR LGUI(KC_LEFT)
-#define CMDRARR LGUI(KC_RIGHT)
+#define CMDRARR LGUI(KC_RGHT)
 #define OCC     LGUI(LCTL(KC_LALT))
 #define TERM    LGUI(KC_ESC)
 #define FILEMAN LALT(KC_ESC)
 #define CMDPGDN LGUI(KC_PGDN)
 #define CMDPGUP LGUI(KC_PGUP)
 
-// Momentary layer keys {{{3
-#define ADJUST MO(_ADJUST)
-
 // }}}1
 
 // Keymap Layers {{{1
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
-/* Base layer: US-ANSI with ÅÄÖ (KC_P7--KC_P9) {{{2
+/* Base layer: ANSI-SE (special US-ANSI with [Å, Ä, Ö] remapped in OS to [KC_P7, KC_P8, KC_P9] {{{2
   ,-----------------------------------------------------+ +-----------------------------------------------------.
   |  Tab   |   Q    |   W    |   E    |   R    |   T    | |   Y    |   U    |   I    |   O    |   P    |   Å    |
   |--------+--------+--------+--------+--------+--------| |--------+--------+--------+--------+--------+--------|
@@ -142,17 +164,118 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   |--------+--------+--------+--------+--------+--------| |--------+--------+--------+--------+--------+--------|
   | Shift  |   Z    |   X    |   C    |   V    |   B    | |   N    |   M    |   ,    |   .    |   /    | Shift  |
   |--------+--------+--------+--------+--------+--------| |--------+--------+--------+--------+--------+--------|
-  |  CTRL  | BCKSPC |  FN    |  LALT  |TD:CMDNV| PL/SPC | | PR/SPC |TD:NHYCM|  CMD   |  ALT   |        | ADJUST |
+  |  CTRL  |        |  FN    |  LALT  |TD:CMDHY| PL/SPC | | PR/SPC |TD:NVHYP|  CMD   |  ALT   | ENTER  | BCKSPC |
   `-----------------------------------------------------+ +-----------------------------------------------------'
 */
-[_QWERTY] = KEYMAP( \
+[_QWERTY_ANSISE] = KEYMAP( \
     KC_TAB , KC_Q   , KC_W   , KC_E   , KC_R   , KC_T    ,  KC_Y   , KC_U   , KC_I   , KC_O   , KC_P   , KC_P7  ,\
     ESC_CTL, KC_A   , KC_S   , KC_D   , KC_F   , KC_G    ,  KC_H   , KC_J   , KC_K   , KC_L   , KC_P9  , KC_P8  ,\
     KC_LSFT, KC_Z   , KC_X   , KC_C   , KC_V   , KC_B    ,  KC_N   , KC_M   , KC_COMM, KC_DOT , KC_SLSH, KC_RSFT,\
-    KC_LCTL, KC_BSPC, FN     , KC_LALT, TDCMDNV, PL_SPC  ,  PR_SPC , TDNVHCM, KC_RGUI, KC_RALT, XXXXXX , ADJUST  \
+    KC_LCTL, XXXXXX , FN     , KC_LALT, TDCMDHY, PL_SPC  ,  PR_SPC , TDNVHYP, KC_RGUI, KC_RALT, HW_KEY , KC_BSPC \
 ),
 
-/* HYPER layer {{{2
+/* Base layer: US-ANSI (STANDARD) {{{2
+  ,-----------------------------------------------------+ +-----------------------------------------------------.
+  |  Tab   |   Q    |   W    |   E    |   R    |   T    | |   Y    |   U    |   I    |   O    |   P    | BCKSPC |
+  |--------+--------+--------+--------+--------+--------| |--------+--------+--------+--------+--------+--------|
+  |CTRL/ESC|   A    |   S    |   D    |   F    |   G    | |   H    |   J    |   K    |   L    |   ;    |   '    |
+  |--------+--------+--------+--------+--------+--------| |--------+--------+--------+--------+--------+--------|
+  | Shift  |   Z    |   X    |   C    |   V    |   B    | |   N    |   M    |   ,    |   .    |   /    | Shift  |
+  |--------+--------+--------+--------+--------+--------| |--------+--------+--------+--------+--------+--------|
+  |  CTRL  |        |  FN    |  LALT  |TD:CMDHY| PL/SPC | | PR/SPC |TD:NVHYP|  CMD   |  ALT   | ENTER  | BCKSPC |
+  `-----------------------------------------------------+ +-----------------------------------------------------'
+*/
+[_QWERTY_ANSIUS] = KEYMAP( \
+    KC_TAB , KC_Q   , KC_W   , KC_E   , KC_R   , KC_T    ,  KC_Y   , KC_U   , KC_I   , KC_O   , KC_P   , KC_BSPC,\
+    ESC_CTL, KC_A   , KC_S   , KC_D   , KC_F   , KC_G    ,  KC_H   , KC_J   , KC_K   , KC_L   , KC_SCLN, KC_QUOT,\
+    KC_LSFT, KC_Z   , KC_X   , KC_C   , KC_V   , KC_B    ,  KC_N   , KC_M   , KC_COMM, KC_DOT , KC_SLSH, KC_RSFT,\
+    KC_LCTL, XXXXXX , FN     , KC_LALT, TDCMDHY, PL_SPC  ,  PR_SPC , TDNVHYP, KC_RGUI, KC_RALT, HW_KEY , KC_BSPC \
+),
+
+/* Paren Left Layer {{{2
+  ,-----------------------------------------------------+ +-----------------------------------------------------.
+  |   ~    |    1   |   2    |   3    |   4    |   5    | |   6    |   7    |   8    |   9    |   0    |   `    |
+  |--------+--------+--------+--------+--------+--------+ +--------+--------+--------+--------+--------+--------|
+  |  CTRL  |        |   <    |   {    |   (    |   [    | |   *    |   $    |   =    |   &    |   %    |        |
+  |--------+--------+--------+--------+--------+--------+ +--------+--------+--------+--------+--------+--------|
+  |        |        |        |   _    |   -    |   :    | |   ;    |   "    |   '    |   |    |   \    |        |
+  |--------+--------+--------+--------+--------+--------+ +--------+--------+--------+--------+--------+--------|
+  |        |        |        |        |        | PL/SPC | | DB/ENT |        |        |        |        |        |
+  `-----------------------------------------------------+ +-----------------------------------------------------'
+*/
+[_PLEFT] = KEYMAP( \
+    KC_TILD, KC_1   , KC_2   , KC_3   , KC_4   , KC_5    ,  KC_6   , KC_7   , KC_8   , KC_9   , KC_0   , KC_GRV ,\
+    KC_LCTL, XXXXXX , KC_LABK, KC_LCBR, KC_LPRN, KC_LBRC ,  KC_ASTR, KC_DLR , KC_EQL , KC_AMPR, KC_PERC, XXXXXX ,\
+    ______ , XXXXXX , XXXXXX , KC_UNDS, KC_MINS, KC_COLN ,  KC_SCLN, KC_DQUO, KC_QUOT, KC_PIPE, KC_BSLS, ______ ,\
+    ______ , ______ , ______ , ______ , ______ , ______  ,  KC_ENT , ______ , ______ , ______ , ______ , ______  \
+),
+
+/* Paren Right Layer {{{2
+  ,-----------------------------------------------------+ +-----------------------------------------------------.
+  |   ~    |   1    |   2    |   3    |   4    |   5    | |   6    |   7    |   8    |   9    |   0    |   `    |
+  |--------+--------+--------+--------+--------+--------+ +--------+--------+--------+--------+--------+--------|
+  |  CTRL  |   !    |   @    |   #    |   ^    |   +    | |   ]    |   )    |   }    |   >    |        |        |
+  |--------+--------+--------+--------+--------+--------+ +--------+--------+--------+--------+--------+--------|
+  |        |        |        |   _    |   -    |   :    | |   ;    |   "    |   '    |   |    |   \    |        |
+  |--------+--------+--------+--------+--------+--------+ +--------+--------+--------+--------+--------+--------|
+  |        |        |        |        |        |  BSPC  | | PR/SPC |        |        |        |        |        |
+  `-----------------------------------------------------+ +-----------------------------------------------------'
+ */
+[_PRIGHT] = KEYMAP( \
+    KC_TILD, KC_1   , KC_2   , KC_3   , KC_4   , KC_5    ,  KC_6   , KC_7   , KC_8   , KC_9   , KC_0   , KC_GRV ,\
+    KC_LCTL, KC_EXLM, KC_AT  , KC_HASH, KC_CIRC, KC_PLUS ,  KC_RBRC, KC_RPRN, KC_RCBR, KC_RABK, XXXXXX , XXXXXX ,\
+    ______ , XXXXXX , XXXXXX , KC_UNDS, KC_MINS, KC_COLN ,  KC_SCLN, KC_DQUO, KC_QUOT, KC_PIPE, KC_BSLS, ______ ,\
+    ______ , ______ , ______ , ______ , ______ , KC_BSPC ,  ______ , ______ , ______ , ______ , ______ , ______  \
+),
+
+/* FN Layer {{{2
+  ,-----------------------------------------------------+ +-----------------------------------------------------.
+  |        |   F1   |   F2   |   F3   |   F4   |   F5   | |   F6   |   F7   |   F8   |   F9   |  F10   |  F11   |
+  |--------+--------+--------+--------+--------+--------+ +--------+--------+--------+--------+--------+--------|
+  |        |CMDPGUP |        |        |        |        | |        |        |        |        |        |  F12   |
+  |--------+--------+--------+--------+--------+--------+ +--------+--------+--------+--------+--------+--------|
+  |        |CMDPGDN |        |        |        |        | |        |        |        |        |        |        |
+  |--------+--------+--------+--------+--------+--------+ +--------+--------+--------+--------+--------+--------|
+  |        |        |        |        |        |        | |        |        |        |        |        |        |
+  `-----------------------------------------------------+ +-----------------------------------------------------'
+*/
+[_FN] = KEYMAP( \
+    XXXXXX , KC_F1  , KC_F2  , KC_F3  , KC_F4  , KC_F5   ,  KC_F6  , KC_F7  , KC_F8  , KC_F9  , KC_F10 , KC_F11 ,\
+    KC_LCTL, CMDPGUP, XXXXXX , XXXXXX , XXXXXX , XXXXXX  ,  XXXXXX , XXXXXX , XXXXXX , XXXXXX , XXXXXX , KC_F12 ,\
+    ______ , CMDPGDN, XXXXXX , XXXXXX , XXXXXX , XXXXXX  ,  XXXXXX , XXXXXX , XXXXXX , XXXXXX , XXXXXX , ______ ,\
+    ______ , ______ , ______ , ______ , ______ , XXXXXX  ,  XXXXXX , ______ , ______ , ______ , ______ , ______  \
+),
+
+/* Navigation layer {{{2
+  ,-----------------------------------------------------+ +-----------------------------------------------------.
+  |        | VIMSAVE|        | CMDLARR| CMDRARR| TERM   | |        |PREV TAB|   UP   |NEXT TAB|  PgUp  |zOU<C-->|
+  |--------+--------+--------+--------+--------+--------+ +--------+--------+--------+--------+--------+--------|
+  |        |  MUTE  |  V DN  |  V UP  | FILEMAN| GAME1  | | GAME2  |  LEFT  |  DOWN  | RIGHT  |  PgDn  |zIN<C-+>|
+  |--------+--------+--------+--------+--------+--------+ +--------+--------+--------+--------+--------+--------|
+  |        |  PREV  |  PLAY  |  NEXT  |        | ANSIUS | |        |CMDLARR |        |CMDRARR |        |        |
+  |--------+--------+--------+--------+--------+--------+ +--------+--------+--------+--------+--------+--------|
+  |        |        |  FN    |        |        |        | |        |        |        |        |        | HW_KEY |
+  `-----------------------------------------------------+ +-----------------------------------------------------'
+ */
+[_NAV] = KEYMAP( \
+    XXXXXX , XXXXXX , VIMSAVE, CMDLARR, CMDRARR, TERM    ,  XXXXXX , PRV_TAB, KC_UP  , NXT_TAB, KC_PGUP, Z_OUT  ,\
+    KC_LCTL, KC_MUTE, KC_VOLD, KC_VOLU, FILEMAN, GAME1   ,  GAME2  , KC_LEFT, KC_DOWN, KC_RGHT, KC_PGDN, Z_IN   ,\
+    ______ , KC_MRWD, KC_MPLY, KC_MFFD, XXXXXX , ANSIUS  ,  XXXXXX , CMDLARR, XXXXXX , CMDRARR, XXXXXX , ______ ,\
+    ______ , ______ , ______ , ______ , ______ , XXXXXX  ,  XXXXXX , ______ , ______ , ______ , ______ , HW_KEY \
+),
+
+/* HYPER and HYPER ONE SHOT layers {{{2
+ 
+  The actual hyper stuff happens when processing the pressed event (`if
+  (record->event.pressed) {`), The _HYPER/_HYPEROS layer is used instead of
+  a variable to check if hyper stuff should be done. This is probably an ugly
+  workaround, but it works...
+
+  Currently the _HYPER layer is used for momentary and locked hyper stuff. When
+  used for momentary stuff, the layer is turned on together with registering
+  GUI+CTRL+ALT+SHIFT as pressed in an advanced tap dance with only one
+  condition.
+
   ,-----------------------------------------------------+ +-----------------------------------------------------.
   |        | HYPER Q| HYPER W| HYPER E| HYPER R| HYPER T| | HYPER Y| HYPER U| HYPER I| HYPER O| HYPER P|        |
   |--------+--------+--------+--------+--------+--------+ +--------+--------+--------+--------+--------+--------|
@@ -163,7 +286,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   |        |        |        |        |        |        | |        |        |        |        |        |        |
   `-----------------------------------------------------+ +-----------------------------------------------------'
 */
-/*[_HYPER] = KEYMAP( \
+/*[_HYPEROS] = KEYMAP( \
     ______ , ______ , ______ , ______ , ______ , ______  ,  ______ , ______ , ______ , ______ , ______ , HYPEROS,\
     KC_ESC , ______ , ______ , ______ , ______ , ______  ,  ______ , ______ , ______ , ______ , HYPEROS, HYPEROS,\
     HYPEROS, ______ , ______ , ______ , ______ , ______  ,  ______ , ______ , ______ , ______ , ______ , HYPEROS,\
@@ -176,116 +299,61 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     ______ , ______ , ______ , ______ , ______ , ______  ,  ______ , ______ , ______ , ______ , ______ , ______  \
 ),
 
-/* Paren Left Layer {{{2
-  ,-----------------------------------------------------+ +-----------------------------------------------------.
-  |   ~    |    1   |   2    |   3    |   4    |   5    | |   6    |   7    |   8    |   9    |   0    |   `    |
-  |--------+--------+--------+--------+--------+--------+ +--------+--------+--------+--------+--------+--------|
-  |  CTRL  |        |   <    |   {    |   (    |   [    | |   *    |   $    |   =    |   &    |   %    |  BSPC  |
-  |--------+--------+--------+--------+--------+--------+ +--------+--------+--------+--------+--------+--------|
-  |        |        |        |   _    |   -    |   :    | |   ;    |   "    |   '    |   |    |   \    |        |
-  |--------+--------+--------+--------+--------+--------+ +--------+--------+--------+--------+--------+--------|
-  |        |        |        |        |        |        | | DB/ENT |        |        |        |        |        |
-  `-----------------------------------------------------+ +-----------------------------------------------------'
-*/
-[_PLEFT] = KEYMAP( \
-    KC_TILD, KC_1   , KC_2   , KC_3   , KC_4   , KC_5    ,  KC_6   , KC_7   , KC_8   , KC_9   , KC_0   , KC_GRV ,\
-    KC_LCTL, XXXXXX , KC_LABK, KC_LCBR, KC_LPRN, KC_LBRC ,  KC_ASTR, KC_DLR , KC_EQL , KC_AMPR, KC_PERC, KC_BSPC,\
-    ______ , XXXXXX , XXXXXX , KC_UNDS, KC_MINS, KC_COLN ,  KC_SCLN, KC_DQUO, KC_QUOT, KC_PIPE, KC_BSLS, ______ ,\
-    ______ , ______ , ______ , ______ , ______ , ______  ,  KC_ENT , ______ , ______ , ______ , ______ , ______  \
-),
-
-/* Paren Right Layer {{{2
-  ,-----------------------------------------------------+ +-----------------------------------------------------.
-  |   ~    |   1    |   2    |   3    |   4    |   5    | |   6    |   7    |   8    |   9    |   0    |   `    |
-  |--------+--------+--------+--------+--------+--------+ +--------+--------+--------+--------+--------+--------|
-  |  CTRL  |   !    |   @    |   #    |   ^    |   +    | |   ]    |   )    |   }    |   >    |        |  BSPC  |
-  |--------+--------+--------+--------+--------+--------+ +--------+--------+--------+--------+--------+--------|
-  |        |        |        |   _    |   -    |   :    | |   ;    |   "    |   '    |   |    |   \    |        |
-  |--------+--------+--------+--------+--------+--------+ +--------+--------+--------+--------+--------+--------|
-  |        |  DEL   |        |        |        |  BSPC  | |        |        |        |        |        |        |
-  `-----------------------------------------------------+ +-----------------------------------------------------'
- */
-[_PRIGHT] = KEYMAP( \
-    KC_TILD, KC_1   , KC_2   , KC_3   , KC_4   , KC_5    ,  KC_6   , KC_7   , KC_8   , KC_9   , KC_0   , KC_GRV ,\
-    KC_LCTL, KC_EXLM, KC_AT  , KC_HASH, KC_CIRC, KC_PLUS ,  KC_RBRC, KC_RPRN, KC_RCBR, KC_RABK, XXXXXX , KC_BSPC,\
-    ______ , XXXXXX , XXXXXX , KC_UNDS, KC_MINS, KC_COLN ,  KC_SCLN, KC_DQUO, KC_QUOT, KC_PIPE, KC_BSLS, ______ ,\
-    ______ , KC_DEL , ______ , ______ , ______ , KC_BSPC ,  ______ , ______ , ______ , ______ , ______ , ______  \
-),
-
-/* FN Layer {{{2
-  ,-----------------------------------------------------+ +-----------------------------------------------------.
-  |        |   F1   |   F2   |   F3   |   F4   |   F5   | |   F6   |   F7   |   F8   |   F9   |  F10   |  F11   |
-  |--------+--------+--------+--------+--------+--------+ +--------+--------+--------+--------+--------+--------|
-  |        |CMDPGUP |        |        |        |        | |        |        |        |        |        |  F12   |
-  |--------+--------+--------+--------+--------+--------+ +--------+--------+--------+--------+--------+--------|
-  |        |CMDPGDN |        |        |        |        | |        |        |        |        |        |        |
-  |--------+--------+--------+--------+--------+--------+ +--------+--------+--------+--------+--------+--------|
-  |        |  DEL   |        |        |        |        | |        | NAV    |        |        |        |        |
-  `-----------------------------------------------------+ +-----------------------------------------------------'
-*/
-[_FN] = KEYMAP( \
-    XXXXXX , KC_F1  , KC_F2  , KC_F3  , KC_F4  , KC_F5   ,  KC_F6  , KC_F7  , KC_F8  , KC_F9  , KC_F10 , KC_F11 ,\
-    KC_LCTL, CMDPGUP, XXXXXX , XXXXXX , XXXXXX , GAME    ,  XXXXXX , XXXXXX , XXXXXX , XXXXXX , XXXXXX , KC_F12 ,\
-    ______ , CMDPGDN, XXXXXX , XXXXXX , XXXXXX , XXXXXX  ,  XXXXXX , XXXXXX , XXXXXX , XXXXXX , XXXXXX , ______ ,\
-    ______ , KC_DEL , ______ , ______ , ______ , XXXXXX  ,  XXXXXX , NAV    , ______ , ______ , ______ , ______  \
-),
-
-
-/* Navigation layer {{{2
-  ,-----------------------------------------------------+ +-----------------------------------------------------.
-  |        | VIMSAVE|        |CMDLARR |CMDRARR |  TERM  | |        |PREV TAB|   UP   |NEXT TAB|  PgUp  |zOU<C-->|
-  |--------+--------+--------+--------+--------+--------+ +--------+--------+--------+--------+--------+--------|
-  |        |  MUTE  |  V DN  |  V UP  |FILEMAN |  GAME  | |        |  LEFT  |  DOWN  | RIGHT  |  PgDn  |zIN<C-+>|
-  |--------+--------+--------+--------+--------+--------+ +--------+--------+--------+--------+--------+--------|
-  |        |  PREV  |  PLAY  |  NEXT  |        |        | |        |CMDLARR |        |CMDRARR |        |        |
-  |--------+--------+--------+--------+--------+--------+ +--------+--------+--------+--------+--------+--------|
-  |        |        |  FN    |        |        |        | |        |        |        |        |        |        |
-  `-----------------------------------------------------+ +-----------------------------------------------------'
- */
-[_NAV] = KEYMAP( \
-    XXXXXX , XXXXXX , VIMSAVE, CMDLARR, CMDRARR, TERM    ,  XXXXXX , PRV_TAB, KC_UP  , NXT_TAB, KC_PGUP, Z_OUT  ,\
-    KC_LCTL, KC_MUTE, KC_VOLD, KC_VOLU, FILEMAN, GAME    ,  XXXXXX , KC_LEFT, KC_DOWN, KC_RGHT, KC_PGDN, Z_IN   ,\
-    ______ , KC_MRWD, KC_MPLY, KC_MFFD, XXXXXX , XXXXXX  ,  XXXXXX , CMDLARR, XXXXXX , CMDRARR, XXXXXX , ______ ,\
-    ______ , ______ , FN     , ______ , ______ , XXXXXX  ,  XXXXXX , ______ , ______ , ______ , ______ , ______  \
-),
-
 /* Game layer (left side) {{{2
   ,-----------------------------------------------------+ +-----------------------------------------------------.
   |        |        |        |        |        |        | |        |        |        |        |        | BCKSPC |
   |--------+--------+--------+--------+--------+--------+ +--------+--------+--------+--------+--------+--------|
   | L_CTRL |        |        |        |        |        | |        |        |        |        |        | ENTER  |
   |--------+--------+--------+--------+--------+--------+ +--------+--------+--------+--------+--------+--------|
-  |        |        |        |        |        |        | |        |        |        |        |   UP   |        |
+  |        |        |        |        |        |        | |        |        |        |        |        |   UP   |
   |--------+--------+--------+--------+--------+--------+ +--------+--------+--------+--------+--------+--------|
-  | SPACE  |NUM_MOD |        |        |        |        | |        |        |        |  LEFT  |  DOWN  | RIGHT  |
+  | SPACE  |NUM1MOD |        |        |        |        | |        |        |        |  LEFT  | RIGHT  |  DOWN  |
   `-----------------------------------------------------+ +-----------------------------------------------------'
 */
-[_GAME] = KEYMAP( \
+[_GAME1] = KEYMAP( \
     ______ , ______ , ______ , ______ , ______ , ______  ,  ______ , ______ , ______ , ______ , ______ , KC_BSPC,\
     KC_LCTL, ______ , ______ , ______ , ______ , ______  ,  ______ , ______ , ______ , ______ , ______ , KC_ENT ,\
-    ______ , ______ , ______ , ______ , ______ , ______  ,  ______ , ______ , ______ , ______ , KC_UP  , ______ ,\
-    KC_SPC , NUM_MOD, ______ , ______ , ______ , ______  ,  ______ , ______ , ______ , KC_LEFT, KC_DOWN, KC_RGHT \
+    ______ , ______ , ______ , ______ , ______ , ______  ,  ______ , ______ , ______ , ______ , ______ , KC_UP  ,\
+    KC_SPC , NUM1MOD, ______ , ______ , ______ , ______  ,  ______ , ______ , ______ , KC_LEFT, KC_RGHT, KC_DOWN \
 ),
 
-/* Game layer (right side) {{{2
+/* Game layer (left/right [wasd]/[ijkl] swapped) {{{2
   ,-----------------------------------------------------+ +-----------------------------------------------------.
   |        |        |  I     |        |        |        | |        |        |  W     |        |        | BCKSPC |
   |--------+--------+--------+--------+--------+--------+ +--------+--------+--------+--------+--------+--------|
-  |  H     |  J     |  K     |  L     |        |        | |  CTRL  |  A     |  S     |  D     |        |        |
+  |  H     |  J     |  K     |  L     |        |        | |  CTRL  |  A     |  S     |  D     |        | ENTER  |
   |--------+--------+--------+--------+--------+--------+ +--------+--------+--------+--------+--------+--------|
-  |  N     |        |        |        |        |        | |  Shift |        |        |        |        | ENTER  |
+  |  N     |        |        |        |        |        | |  Shift |        |        |        |        |        |
   |--------+--------+--------+--------+--------+--------+ +--------+--------+--------+--------+--------+--------|
-  | PR/SPC |TD:NAVLK|        |        |        |        | |  SPC   |        |        |        |        |        |
+  | PR/SPC |TD:NAVHY|        |        |        |        | |  SPC   | NUM2MOD|        |        |        |        |
   `-----------------------------------------------------+ +-----------------------------------------------------'
-[_GAME] = KEYMAP( \
-    ______ , ______ , KC_I   , ______ , ______ , ______  ,  ______ , ______ , KC_W   , ______ , ______ , KC_BSPC,\
-    KC_H   , KC_J   , KC_K   , KC_L   , ______ , ______  ,  KC_LCTL, KC_A   , KC_S   , KC_D   , ______ , ______ ,\
-    KC_N   , ______ , ______ , ______ , ______ , ______  ,  KC_LSFT, ______ , ______ , ______ , ______ , KC_ENT ,\
-    PR_SPC , TDNVCMD, ______ , ______ , ______ , ______  ,  KC_SPC , NUM_MOD, NAV    , ______ , ______ , ______  \
-),
 */
+[_GAME2] = KEYMAP( \
+    ______ , ______ , KC_I   , ______ , ______ , ______  ,  ______ , ______ , KC_W   , ______ , ______ , KC_BSPC,\
+    KC_H   , KC_J   , KC_K   , KC_L   , ______ , ______  ,  KC_LCTL, KC_A   , KC_S   , KC_D   , ______ , KC_ENT ,\
+    KC_N   , ______ , ______ , ______ , ______ , ______  ,  KC_LSFT, ______ , ______ , ______ , ______ , KC_UP  ,\
+    PR_SPC , TDNVHYP, ______ , ______ , ______ , ______  ,  KC_SPC , NUM2MOD, ______ , KC_LEFT, KC_RGHT, KC_DOWN \
+),
 
-/* Numeric Layer {{{2
+/* Numeric Layer 1 {{{2
+  ,-----------------------------------------------------+ +-----------------------------------------------------.
+  |   0    |   1    |   2    |   3    |   4    |   5    | |   6    |   7    |   8    |   9    |   0    |        |
+  |--------+--------+--------+--------+--------+--------+ +--------+--------+--------+--------+--------+--------|
+  |  ESC   |   4    |   5    |   6    |        |        | |        |        |        |        |        |        |
+  |--------+--------+--------+--------+--------+--------+ +--------+--------+--------+--------+--------+--------|
+  |        |   7    |   8    |   9    |   0    |        | |        |        |        |        |        |        |
+  |--------+--------+--------+--------+--------+--------+ +--------+--------+--------+--------+--------+--------|
+  |        |        |   0    |        |        |        | |        |        |        |        |        |        |
+  `-----------------------------------------------------+ +-----------------------------------------------------'
+*/
+[_NUM1] = KEYMAP( \
+    KC_0   , KC_1   , KC_2   , KC_3   , KC_4   , KC_5    ,  KC_6   , KC_7   , KC_8   , KC_9   , KC_0   , XXXXXX ,\
+    KC_ESC , KC_4   , KC_5   , KC_6   , XXXXXX , XXXXXX  ,  XXXXXX , XXXXXX , XXXXXX , XXXXXX , XXXXXX , XXXXXX ,\
+    ______ , KC_7   , KC_8   , KC_9   , KC_0   , XXXXXX  ,  XXXXXX , XXXXXX , XXXXXX , XXXXXX , XXXXXX , XXXXXX ,\
+    ______ , NUM1MOD, KC_0   , ______ , ______ , ______  ,  ______ , ______ , ______ , ______ , ______ , ______  \
+),
+
+/* Numeric Layer 2 {{{2
   ,-----------------------------------------------------+ +-----------------------------------------------------.
   |   0    |   1    |   2    |   3    |   4    |   5    | |   6    |   7    |   8    |   9    |   0    |        |
   |--------+--------+--------+--------+--------+--------+ +--------+--------+--------+--------+--------+--------|
@@ -296,11 +364,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   |        |        |        |        |        |        | |        |        |        |        |        |        |
   `-----------------------------------------------------+ +-----------------------------------------------------'
 */
-[_NUM] = KEYMAP( \
-    KC_0   , KC_1   , KC_2   , KC_3   , KC_4   , KC_5    ,  KC_6   , KC_7   , KC_8   , KC_9   , KC_0   , XXXXXX ,\
-    KC_ESC , KC_4   , KC_5   , KC_6   , XXXXXX , XXXXXX  ,  XXXXXX , XXXXXX , XXXXXX , XXXXXX , XXXXXX , XXXXXX ,\
-    XXXXXX , KC_7   , KC_8   , KC_9   , XXXXXX , XXXXXX  ,  XXXXXX , XXXXXX , XXXXXX , XXXXXX , XXXXXX , XXXXXX ,\
-    ______ , ______ , ______ , ______ , ______ , ______  ,  ______ , ______ , ______ , ______ , ______ , ______  \
+[_NUM2] = KEYMAP( \
+    KC_0   , KC_1   , KC_2   , KC_3   , KC_4   , KC_5    ,  KC_0   , KC_1   , KC_2   , KC_3   , KC_4   , KC_5   ,\
+    KC_ESC , KC_4   , KC_5   , KC_6   , XXXXXX , XXXXXX  ,  KC_ESC , KC_4   , KC_5   , KC_6   , XXXXXX , XXXXXX ,\
+    XXXXXX , KC_7   , KC_8   , KC_9   , XXXXXX , XXXXXX  ,  XXXXXX , KC_7   , KC_8   , KC_9   , XXXXXX , XXXXXX ,\
+    ______ , ______ , ______ , ______ , ______ , ______  ,  ______ , NUM2MOD, ______ , ______ , ______ , ______  \
 ),
 
 /* Adjust Layer (FN + NAV) {{{2
@@ -311,14 +379,14 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   |--------+--------+--------+--------+--------+--------+ +--------+--------+--------+--------+--------+--------|
   |        |        |        |        |        |        | |        |        |        |        |        |        |
   |--------+--------+--------+--------+--------+--------+ +--------+--------+--------+--------+--------+--------|
-  |        |        |        |        |        |        | |        |        |        |        |        |        |
+  |        |        | FN     |        |        |        | |        | NAV    |        |        | HW_KEY | HW_KEY |
   `-----------------------------------------------------+ +-----------------------------------------------------'
  */
 [_ADJUST] = KEYMAP( \
     XXXXXX , RESET  , XXXXXX , XXXXXX , XXXXXX , XXXXXX  ,  XXXXXX , XXXXXX , XXXXXX , XXXXXX , XXXXXX , XXXXXX ,\
     XXXXXX , XXXXXX , XXXXXX , XXXXXX , XXXXXX , XXXXXX  ,  XXXXXX , XXXXXX , XXXXXX , XXXXXX , XXXXXX , XXXXXX ,\
-    ______ , XXXXXX , XXXXXX , XXXXXX , XXXXXX , XXXXXX  ,  XXXXXX , XXXXXX , XXXXXX , XXXXXX , XXXXXX , ______ ,\
-    ______ , ______ , FN     , ______ , XXXXXX , ______  ,  ______ , NAV    , ______ , ______ , ______ , ______  \
+    XXXXXX , XXXXXX , XXXXXX , XXXXXX , XXXXXX , XXXXXX  ,  XXXXXX , XXXXXX , XXXXXX , XXXXXX , XXXXXX , XXXXXX ,\
+    XXXXXX , XXXXXX , FN     , XXXXXX , XXXXXX , XXXXXX  ,  XXXXXX , NAV    , XXXXXX , XXXXXX , HW_KEY , HW_KEY  \
 ),
 
 /* Planck Layer (FN + NAV) {{{2
@@ -329,14 +397,14 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   |--------+--------+--------+--------+--------+--------|--------+--------+--------+--------+--------+--------|
   |        |AudioOff|MusicOff| Voice- |        |        |        |        |        |        |        |        |
   |--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------|
-  |        |        |        |        |        |        |        |        |        |        |        |        |
+  |        |        | FN     |        |        |        |        | NAV    |        |        | HW_KEY | HW_KEY |
   `-----------------------------------------------------------------------------------------------------------'
  */
 [_PLANCK] = KEYMAP( \
   XXXXXX , RESET  , XXXXXX , XXXXXX , XXXXXX , XXXXXX , XXXXXX , XXXXXX , XXXXXX , XXXXXX , XXXXXX , XXXXXX ,\
   XXXXXX , AU_ON  , MU_ON  , MUV_IN , MU_MOD , XXXXXX , XXXXXX , XXXXXX , XXXXXX , XXXXXX , XXXXXX , XXXXXX ,\
   ______ , AU_OFF , MU_OFF , MUV_DE , XXXXXX , XXXXXX , XXXXXX , XXXXXX , XXXXXX , XXXXXX , XXXXXX , ______ ,\
-  ______ , ______ , FN     , ______ , XXXXXX , ______ , ______ , NAV    , ______ , ______ , ______ , ______  \
+  ______ , ______ , FN     , ______ , XXXXXX , ______ , ______ , NAV    , ______ , ______ , HW_KEY  , HW_KEY   \
 ),
 
 };
@@ -344,40 +412,55 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 // Audio {{{1
 // Notification sounds {{{2
-#define NAV_ON_SONG    M__NOTE(_D5, 2),
-#define NAV_OFF_SONG   M__NOTE(_D4, 2),
-#define HYPER_ON_SONG  M__NOTE(_G5, 2),
-#define HYPER_OFF_SONG M__NOTE(_G4, 2),
-#define GAME_ON_SONG   M__NOTE(_A5, 2),
-#define GAME_OFF_SONG  M__NOTE(_A4, 2),
-#define CAPS_SONG      M__NOTE(_E5, 2),
-#define FN_ON_SONG     M__NOTE(_E5, 2),
-#define FN_OFF_SONG    M__NOTE(_E4, 2),
-#define MEH_ON_SONG    M__NOTE(_FS5, 2),
-#define MEH_OFF_SONG   M__NOTE(_FS4, 2),
-#define CMD_ON_SONG    M__NOTE(_F5, 2),
-#define CMD_OFF_SONG   M__NOTE(_F4, 2),
+#define NAV_ON_SONG      M__NOTE(_D5, 2),
+#define NAV_OFF_SONG     M__NOTE(_D4, 2),
+#define HYPER_ON_SONG    M__NOTE(_G5, 2),
+#define HYPER_OFF_SONG   M__NOTE(_G4, 2),
+#define HYPEROS_ON_SONG  M__NOTE(_G5, 2), M__NOTE(_G5, 2),
+#define HYPEROS_OFF_SONG M__NOTE(_G4, 2), M__NOTE(_G4, 2),
+#define GAME1_ON_SONG    M__NOTE(_A5, 2),
+#define GAME1_OFF_SONG   M__NOTE(_A4, 2),
+#define CAPS_SONG        M__NOTE(_E5, 2),
+#define FN_ON_SONG       M__NOTE(_E5, 2),
+#define FN_OFF_SONG      M__NOTE(_E4, 2),
+#define MEH_ON_SONG      M__NOTE(_FS5, 2),
+#define MEH_OFF_SONG     M__NOTE(_FS4, 2),
+#define CMD_ON_SONG      M__NOTE(_F5, 2),
+#define CMD_OFF_SONG     M__NOTE(_F4, 2),
 
 // Create song arrays {{{2
 #ifdef AUDIO_ENABLE
-  float nav_on_song[][2]    = SONG(NAV_ON_SONG);
-  float nav_off_song[][2]   = SONG(NAV_OFF_SONG);
-  float hyper_on_song[][2]  = SONG(HYPER_ON_SONG);
-  float hyper_off_song[][2] = SONG(HYPER_OFF_SONG);
-  float game_on_song[][2]   = SONG(GAME_ON_SONG);
-  float game_off_song[][2]  = SONG(GAME_OFF_SONG);
-  float caps_song[][2]      = SONG(CAPS_SONG);
-  float fn_on_song[][2]     = SONG(FN_ON_SONG);
-  float fn_off_song[][2]    = SONG(FN_OFF_SONG);
-  float meh_on_song[][2]    = SONG(MEH_ON_SONG);
-  float meh_off_song[][2]   = SONG(MEH_OFF_SONG);
-  float cmd_on_song[][2]    = SONG(CMD_ON_SONG);
-  float cmd_off_song[][2]   = SONG(CMD_OFF_SONG);
+  float nav_on_song[][2]      = SONG(NAV_ON_SONG);
+  float nav_off_song[][2]     = SONG(NAV_OFF_SONG);
+  float hyper_on_song[][2]    = SONG(HYPER_ON_SONG);
+  float hyper_off_song[][2]   = SONG(HYPER_OFF_SONG);
+  float hyperos_on_song[][2]  = SONG(HYPEROS_ON_SONG);
+  float hyperos_off_song[][2] = SONG(HYPEROS_OFF_SONG);
+  float game_on_song[][2]     = SONG(GAME1_ON_SONG);
+  float game_off_song[][2]    = SONG(GAME1_OFF_SONG);
+  float caps_song[][2]        = SONG(CAPS_SONG);
+  float fn_on_song[][2]       = SONG(FN_ON_SONG);
+  float fn_off_song[][2]      = SONG(FN_OFF_SONG);
+  float meh_on_song[][2]      = SONG(MEH_ON_SONG);
+  float meh_off_song[][2]     = SONG(MEH_OFF_SONG);
+  float cmd_on_song[][2]      = SONG(CMD_ON_SONG);
+  float cmd_off_song[][2]     = SONG(CMD_OFF_SONG);
 #endif
 
 //}}}1
 
 // Advanced Tap Dancing functions {{{1
+
+/**
+ * The _finished() functions are used when the tap dance cutoff timer has
+ * elapsed. I.e. no more taps will be counted as part of the current tap dance.
+ * The tap dance key is still pressed and held when the _finished() function is
+ * called.
+ * 
+ * The _reset() functions are called when the key is released and usually
+ * contains some kind of conditional for different amount of taps.
+ **/
+
 // nav_and_lock_dance_finished() {{{2
 void nav_and_lock_dance_finished(qk_tap_dance_state_t *state, void *user_data) {
   switch (state->count) {
@@ -415,8 +498,12 @@ void nav_and_lock_dance_reset(qk_tap_dance_state_t *state, void *user_data) {
   }
 }
 
-// hyper_layer_finished() HYPER when tapped once and held, and activate _HYPER layer
-// for escape to work
+/** 
+ * hyper_layer_finished() HYPER when tapped once and held, and activate _HYPER
+ * layer for escape to work.
+ *
+ * See _HYPER layer comment.
+ **/
 void hyper_layer_finished(qk_tap_dance_state_t *state, void *user_data) {
   switch (state->count) {
     // Tapping/holding once is for momentary HYPER and turning off HYPER layer
@@ -426,8 +513,8 @@ void hyper_layer_finished(qk_tap_dance_state_t *state, void *user_data) {
       register_code(KC_LALT);
       register_code(KC_LCTL);
       register_code(KC_LSFT);
-      layer_on(_HYPER);
-      break;
+      layer_on(_HYPER);  // enabled for HYPER+ESC to work
+    break;
   }
 }
 
@@ -439,12 +526,7 @@ void hyper_layer_reset(qk_tap_dance_state_t *state, void *user_data) {
     unregister_code(KC_LALT);
     unregister_code(KC_LCTL);
     unregister_code(KC_LSFT);
-    // deactivate _HYPER layer
     layer_off(_HYPER);
-    #ifdef AUDIO_ENABLE
-    stop_all_notes();
-    PLAY_SONG(hyper_off_song);
-    #endif
   }
 }
 
@@ -454,7 +536,8 @@ void hyper_and_hyperos_dance_finished(qk_tap_dance_state_t *state, void *user_da
   switch (state->count) {
     // Tapping/holding once is for momentary HYPER and turning off HYPER layer
     case 1:
-      // unprime hyper one-shot if tapped once
+      // check if ONE SHOT was activated previously.
+      // if so, unprime hyper one-shot if tapped/held once
       if (IS_LAYER_ON(_HYPER)) {
         layer_off(_HYPER);
         #ifdef AUDIO_ENABLE
@@ -463,24 +546,48 @@ void hyper_and_hyperos_dance_finished(qk_tap_dance_state_t *state, void *user_da
         #endif
       }
 
-      // momentary hyper
+      // ... and use as momentary hyper only
       register_code(KC_LGUI);
       register_code(KC_LALT);
       register_code(KC_LCTL);
       register_code(KC_LSFT);
       break;
     case 2:
-      // Second tap always activates HYPER layer
-      layer_on(_HYPER);
-      #ifdef AUDIO_ENABLE
-      stop_all_notes();
-      PLAY_SONG(hyper_on_song);
-      #endif
+      // Second tap toggles HYPER layer lock
+
+      // toggle OFF _HYPER layer and "un-arm" hyper
+      if (IS_LAYER_ON(_HYPER)) {
+        layer_off(_HYPER);
+        unregister_code(KC_LGUI);
+        unregister_code(KC_LALT);
+        unregister_code(KC_LCTL);
+        unregister_code(KC_LSFT);
+
+        #ifdef AUDIO_ENABLE
+        stop_all_notes();
+        PLAY_SONG(hyperos_off_song);
+        #endif
+      }
+      // toggle ON _HYPER layer and "arm" hyper
+      else {
+        layer_on(_HYPER);
+        register_code(KC_LGUI);
+        register_code(KC_LALT);
+        register_code(KC_LCTL);
+        register_code(KC_LSFT);
+
+        #ifdef AUDIO_ENABLE
+        stop_all_notes();
+        PLAY_SONG(hyperos_on_song);
+        #endif
+      }
       break;
   }
 }
 
 // hyper_and_hyperos_dance_reset() - release HYPER mod {{{2
+// all toggle stuff happens in the _finished() function. only momentary stuff
+// here.
 void hyper_and_hyperos_dance_reset(qk_tap_dance_state_t *state, void *user_data) {
   if (state->count == 1) {
     // release HYPER
@@ -488,10 +595,6 @@ void hyper_and_hyperos_dance_reset(qk_tap_dance_state_t *state, void *user_data)
     unregister_code(KC_LALT);
     unregister_code(KC_LCTL);
     unregister_code(KC_LSFT);
-    #ifdef AUDIO_ENABLE
-    stop_all_notes();
-    PLAY_SONG(hyper_off_song);
-    #endif
   }
 }
 
@@ -948,15 +1051,27 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       }
       return false;
       break;
+    case ANSIUS:    // Toggle QWERTY_ANSIUS layer {{{2
+      if (record->event.pressed) {
+        if (IS_LAYER_ON(_QWERTY_ANSIUS)) {
+          layer_off(_QWERTY_ANSIUS);
+        } else {
+          layer_on(_QWERTY_ANSIUS);
+        }
+      }
+      return false;
+      break;
     case FN:      // _FN layer + tri layer {{{2
       if (record->event.pressed) {
         layer_on(_FN);
 	// _PLANCK on Planck, _ADJUST on lets split
-        update_tri_layer(_FN, _NAV, _ADJUST);
+	// _HWDLAYER as defined at top of file
+        update_tri_layer(_FN, _NAV, _HWDLAYER);
       } else {
         layer_off(_FN);
 	// _PLANCK on Planck, _ADJUST on lets split
-        update_tri_layer(_FN, _NAV, _ADJUST);
+	// _HWDLAYER as defined at top of file
+        update_tri_layer(_FN, _NAV, _HWDLAYER);
       }
       return false;
       break;
@@ -964,24 +1079,26 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       if (record->event.pressed) {
         layer_on(_NAV);
 	// _PLANCK on Planck, _ADJUST on lets split
-        update_tri_layer(_FN, _NAV, _ADJUST);
+	// _HWDLAYER as defined at top of file
+        update_tri_layer(_FN, _NAV, _HWDLAYER);
       } else {
         layer_off(_NAV);
 	// _PLANCK on Planck, _ADJUST on lets split
-        update_tri_layer(_FN, _NAV, _ADJUST);
+	// _HWDLAYER as defined at top of file
+        update_tri_layer(_FN, _NAV, _HWDLAYER);
       }
       return false;
       break;
-    case GAME:    // Toggle _GAME layer {{{2
+    case GAME1:    // Toggle _GAME1 layer {{{2
       if (record->event.pressed) {
-        if (IS_LAYER_ON(_GAME)) {
-          layer_off(_GAME);
+        if (IS_LAYER_ON(_GAME1)) {
+          layer_off(_GAME1);
           #ifdef AUDIO_ENABLE
             stop_all_notes();
             PLAY_SONG(game_off_song);
           #endif
         } else {
-          layer_on(_GAME);
+          layer_on(_GAME1);
           #ifdef AUDIO_ENABLE
             stop_all_notes();
             PLAY_SONG(game_on_song);
@@ -1014,13 +1131,13 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
           layer_off(_HYPER);
           #ifdef AUDIO_ENABLE
             stop_all_notes();
-            PLAY_SONG(hyper_off_song);
+            PLAY_SONG(hyperos_off_song);
           #endif
         } else {
           layer_on(_HYPER);
           #ifdef AUDIO_ENABLE
             stop_all_notes();
-            PLAY_SONG(hyper_on_song);
+            PLAY_SONG(hyperos_on_song);
           #endif
         }
       }
