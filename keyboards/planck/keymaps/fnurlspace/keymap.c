@@ -33,18 +33,18 @@ extern keymap_config_t keymap_config;
 enum fnurlspace_layers {
   _QWERTY_ANSISE,   // QWERTY. ANSI, SE variant (by @fnurl)
   _QWERTY_ANSIUS,   // QWERTY. ANSI, standard US variant
-  _PLEFT, 			// Parens & symbols, left
-  _PRIGHT,			// Parens & symbols, right 
-  _FN, 				// F-keys (F1 through F12)
-  _NAV, 		    // Navigation keys using GUI (arrows, pgup/pgdown, media keys, key combos)
+  _PLEFT,           // Parens & symbols, left
+  _PRIGHT,          // Parens & symbols, right 
+  _FN,              // F-keys (F1 through F12)
+  _NAV,             // Navigation keys using GUI (arrows, pgup/pgdown, media keys, key combos)
   _NAVCTRL,         // Navigation keys using CTRL (arrows, pgup/pgdown, media keys, key combos)
-  _GAME1, 			// Left split game mode (left thumb is SPACE)
-  //_GAME2, 		// Right split game mode (map WASD to right split)
-  _NUM1, 			// Number keys for Left split game mode
-  //_NUM2, 			// Number keys for Right split game mode
-  _PLANCK, 			// Hardware commands (general) + Planck specific functionality
-  _ADJUST, 			// Hardware commands (general)
-  _HYPER_MEH 		// Hyper/Meh (Shift+CTRL+ALT+GUI / Shift+CTRL+ALT) key compatability layer
+  _GAME1,           // Left split game mode (left thumb is SPACE)
+  //_GAME2,           // Right split game mode (map WASD to right split)
+  _NUM1,            // Number keys for Left split game mode
+  //_NUM2,          // Number keys for Right split game mode
+  _PLANCK,          // Hardware commands (general) + Planck specific functionality
+  _ADJUST,          // Hardware commands (general)
+  _HYPER_MEH        // Hyper/Meh (Shift+CTRL+ALT+GUI / Shift+CTRL+ALT) key compatability layer
 };
 
 
@@ -62,14 +62,14 @@ enum fnurlspace_layers {
 // QWERTY = SAFE_RANGE adds all the standard keys first to the enumeration.
 enum custom_keycodes {
   QWERTY = SAFE_RANGE,   // Default ANSI key codes
-  ANSIUS,				 // Key for enabling _ANSIUS layer
-  FN, 					 // Key for enabling _FN layer
-  NAV, 		  		     // Key for enabling _NAV layer
-  NAVCTRL, 				 // Key for enabling _NAVCTRL (CTRL based navigation layer)
-  GAME1, 			     // Key for toggeling _GAME1 layer on/off
-  //GAME2, 				   // Key for toggeling _GAME2 layer on/off
-  VIMSAVE, 			 	 // Key for expanding macro for saving in Vim.
-  NONE 					 // NOOP key for readability.
+  ANSIUS,                // Key for enabling _ANSIUS layer
+  FN,                    // Key for enabling _FN layer
+  NAV,                   // Key for enabling _NAV layer
+  NAVCTRL,               // Key for enabling _NAVCTRL (CTRL based navigation layer)
+  GAME1,                 // Key for toggeling _GAME1 layer on/off
+  //GAME2,                 // Key for toggeling _GAME2 layer on/off
+  VIMSAVE,               // Key for expanding macro for saving in Vim.
+  NONE                   // NOOP key for readability.
 };
  
 
@@ -80,9 +80,9 @@ enum tap_dances {
     TD_HYPER,
     TD_HYPER_ONESHOT,
     TD_CMD_HYPER,
-	TD_ALT_MEH,
-	TD_FN_HYPER,
-	TD_CTRL_NAVCTRL
+    TD_ALT_MEH,
+    TD_FN_HYPER,
+    TD_CTRL_NAVCTRL
 };
 
 // Tap dance aliases (use in layout) {{{3
@@ -172,7 +172,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   |--------+--------+--------+--------+--------+--------| |--------+--------+--------+--------+--------+--------|
   | Shift  |   Z    |   X    |   C    |   V    |   B    | |   N    |   M    |   ,    |   .    |   /    | Shift  |
   |--------+--------+--------+--------+--------+--------| |--------+--------+--------+--------+--------+--------|
-  |  CTRL  |  ESC   |  FN    |TD:ALTME|TD:CMDHY| PL/SPC | | PR/SPC |  NAV   |  CMD   |  ALT   | ENTER  | BCKSPC |
+  |TD:CNAVC|  ESC   |  FN    |TD:ALTME|TD:CMDHY| PL/SPC | | PR/SPC |  NAV   |  CMD   |  ALT   | BCKSPC | ENTER  |
   `-----------------------------------------------------+ +-----------------------------------------------------'
 */
 [_QWERTY_ANSIUS] = KB_LAYOUT_LAYER(
@@ -204,7 +204,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   ,-----------------------------------------------------+ +-----------------------------------------------------.
   |   ~    |   1    |   2    |   3    |   4    |   5    | |   6    |   7    |   8    |   9    |   0    |   `    |
   |--------+--------+--------+--------+--------+--------+ +--------+--------+--------+--------+--------+--------|
-  |  CTRL  |   !    |   @    |   #    |   ^    |   +    | |   ]    |   )    |   }    |   >    |        |        |
+  |        |   !    |   @    |   #    |   ^    |   +    | |   ]    |   )    |   }    |   >    |        |        |
   |--------+--------+--------+--------+--------+--------+ +--------+--------+--------+--------+--------+--------|
   |        |        |        |   _    |   -    |   :    | |   ;    |   "    |   '    |   |    |   \    |        |
   |--------+--------+--------+--------+--------+--------+ +--------+--------+--------+--------+--------+--------|
@@ -271,7 +271,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   ,-----------------------------------------------------+ +-----------------------------------------------------.
   |        |        |        | CMDLARR| CMDRARR|        | |        |PREV TAB|   UP   |NEXT TAB|  PgUp  |Zoom Out|
   |--------+--------+--------+--------+--------+--------+ +--------+--------+--------+--------+--------+--------|
-  |        |  MUTE  |  V DN  |  V UP  |        | GAME1  | | GAME2  |  LEFT  |  DOWN  | RIGHT  |  PgDn  |Zoom In |
+  |        |  MUTE  |  V DN  |  V UP  |        | GAME1  | |        |  LEFT  |  DOWN  | RIGHT  |  PgDn  |Zoom In |
   |--------+--------+--------+--------+--------+--------+ +--------+--------+--------+--------+--------+--------|
   |        |  PREV  |  PLAY  |  NEXT  |        | ANSIUS | |        |CMDLARR |        |CMDRARR |        |        |
   |--------+--------+--------+--------+--------+--------+ +--------+--------+--------+--------+--------+--------|
@@ -467,8 +467,8 @@ void hyper_layer_finished(qk_tap_dance_state_t *state, void *user_data) {
       register_code(KC_LALT);
       register_code(KC_LCTL);
       register_code(KC_LSFT);
-	  
-	  // enabled _HYPER_MEH layer for HYPER+ESC to work
+      
+      // enabled _HYPER_MEH layer for HYPER+ESC to work
       layer_on(_HYPER_MEH);
     break;
   }
@@ -482,15 +482,15 @@ void hyper_layer_reset(qk_tap_dance_state_t *state, void *user_data) {
     unregister_code(KC_LALT);
     unregister_code(KC_LCTL);
     unregister_code(KC_LSFT);
-	
-	// disable _HYPER_MEH layer
+    
+    // disable _HYPER_MEH layer
     layer_off(_HYPER_MEH);
   }
 }
 
 
 // HYPER / HYPER One-Shot Tap dance {{{2
-// hyper_and_hyperos_finished() HYPER when tapped once and held, HYPER One-shot when double tapped and held {{3ll
+// hyper_and_hyperos_finished() HYPER when tapped once and held, HYPER One-shot when double tapped and held {{{3
 void hyper_and_hyperos_dance_finished(qk_tap_dance_state_t *state, void *user_data) {
   switch (state->count) {
 
@@ -499,9 +499,9 @@ void hyper_and_hyperos_dance_finished(qk_tap_dance_state_t *state, void *user_da
       // check if ONE SHOT was activated previously.
       // if so, unprime hyper one-shot if tapped/held once
       if (IS_LAYER_ON(_HYPER_MEH)) {
-		// _HYPER_MEH layer kept on for HYPER+ESC
+        // _HYPER_MEH layer kept on for HYPER+ESC
 
-		// Notify of One-Shot beind deactivated
+        // Notify of One-Shot beind deactivated
         #ifdef AUDIO_ENABLE
         stop_all_notes();
         PLAY_SONG(hyper_off_song);
@@ -514,14 +514,14 @@ void hyper_and_hyperos_dance_finished(qk_tap_dance_state_t *state, void *user_da
       register_code(KC_LCTL);
       register_code(KC_LSFT);
       break;
-	  
-	// Second tap toggles HYPER layer lock for HYPER One-Shot
+    
+    // Second tap toggles HYPER layer lock for HYPER One-Shot
     case 2:
       // toggle OFF _HYPER_MEH layer and "un-arm" HYPER One-Shot
       if (IS_LAYER_ON(_HYPER_MEH)) {
         layer_off(_HYPER_MEH);
-
-		// HYPER disarm sound
+        
+        // HYPER disarm sound
         #ifdef AUDIO_ENABLE
         stop_all_notes();
         PLAY_SONG(hyper_off_song);
@@ -531,8 +531,8 @@ void hyper_and_hyperos_dance_finished(qk_tap_dance_state_t *state, void *user_da
       // toggle ON _HYPER_MEH layer, i.e. "arm" HYPER One-Shot
       else {
         layer_on(_HYPER_MEH);
-
-		// HYPER arm sound
+        
+        // HYPER arm sound
         #ifdef AUDIO_ENABLE
         stop_all_notes();
         PLAY_SONG(hyper_on_song);
@@ -556,8 +556,8 @@ void hyper_and_hyperos_dance_reset(qk_tap_dance_state_t *state, void *user_data)
 }
 
 
-// CMD / HYPER Tap dance
-// cmdhyper_dance_finished() - CMD when held, HYPER when double tapped + held {{{2
+// CMD / HYPER Tap dance {{{2
+// cmdhyper_dance_finished() - CMD when held, HYPER when double tapped + held {{{3
 void cmdhyper_dance_finished(qk_tap_dance_state_t *state, void *user_data) {
   switch (state->count) {
     // Tapping/holding once is for momentary CMD
@@ -578,7 +578,7 @@ void cmdhyper_dance_finished(qk_tap_dance_state_t *state, void *user_data) {
   }
 }
 
-// cmdhyper_dance_reset() - release CMD/HYPER {{2
+// cmdhyper_dance_reset() - release CMD/HYPER {{{3
 void cmdhyper_dance_reset(qk_tap_dance_state_t *state, void *user_data) {
   switch (state->count) {
     case 1:
@@ -600,8 +600,8 @@ void cmdhyper_dance_reset(qk_tap_dance_state_t *state, void *user_data) {
 }
 
 
-// ALT / MEH Tap dance
-// altmeh_dance_finished() - ALT when held, MEH when double tapped + held {{{2
+// ALT / MEH Tap dance {{{2
+// altmeh_dance_finished() - ALT when held, MEH when double tapped + held {{{3
 void altmeh_dance_finished(qk_tap_dance_state_t *state, void *user_data) {
   switch (state->count) {
 
@@ -625,7 +625,7 @@ void altmeh_dance_finished(qk_tap_dance_state_t *state, void *user_data) {
   }
 }
 
-// altmeh_dance_reset() - release ALT/MEH{{2
+// altmeh_dance_reset() - release ALT/MEH {{{3
 void altmeh_dance_reset(qk_tap_dance_state_t *state, void *user_data) {
   switch (state->count) {
     case 1:
@@ -647,11 +647,10 @@ void altmeh_dance_reset(qk_tap_dance_state_t *state, void *user_data) {
 }
 
 
-// FN / HYPER
-// fnhyper_dance_finished() {{{2
+// FN / HYPER {{{2
+// fnhyper_dance_finished() {{{3
 void fnhyper_dance_finished(qk_tap_dance_state_t *state, void *user_data) {
   switch (state->count) {
-
      // Tapping/holding once is for the momentary FN-layer. 
     case 1:
       layer_on(_FN);
@@ -664,8 +663,8 @@ void fnhyper_dance_finished(qk_tap_dance_state_t *state, void *user_data) {
       register_code(KC_LSFT);
       register_code(KC_LCTL);
 
-	  layer_on(_HYPER_MEH);
-				
+      layer_on(_HYPER_MEH);
+
       #ifdef AUDIO_ENABLE
       stop_all_notes();
       PLAY_SONG(hyper_on_song);
@@ -674,31 +673,29 @@ void fnhyper_dance_finished(qk_tap_dance_state_t *state, void *user_data) {
   }
 }
 
-// fnhyper_dance_reset {{{2
+// fnhyper_dance_reset {{{3
 void fnhyper_dance_reset(qk_tap_dance_state_t *state, void *user_data) {
   switch (state->count) {
-  	
-	// momentary _FN off
-	case 1:
+    // momentary _FN off
+    case 1:
       layer_off(_FN);
-	  break;
+      break;
 
-	// momentary HYPER off
-	case 2:
-	  unregister_code(KC_LGUI);
+    // momentary HYPER off
+    case 2:
+      unregister_code(KC_LGUI);
       unregister_code(KC_LALT);
       unregister_code(KC_LSFT);
       unregister_code(KC_LCTL);
-	  break;
+      break;
   }
 }
 
 
-// CTRL / NAVCTRL tap dance
-// ctrl_navctrl_dance_finished() {{{2
+// CTRL / NAVCTRL tap dance {{{2
+// ctrl_navctrl_dance_finished() {{{3
 void ctrl_navctrl_dance_finished(qk_tap_dance_state_t *state, void *user_data) {
   switch (state->count) {
-
      // Tapping/holding once is for the momentary FN-layer. 
     case 1:
       register_code(KC_LCTL);
@@ -706,32 +703,32 @@ void ctrl_navctrl_dance_finished(qk_tap_dance_state_t *state, void *user_data) {
 
     // Second tap is for momentary _NAVCTRL (if _NAV if on)
     case 2:
-	  if (IS_LAYER_ON(_NAV)) {
-        layer_on(_NAVCTRL);
-	  } else {
-	    if (IS_LAYER_ON(_NAVCTRL)) {
-		  layer_off(_NAVCTRL);
-		}
-	  }
+      if (IS_LAYER_ON(_NAV)) {
+          layer_on(_NAVCTRL);
+      }
+      else {
+        if (IS_LAYER_ON(_NAVCTRL)) {
+          layer_off(_NAVCTRL);
+	}
+      }
       break;
   }
 }
 
-// ctrlnavctrl_dance_reset {{{2
+// ctrlnavctrl_dance_reset {{{3
 void ctrl_navctrl_dance_reset(qk_tap_dance_state_t *state, void *user_data) {
   switch (state->count) {
-  	
-	// momentary CTRL off
-	case 1:
+    // momentary CTRL off
+    case 1:
       unregister_code(KC_LCTL);
-	  break;
-
-	// momentary _NAVCTRL off (if it is on)
-	case 2:
-	  if (IS_LAYER_ON(_NAVCTRL)) {
-		layer_off(_NAVCTRL);
-	  }
-	  break;
+      break;
+    
+    // momentary _NAVCTRL off (if it is on)
+    case 2:
+      if (IS_LAYER_ON(_NAVCTRL)) {
+        layer_off(_NAVCTRL);
+      }
+      break;
   }
 }
 
@@ -740,13 +737,13 @@ void ctrl_navctrl_dance_reset(qk_tap_dance_state_t *state, void *user_data) {
 // Tap Dance Actions {{{1
 qk_tap_dance_action_t tap_dance_actions[] = {
     [TD_RSHIFT_CAPS]   = ACTION_TAP_DANCE_DOUBLE(KC_RSFT,   KC_CAPS),
-	[TD_RSHIFT_BTN1]   = ACTION_TAP_DANCE_DOUBLE(KC_RSFT,   KC_BTN1),
+    [TD_RSHIFT_BTN1]   = ACTION_TAP_DANCE_DOUBLE(KC_RSFT,   KC_BTN1),
     [TD_HYPER]         = ACTION_TAP_DANCE_FN_ADVANCED(NULL, hyper_layer_finished,             hyper_layer_reset),
     [TD_HYPER_ONESHOT] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, hyper_and_hyperos_dance_finished, hyper_and_hyperos_dance_reset),
-	[TD_CMD_HYPER]     = ACTION_TAP_DANCE_FN_ADVANCED(NULL, cmdhyper_dance_finished,          cmdhyper_dance_reset),
-	[TD_ALT_MEH]       = ACTION_TAP_DANCE_FN_ADVANCED(NULL, altmeh_dance_finished, 		      altmeh_dance_reset),
-	[TD_FN_HYPER] 	   = ACTION_TAP_DANCE_FN_ADVANCED(NULL, fnhyper_dance_finished,           fnhyper_dance_reset),
-	[TD_CTRL_NAVCTRL]  = ACTION_TAP_DANCE_FN_ADVANCED(NULL, ctrl_navctrl_dance_finished,      ctrl_navctrl_dance_reset)
+    [TD_CMD_HYPER]     = ACTION_TAP_DANCE_FN_ADVANCED(NULL, cmdhyper_dance_finished,          cmdhyper_dance_reset),
+    [TD_ALT_MEH]       = ACTION_TAP_DANCE_FN_ADVANCED(NULL, altmeh_dance_finished,            altmeh_dance_reset),
+    [TD_FN_HYPER]      = ACTION_TAP_DANCE_FN_ADVANCED(NULL, fnhyper_dance_finished,           fnhyper_dance_reset),
+    [TD_CTRL_NAVCTRL]  = ACTION_TAP_DANCE_FN_ADVANCED(NULL, ctrl_navctrl_dance_finished,      ctrl_navctrl_dance_reset)
 };
 // }}}1
 
@@ -785,18 +782,18 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       break;
 
     case NAV:       // _NAV layer + tri layer {{{3
-	  // key pressed
+      // key pressed
       if (record->event.pressed) {
         layer_on(_NAV);
         update_tri_layer(_FN, _NAV, _HWDLAYER);
       }
-
-	  // key released
+      
+      // key released
       else {
-	    // turn off _NAVCTRL if it is on when _NAV is going to turn off
-		if (IS_LAYER_ON(_NAVCTRL)) {
-		  layer_off(_NAVCTRL);
-		}
+        // turn off _NAVCTRL if it is on when _NAV is going to turn off
+        if (IS_LAYER_ON(_NAVCTRL)) {
+          layer_off(_NAVCTRL);
+        }
         layer_off(_NAV);
         update_tri_layer(_FN, _NAV, _HWDLAYER);
       }
@@ -834,7 +831,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         return false;
 
       default:      // HYPER One-Shot if _HYPER_MEH layer is on
-		// add modifiers, register keycode and go back to default layer  {{{3
+        // add modifiers, register keycode and go back to default layer  {{{3
         if (IS_LAYER_ON(_HYPER_MEH)) {
 		
           // turn off hyper layer

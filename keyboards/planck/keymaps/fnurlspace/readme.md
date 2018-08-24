@@ -1,4 +1,6 @@
-# fnurlspace layout for The Planck 
+# fnurlspace layout for The Planck and other 40% ortholinear keyboards
+
+Partially updated for fnurlspace v1.2, 2018-08-23
 
 The fnurlspace layout was designed with the following goals:
 
@@ -25,7 +27,7 @@ To accomplish these goals, the fnurlspace layout uses the following:
 
 ## Base layer
 
-![The fnurlspace layout](./fnurlspace-layout.png)
+![The fnurlspace layout, ANSI SE and ANSI US variations](./fnurlspace-ansi_se-us.png)
 
 The base layer features a dual role `ESC/CTRL` key which works like the
 `Escape` key when tapped, but like the `Ctrl` key when held. I actually use
@@ -45,6 +47,8 @@ Space`. The `Backspace` key is found by doing the opposite; press and hold
 `Right Space`, then tap `Left Space`. I have found this quite intuitive, as
 the `Enter` key sequence is a forward moving left to right movement whereas
 the `Backspace` key sequence is a backward moving right to left movement.
+
+A standard US version can be toggled from the `NAV` layer.
 
 
 ## PLEFT and PRIGHT layers
@@ -77,26 +81,36 @@ same position for both `PLEFT` and `PRIGHT` layers. Finally, the top right
 keys are used for zooming in and out as they produce `Cmd-=` and `Cmd--`.
 
 
-## NAV layer
+## NAV and CNAV layers
 
-![NAV layer](./fnurlspace-nav.png)
+![NAV layer](./fnurlspace-nav-cnav.png)
 
-The `NAV` layer simply provides an arrow cluster, `Home` and `End` keys +
-`PgUp` and `PgDn` and the idea is that you just have to move your thumb to
-the right one step and use the already positioned fingers to use the arrow
-cluster.
+The `NAV` layer simply provides an arrow cluster, media keys, modifier+arrow
+keys + `PgUp` and `PgDn` and the idea is that you just have to move your thumb
+to the right one step and use the already positioned fingers to use the arrow
+cluster. This layer also contains the `Game Mode` and `ANSI-US` toggle keys.
 
+The `Previous Tab` and `Next Tab` keys are actually `CMD+OPT+Left Arrow` and
+`CMD+OPT+Right Arrow` which I have bound to previous/next tab using the general
+system preferences in macOS.
+
+`Zoom in` and `Zoom out` are the standard bindings to `CMD+=` and `CMD+-`.
+
+
+The *CNAV layer* contains modifier + arrow key bindings using `CTRL` instead of
+`CMD`.
 
 ## FN layer
 
 ![FN layer](./fnurlspace-fn.png)
 
 The `FN` layer contains F-keys `F1` through `F12` placed on the same keys
-as the numbers `1`-`0` followed by `F12` just below `F11`. This is also
-where the media keysa are placed and the `Game Mode` toggle key.
+as the numbers `1`-`0` followed by `F12` just below `F11`. 
 
 
 ## Game Mode and NUM layers
+
+![GAME and NUM layers](./fnurlspace-gamenum.png)
 
 The `Game Mode` layer is toggled on from the `FN` layer and the Planck
 makes a sound when it toggles on, and another when it toggles off (the
@@ -115,12 +129,17 @@ needs to be tapped in games. The `ESC` key is accessed on the same key but
 with the `NUM` layer activated.
 
 
+## Hardware specific layers
+
+![Planck and general hardware layer](./fnurlspace-planck-adjust.png)
+
+Triggered by pressing NAV
+
 # Some background
 
-I have been working and using this layout on various keyboards for more
-than a year now and it has proven to be great, at least for me. Initially
-the reason for creating it was to add Swedish characters (`åäö`) to the
-default US ANSI layout.
+I have been working and using this layout on various keyboards since around 2016
+and it has proven to be great, at least for me. Initially the reason for
+creating it was to add Swedish characters (`åäö`) to the default US ANSI layout.
 
 Using a standard Swedish layout (the same problem exists with other layouts
 as well) comes with the problem that the keycodes for certain characters
