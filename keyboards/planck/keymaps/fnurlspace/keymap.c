@@ -36,15 +36,16 @@ enum fnurlspace_layers {
   _PLEFT,           // Parens & symbols, left
   _PRIGHT,          // Parens & symbols, right 
   _FN,              // F-keys (F1 through F12)
+  _HYPER_MEH,       // Hyper/Meh (Shift+CTRL+ALT+GUI / Shift+CTRL+ALT) key compatability layer
+  _USE_CTRL,        // used as a state indicator
   _NAV,             // Navigation keys using GUI (arrows, pgup/pgdown, media keys, key combos)
   _NAVCTRL,         // Navigation keys using CTRL (arrows, pgup/pgdown, media keys, key combos)
   _GAME1,           // Left split game mode (left thumb is SPACE)
   //_GAME2,           // Right split game mode (map WASD to right split)
   _NUM1,            // Number keys for Left split game mode
-  //_NUM2,          // Number keys for Right split game mode
+  //_NUM2,            // Number keys for Right split game mode
   _PLANCK,          // Hardware commands (general) + Planck specific functionality
-  _ADJUST,          // Hardware commands (general)
-  _HYPER_MEH        // Hyper/Meh (Shift+CTRL+ALT+GUI / Shift+CTRL+ALT) key compatability layer
+  _ADJUST           // Hardware commands (general)
 };
 
 
@@ -75,26 +76,26 @@ enum custom_keycodes {
 
 // Tap Dance aliases and IDs {{{2
 enum tap_dances {
-    TD_RSHIFT_CAPS,
-    TD_RSHIFT_BTN1,
-    TD_HYPER,
-    TD_HYPER_ONESHOT,
+    //TD_RSHIFT_CAPS,
+    //TD_RSHIFT_BTN1,
+    //TD_HYPER,
+    //TD_HYPER_ONESHOT,
     TD_CMD_HYPER,
     TD_ALT_MEH,
-    TD_FN_HYPER,
-    TD_CTRL_NAVCTRL
+    TD_CTRL_NAVCTRL,
+    TD_CTRL_USECTRL
 };
 
 // Tap dance aliases (use in layout) {{{3
-#define TDRSCAP  TD(TD_RSHIFT_CAPS)
-#define TDRSBT1  TD(TD_RSHIFT_BTN1)
-#define TDHYPER  TD(TD_HYPER)
-#define TDHYPOS  TD(TD_HYPER_ONESHOT)
-#define TDHYPME  TD(TD_HYPER_MEH)
-#define TDALTME  TD(TD_ALT_MEH)
+//#define TDRSCAP  TD(TD_RSHIFT_CAPS)
+//#define TDRSBT1  TD(TD_RSHIFT_BTN1)
+//#define TDHYPER  TD(TD_HYPER)
+//#define TDHYPOS  TD(TD_HYPER_ONESHOT)
+//#define TDHYPME  TD(TD_HYPER_MEH)
 #define TDCMDHY  TD(TD_CMD_HYPER)
-#define TDFNHYP  TD(TD_FN_HYPER)
+#define TDALTME  TD(TD_ALT_MEH)
 #define TDCNAVC  TD(TD_CTRL_NAVCTRL)
+#define TDCUSEC  TD(TD_CTRL_USECTRL)
 
 
 // Aliases to use in keymaps {{{2
@@ -105,7 +106,7 @@ enum tap_dances {
 
 // Layer modifiers {{{3
 #define NUM1MOD  MO(_NUM1)
-#define NUM2MOD  MO(_NUM2)
+//#define NUM2MOD  MO(_NUM2)
 
 // Dual-role layer keys: LT = layer when held, keycode when tapped {{{3
 #define PL_SPC   LT(_PLEFT,  KC_SPC)
@@ -138,7 +139,6 @@ enum tap_dances {
 // }}}1
 
 
-
 // Keymap Layers {{{1
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
@@ -153,7 +153,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   |--------+--------+--------+--------+--------+--------| |--------+--------+--------+--------+--------+--------|
   | Shift  |   Z    |   X    |   C    |   V    |   B    | |   N    |   M    |   ,    |   .    |   /    | Shift  |
   |--------+--------+--------+--------+--------+--------| |--------+--------+--------+--------+--------+--------|
-  |TD:CNAVC|  ESC   |  FN    |TD:ALTME|TD:CMDHY| PL/SPC | | PR/SPC |  NAV   |  CMD   |  ALT   | BCKSPC | ENTER  |
+  |TD:CUSEC|  ESC   |  FN    |TD:ALTME|TD:CMDHY| PL/SPC | | PR/SPC |  NAV   |  CMD   |  ALT   | BCKSPC | ENTER  |
   `-----------------------------------------------------+ +-----------------------------------------------------'
   NOTE: Right half, bottom row, second key from the right is broken on my Lets Split (i.e. BCKSPC above).
 */
@@ -161,7 +161,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
    KC_TAB , KC_Q   , KC_W   , KC_E   , KC_R   , KC_T    ,  KC_Y   , KC_U   , KC_I   , KC_O   , KC_P   , KC_P7  ,\
    ESC_CTL, KC_A   , KC_S   , KC_D   , KC_F   , KC_G    ,  KC_H   , KC_J   , KC_K   , KC_L   , KC_P9  , KC_P8  ,\
    KC_LSFT, KC_Z   , KC_X   , KC_C   , KC_V   , KC_B    ,  KC_N   , KC_M   , KC_COMM, KC_DOT , KC_SLSH, KC_RSFT,\
-   TDCNAVC, KC_ESC , FN     , TDALTME, TDCMDHY, PL_SPC  ,  PR_SPC , NAV    , KC_RGUI, KC_RALT, KC_BSPC, KC_ENT  \
+   TDCUSEC, KC_ESC , FN     , TDALTME, TDCMDHY, PL_SPC  ,  PR_SPC , NAV    , KC_RGUI, KC_RALT, KC_BSPC, KC_ENT  \
 ),
 
 /* Base layer: ANSI-US (standard ANSI US) {{{2
@@ -222,17 +222,17 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   ,-----------------------------------------------------+ +-----------------------------------------------------.
   |        |   F1   |   F2   |   F3   |   F4   |   F5   | |   F6   |   F7   |   F8   |   F9   |  F10   |  F11   |
   |--------+--------+--------+--------+--------+--------+ +--------+--------+--------+--------+--------+--------|
-  |        |CMDPGUP |        |        |        |        | |        |        |        |        |        |  F12   |
+  |        |        |        |        |        |        | |        |        |        |        |        |  F12   |
   |--------+--------+--------+--------+--------+--------+ +--------+--------+--------+--------+--------+--------|
-  |        |CMDPGDN |        |        |        |        | |        |        |        |        |        |        |
+  |        |        |        |        |        |        | |        |        |        |        |        |        |
   |--------+--------+--------+--------+--------+--------+ +--------+--------+--------+--------+--------+--------|
   |        |        |        |        |        |        | |        |        |        |        | KP ENT |  DEL   |
   `-----------------------------------------------------+ +-----------------------------------------------------'
 */
 [_FN] = KB_LAYOUT_LAYER(
    XXXXXX , KC_F1  , KC_F2  , KC_F3  , KC_F4  , KC_F5   ,  KC_F6  , KC_F7  , KC_F8  , KC_F9  , KC_F10 , KC_F11 ,\
-   XXXXXX , CMDPGUP, XXXXXX , XXXXXX , XXXXXX , XXXXXX  ,  XXXXXX , XXXXXX , XXXXXX , XXXXXX , XXXXXX , KC_F12 ,\
-   ______ , CMDPGDN, XXXXXX , XXXXXX , XXXXXX , XXXXXX  ,  XXXXXX , XXXXXX , XXXXXX , XXXXXX , XXXXXX , ______ ,\
+   XXXXXX , XXXXXX , XXXXXX , XXXXXX , XXXXXX , XXXXXX  ,  XXXXXX , XXXXXX , XXXXXX , XXXXXX , XXXXXX , KC_F12 ,\
+   ______ , XXXXXX , XXXXXX , XXXXXX , XXXXXX , XXXXXX  ,  XXXXXX , XXXXXX , XXXXXX , XXXXXX , XXXXXX , ______ ,\
    ______ , XXXXXX , ______ , ______ , ______ , ______  ,  ______ , ______ , ______ , ______ , KC_PENT, KC_DEL  \
 ),
 
@@ -267,11 +267,29 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
    ______ , ______ , ______ , ______ , ______ , ______  ,  ______ , ______ , ______ , ______ , ______ , ______  \
 ),
 
+/* Use NAVCTRL layer status ... because I am not sure how to edit any other kind of state {{{2
+  ,-----------------------------------------------------+ +-----------------------------------------------------.
+  |        |        |        |        |        |        | |        |        |        |        |        |        |
+  |--------+--------+--------+--------+--------+--------+ +--------+--------+--------+--------+--------+--------|
+  |        |        |        |        |        |        | |        |        |        |        |        |        |
+  |--------+--------+--------+--------+--------+--------+ +--------+--------+--------+--------+--------+--------|
+  |        |        |        |        |        |        | |        |        |        |        |        |        |
+  |--------+--------+--------+--------+--------+--------+ +--------+--------+--------+--------+--------+--------|
+  |        |        |        |        |        |        | |        |        |        |        |        |        |
+  `-----------------------------------------------------+ +-----------------------------------------------------'
+*/
+[_USE_CTRL] = KB_LAYOUT_LAYER(
+   ______ , ______ , ______ , ______ , ______ , ______  ,  ______ , ______ , ______ , ______ , ______ , ______ ,\
+   ______ , ______ , ______ , ______ , ______ , ______  ,  ______ , ______ , ______ , ______ , ______ , ______ ,\
+   ______ , ______ , ______ , ______ , ______ , ______  ,  ______ , ______ , ______ , ______ , ______ , ______ ,\
+   ______ , ______ , ______ , ______ , ______ , ______  ,  ______ , ______ , ______ , ______ , ______ , ______  \
+),
+
 /* Navigation layer (Default: Using GUI for modified keys) {{{2
   ,-----------------------------------------------------+ +-----------------------------------------------------.
-  |        |        |        | CMDLARR| CMDRARR|        | |        |PREV TAB|   UP   |NEXT TAB|  PgUp  |Zoom Out|
-  |--------+--------+--------+--------+--------+--------+ +--------+--------+--------+--------+--------+--------|
-  |        |  MUTE  |  V DN  |  V UP  |        | GAME1  | |        |  LEFT  |  DOWN  | RIGHT  |  PgDn  |Zoom In |
+  |        |        |        | CMDLARR| CMDRARR|        | |CMDPGUP |PREV TAB|   UP   |NEXT TAB|  PgUp  |Zoom Out|
+  |--------+--------+--------+--------+--------+--------+ +--------+ -------+--------+--------+--------+--------|
+  |        |  MUTE  |  V DN  |  V UP  |        | GAME1  | |CMDPGDN |  LEFT  |  DOWN  | RIGHT  |  PgDn  |Zoom In |
   |--------+--------+--------+--------+--------+--------+ +--------+--------+--------+--------+--------+--------|
   |        |  PREV  |  PLAY  |  NEXT  |        | ANSIUS | |        |CMDLARR |        |CMDRARR |        |        |
   |--------+--------+--------+--------+--------+--------+ +--------+--------+--------+--------+--------+--------|
@@ -279,17 +297,17 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   `-----------------------------------------------------+ +-----------------------------------------------------'
  */
 [_NAV] = KB_LAYOUT_LAYER(
-   XXXXXX , XXXXXX , XXXXXX , CMDLARR, CMDRARR, XXXXXX  ,  XXXXXX , PRVTABG, KC_UP  , NXTTABG, KC_PGUP, Z_OUTG ,\
-   XXXXXX , KC_MUTE, KC_VOLD, KC_VOLU, XXXXXX , GAME1   ,  XXXXXX , KC_LEFT, KC_DOWN, KC_RGHT, KC_PGDN, Z_ING  ,\
+   XXXXXX , XXXXXX , XXXXXX , CMDLARR, CMDRARR, XXXXXX  ,  CMDPGUP, PRVTABG, KC_UP  , NXTTABG, KC_PGUP, Z_OUTG ,\
+   XXXXXX , KC_MUTE, KC_VOLD, KC_VOLU, XXXXXX , GAME1   ,  CMDPGDN, KC_LEFT, KC_DOWN, KC_RGHT, KC_PGDN, Z_ING  ,\
    ______ , KC_MRWD, KC_MPLY, KC_MFFD, XXXXXX , ANSIUS  ,  XXXXXX , CMDLARR, XXXXXX , CMDRARR, XXXXXX , ______ ,\
    ______ , XXXXXX , ______ , ______ , ______ , ______  ,  ______ , ______ , ______ , ______ , XXXXXX , XXXXXX  \
 ),
 
 /* Navigation layer (Variant: Using CTRL instead of GUI for modified keys) {{{2
   ,-----------------------------------------------------+ +-----------------------------------------------------.
-  |        |        |        | CTLLARR| CTLRARR|        | |        |PREV TAB|   UP   |NEXT TAB|  PgUp  |Zoom Out|
+  |        |        |        | CTLLARR| CTLRARR|        | |CTRLPGUP|PREV TAB|   UP   |NEXT TAB|  PgUp  |Zoom Out|
   |--------+--------+--------+--------+--------+--------+ +--------+--------+--------+--------+--------+--------|
-  |        |  MUTE  |  V DN  |  V UP  |        | GAME1  | | GAME2  |  LEFT  |  DOWN  | RIGHT  |  PgDn  |Zoom In |
+  |        |  MUTE  |  V DN  |  V UP  |        | GAME1  | |CTRLPGDN|  LEFT  |  DOWN  | RIGHT  |  PgDn  |Zoom In |
   |--------+--------+--------+--------+--------+--------+ +--------+--------+--------+--------+--------+--------|
   |        |  PREV  |  PLAY  |  NEXT  |        | ANSIUS | |        |CTLLARR |        |CTLRARR |        |        |
   |--------+--------+--------+--------+--------+--------+ +--------+--------+--------+--------+--------+--------|
@@ -297,10 +315,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   `-----------------------------------------------------+ +-----------------------------------------------------'
  */
 [_NAVCTRL] = KB_LAYOUT_LAYER(
-   ______ , ______ , ______ , ______ , ______ , ______  ,  ______ , PRVTABC, ______ , NXTTABC, ______ , Z_OUTC ,\
-   ______ , ______ , ______ , ______ , ______ , ______  ,  ______ , ______ , ______ , ______ , ______ , Z_INC  ,\
-   ______ , ______ , ______ , ______ , ______ , ______  ,  ______ , CTLLARR, ______ , CTLRARR, ______ , ______ ,\
-   ______ , ______ , ______ , ______ , ______ , ______  ,  ______ , ______ , ______ , ______ , ______ , ______ \
+   XXXXXX , XXXXXX , XXXXXX , CTLLARR, CTLRARR, XXXXXX  ,  CTLPGUP, PRVTABC, KC_UP  , NXTTABC, KC_PGUP, Z_OUTC ,\
+   XXXXXX , KC_MUTE, KC_VOLD, KC_VOLU, XXXXXX , GAME1   ,  CTLPGDN, KC_LEFT, KC_DOWN, KC_RGHT, KC_PGDN, Z_INC  ,\
+   ______ , KC_MRWD, KC_MPLY, KC_MFFD, XXXXXX , ANSIUS  ,  XXXXXX , CTLLARR, XXXXXX , CTLRARR, XXXXXX , ______ ,\
+   ______ , XXXXXX , ______ , ______ , ______ , ______  ,  ______ , ______ , ______ , ______ , XXXXXX , XXXXXX  \
 ),
 
 /* Game layer {{{2
@@ -443,8 +461,6 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 #endif
 //}}}1
 
-
-
 // Advanced Tap Dancing functions {{{1
 /**
  * The _finished() functions are used when the tap dance cutoff timer has
@@ -456,6 +472,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * contains some kind of conditional for different amount of taps.
  **/ 
 
+/*
 // HYPER momentary modifier. Tap dance implementation. {{{2
 // hyper_layer_finished() HYPER when tapped once and held {{{3
 void hyper_layer_finished(qk_tap_dance_state_t *state, void *user_data) {
@@ -487,8 +504,10 @@ void hyper_layer_reset(qk_tap_dance_state_t *state, void *user_data) {
     layer_off(_HYPER_MEH);
   }
 }
+// }}}2
+*/
 
-
+/*
 // HYPER / HYPER One-Shot Tap dance {{{2
 // hyper_and_hyperos_finished() HYPER when tapped once and held, HYPER One-shot when double tapped and held {{{3
 void hyper_and_hyperos_dance_finished(qk_tap_dance_state_t *state, void *user_data) {
@@ -554,7 +573,8 @@ void hyper_and_hyperos_dance_reset(qk_tap_dance_state_t *state, void *user_data)
   
   // no state->count == 2 clause. all toggle stuff is handled during key press
 }
-
+// }}}2
+*/
 
 // CMD / HYPER Tap dance {{{2
 // cmdhyper_dance_finished() - CMD when held, HYPER when double tapped + held {{{3
@@ -598,7 +618,7 @@ void cmdhyper_dance_reset(qk_tap_dance_state_t *state, void *user_data) {
       break;
   }
 }
-
+// }}}2
 
 // ALT / MEH Tap dance {{{2
 // altmeh_dance_finished() - ALT when held, MEH when double tapped + held {{{3
@@ -645,52 +665,42 @@ void altmeh_dance_reset(qk_tap_dance_state_t *state, void *user_data) {
       break;
   }
 }
+// }}}2
 
-
-// FN / HYPER {{{2
-// fnhyper_dance_finished() {{{3
-void fnhyper_dance_finished(qk_tap_dance_state_t *state, void *user_data) {
+// CTRL / USE_CTRL tap dance {{{2
+// ctrl_usectrl_dance_finished() {{{3
+void ctrl_usectrl_dance_finished(qk_tap_dance_state_t *state, void *user_data) {
   switch (state->count) {
-     // Tapping/holding once is for the momentary FN-layer. 
+     // Tapping/holding once is for the momentary CTRL. 
     case 1:
-      layer_on(_FN);
+      register_code(KC_LCTL);
       break;
 
-    // Second tap is for momentary HYPER
+    // Second tap is to toggle _USECTRL
     case 2:
-	  register_code(KC_LGUI);
-      register_code(KC_LALT);
-      register_code(KC_LSFT);
-      register_code(KC_LCTL);
-
-      layer_on(_HYPER_MEH);
-
-      #ifdef AUDIO_ENABLE
-      stop_all_notes();
-      PLAY_SONG(hyper_on_song);
-      #endif
+      if (IS_LAYER_ON(_USE_CTRL)) {
+          layer_off(_USE_CTRL);
+      } else {
+          layer_on(_USE_CTRL);
+      }
       break;
   }
 }
 
-// fnhyper_dance_reset {{{3
-void fnhyper_dance_reset(qk_tap_dance_state_t *state, void *user_data) {
+// ctrl_usectrl_dance_reset {{{3
+void ctrl_usectrl_dance_reset(qk_tap_dance_state_t *state, void *user_data) {
   switch (state->count) {
-    // momentary _FN off
+    // momentary CTRL off
     case 1:
-      layer_off(_FN);
-      break;
-
-    // momentary HYPER off
-    case 2:
-      unregister_code(KC_LGUI);
-      unregister_code(KC_LALT);
-      unregister_code(KC_LSFT);
       unregister_code(KC_LCTL);
       break;
+    
+    // Its a toggle, so only do stuff on press
+    case 2:
+      break;
   }
 }
-
+// }}}2
 
 // CTRL / NAVCTRL tap dance {{{2
 // ctrl_navctrl_dance_finished() {{{3
@@ -731,19 +741,20 @@ void ctrl_navctrl_dance_reset(qk_tap_dance_state_t *state, void *user_data) {
       break;
   }
 }
+// }}}2
 
 // }}}1
 
 // Tap Dance Actions {{{1
 qk_tap_dance_action_t tap_dance_actions[] = {
-    [TD_RSHIFT_CAPS]   = ACTION_TAP_DANCE_DOUBLE(KC_RSFT,   KC_CAPS),
-    [TD_RSHIFT_BTN1]   = ACTION_TAP_DANCE_DOUBLE(KC_RSFT,   KC_BTN1),
-    [TD_HYPER]         = ACTION_TAP_DANCE_FN_ADVANCED(NULL, hyper_layer_finished,             hyper_layer_reset),
-    [TD_HYPER_ONESHOT] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, hyper_and_hyperos_dance_finished, hyper_and_hyperos_dance_reset),
+    //[TD_RSHIFT_CAPS]   = ACTION_TAP_DANCE_DOUBLE(KC_RSFT,   KC_CAPS),
+    //[TD_RSHIFT_BTN1]   = ACTION_TAP_DANCE_DOUBLE(KC_RSFT,   KC_BTN1),
+    //[TD_HYPER]         = ACTION_TAP_DANCE_FN_ADVANCED(NULL, hyper_layer_finished,             hyper_layer_reset),
+    //[TD_HYPER_ONESHOT] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, hyper_and_hyperos_dance_finished, hyper_and_hyperos_dance_reset),
     [TD_CMD_HYPER]     = ACTION_TAP_DANCE_FN_ADVANCED(NULL, cmdhyper_dance_finished,          cmdhyper_dance_reset),
     [TD_ALT_MEH]       = ACTION_TAP_DANCE_FN_ADVANCED(NULL, altmeh_dance_finished,            altmeh_dance_reset),
-    [TD_FN_HYPER]      = ACTION_TAP_DANCE_FN_ADVANCED(NULL, fnhyper_dance_finished,           fnhyper_dance_reset),
-    [TD_CTRL_NAVCTRL]  = ACTION_TAP_DANCE_FN_ADVANCED(NULL, ctrl_navctrl_dance_finished,      ctrl_navctrl_dance_reset)
+    [TD_CTRL_USECTRL]  = ACTION_TAP_DANCE_FN_ADVANCED(NULL, ctrl_usectrl_dance_finished,      ctrl_usectrl_dance_reset)
+    //[TD_CTRL_NAVCTRL]  = ACTION_TAP_DANCE_FN_ADVANCED(NULL, ctrl_navctrl_dance_finished,      ctrl_navctrl_dance_reset)
 };
 // }}}1
 
@@ -784,18 +795,28 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     case NAV:       // _NAV layer + tri layer {{{3
       // key pressed
       if (record->event.pressed) {
-        layer_on(_NAV);
-        update_tri_layer(_FN, _NAV, _HWDLAYER);
+        // turn on the correct NAV layer depending on if the _USE_CTRL layer is
+        // on or off
+        if (IS_LAYER_ON(_USE_CTRL)) {
+          layer_on(_NAVCTRL);
+          update_tri_layer(_FN, _NAVCTRL, _HWDLAYER);
+        } else {
+          layer_on(_NAV);
+          update_tri_layer(_FN, _NAV, _HWDLAYER);
+        }
       }
       
       // key released
       else {
-        // turn off _NAVCTRL if it is on when _NAV is going to turn off
-        if (IS_LAYER_ON(_NAVCTRL)) {
+        // turn off the correct NAV layer depending on if the _USE_CTRL layer is
+        // on or off
+        if (IS_LAYER_ON(_USE_CTRL)) {
           layer_off(_NAVCTRL);
+          update_tri_layer(_FN, _NAVCTRL, _HWDLAYER);
+        } else {
+          layer_off(_NAV);
+          update_tri_layer(_FN, _NAV, _HWDLAYER);
         }
-        layer_off(_NAV);
-        update_tri_layer(_FN, _NAV, _HWDLAYER);
       }
 	  
       return false;
