@@ -236,7 +236,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
    ______ , XXXXXX , ______ , ______ , ______ , ______  ,  ______ , ______ , ______ , ______ , KC_PENT, KC_DEL  \
 ),
 
-/* HYPER layer {{{2
+/* HYPER MEH layer {{{2
 
   The _HYPER_MEH layer is used for HYPER (GUI+CTRL+ALT+SHIFT) modified keys (both
   momentary and One-Shot). The HYPER layer is needed in order for HYPER + ESC
@@ -293,14 +293,14 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   |--------+--------+--------+--------+--------+--------+ +--------+--------+--------+--------+--------+--------|
   |        |  PLAY  |  PREV  |  NEXT  |        | ANSIUS | |        |CMDLARR |        |CMDRARR |        |        |
   |--------+--------+--------+--------+--------+--------+ +--------+--------+--------+--------+--------+--------|
-  |        |        |        |        |        |        | |        |        |        |        |        |        |
+  |        |        |        |        |        |        | |        |        |        |        |        | BCKSPC |
   `-----------------------------------------------------+ +-----------------------------------------------------'
  */
 [_NAV] = KB_LAYOUT_LAYER(
    ______ , XXXXXX , XXXXXX , CMDLARR, CMDRARR, XXXXXX  ,  CMDPGUP, PRVTABG, KC_UP  , NXTTABG, KC_PGUP, Z_OUTG ,\
    ______ , KC_MUTE, KC_VOLD, KC_VOLU, XXXXXX , GAME1   ,  CMDPGDN, KC_LEFT, KC_DOWN, KC_RGHT, KC_PGDN, Z_ING  ,\
    ______ , KC_MPLY, KC_MRWD, KC_MFFD, XXXXXX , ANSIUS  ,  XXXXXX , CMDLARR, XXXXXX , CMDRARR, XXXXXX , ______ ,\
-   ______ , XXXXXX , ______ , ______ , ______ , ______  ,  ______ , ______ , ______ , ______ , XXXXXX , XXXXXX  \
+   ______ , XXXXXX , ______ , ______ , ______ , ______  ,  ______ , ______ , ______ , ______ , XXXXXX , KC_BSPC \
 ),
 
 /* Navigation layer (Variant: Using CTRL instead of GUI for modified keys) {{{2
@@ -311,14 +311,14 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   |--------+--------+--------+--------+--------+--------+ +--------+--------+--------+--------+--------+--------|
   |        |  PLAY  |  PREV  |  NEXT  |        | ANSIUS | |        |CTLLARR |        |CTLRARR |        |        |
   |--------+--------+--------+--------+--------+--------+ +--------+--------+--------+--------+--------+--------|
-  |        |        |        |        |        |        | |        |        |        |        |        |        |
+  |        |        |        |        |        |        | |        |        |        |        |        | BCKSPC |
   `-----------------------------------------------------+ +-----------------------------------------------------'
  */
 [_NAVCTRL] = KB_LAYOUT_LAYER(
    ______ , XXXXXX , XXXXXX , CTLLARR, CTLRARR, XXXXXX  ,  CTLPGUP, PRVTABC, KC_UP  , NXTTABC, KC_PGUP, Z_OUTC ,\
    ______ , KC_MUTE, KC_VOLD, KC_VOLU, XXXXXX , GAME1   ,  CTLPGDN, KC_LEFT, KC_DOWN, KC_RGHT, KC_PGDN, Z_INC  ,\
    ______ , KC_MPLY, KC_MRWD, KC_MFFD, XXXXXX , ANSIUS  ,  XXXXXX , CTLLARR, XXXXXX , CTLRARR, XXXXXX , ______ ,\
-   ______ , XXXXXX , ______ , ______ , ______ , ______  ,  ______ , ______ , ______ , ______ , XXXXXX , XXXXXX  \
+   ______ , XXXXXX , ______ , ______ , ______ , ______  ,  ______ , ______ , ______ , ______ , XXXXXX , KC_BSPC \
 ),
 
 /* Game layer {{{2
