@@ -287,9 +287,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 /* Navigation layer (Default: Using GUI for modified keys) {{{2
   ,-----------------------------------------------------+ +-----------------------------------------------------.
-  |        |        |        | CMDLARR| CMDRARR|        | |CMDPGUP |PREV TAB|   UP   |NEXT TAB|  PgUp  |Zoom Out|
+  |        |        |        | CMDLARR| CMDRARR|        | |CMDPGUP |PREV TAB|   UP   |NEXT TAB|  PgUp  |Zoom In |
   |--------+--------+--------+--------+--------+--------+ +--------+ -------+--------+--------+--------+--------|
-  |        |  MUTE  |  V DN  |  V UP  |        | GAME1  | |CMDPGDN |  LEFT  |  DOWN  | RIGHT  |  PgDn  |Zoom In |
+  |        |  MUTE  |  V DN  |  V UP  |        | GAME1  | |CMDPGDN |  LEFT  |  DOWN  | RIGHT  |  PgDn  |Zoom Out|
   |--------+--------+--------+--------+--------+--------+ +--------+--------+--------+--------+--------+--------|
   |        |  PLAY  |  PREV  |  NEXT  |        | ANSIUS | |        |CMDLARR |        |CMDRARR |        |        |
   |--------+--------+--------+--------+--------+--------+ +--------+--------+--------+--------+--------+--------|
@@ -297,17 +297,17 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   `-----------------------------------------------------+ +-----------------------------------------------------'
  */
 [_NAV] = KB_LAYOUT_LAYER(
-   ______ , XXXXXX , XXXXXX , CMDLARR, CMDRARR, XXXXXX  ,  CMDPGUP, PRVTABG, KC_UP  , NXTTABG, KC_PGUP, Z_OUTG ,\
-   ______ , KC_MUTE, KC_VOLD, KC_VOLU, XXXXXX , GAME1   ,  CMDPGDN, KC_LEFT, KC_DOWN, KC_RGHT, KC_PGDN, Z_ING  ,\
+   ______ , XXXXXX , XXXXXX , CMDLARR, CMDRARR, XXXXXX  ,  CMDPGUP, PRVTABG, KC_UP  , NXTTABG, KC_PGUP, Z_ING  ,\
+   ______ , KC_MUTE, KC_VOLD, KC_VOLU, XXXXXX , GAME1   ,  CMDPGDN, KC_LEFT, KC_DOWN, KC_RGHT, KC_PGDN, Z_OUTG ,\
    ______ , KC_MPLY, KC_MRWD, KC_MFFD, XXXXXX , ANSIUS  ,  XXXXXX , CMDLARR, XXXXXX , CMDRARR, XXXXXX , ______ ,\
    ______ , XXXXXX , ______ , ______ , ______ , ______  ,  ______ , ______ , ______ , ______ , XXXXXX , KC_BSPC \
 ),
 
 /* Navigation layer (Variant: Using CTRL instead of GUI for modified keys) {{{2
   ,-----------------------------------------------------+ +-----------------------------------------------------.
-  |        |        |        | CTLLARR| CTLRARR|        | |CTRLPGUP|PREV TAB|   UP   |NEXT TAB|  PgUp  |Zoom Out|
+  |        |        |        | CTLLARR| CTLRARR|        | |CTRLPGUP|PREV TAB|   UP   |NEXT TAB|  PgUp  |Zoom In |
   |--------+--------+--------+--------+--------+--------+ +--------+--------+--------+--------+--------+--------|
-  |        |  MUTE  |  V DN  |  V UP  |        | GAME1  | |CTRLPGDN|  LEFT  |  DOWN  | RIGHT  |  PgDn  |Zoom In |
+  |        |  MUTE  |  V DN  |  V UP  |        | GAME1  | |CTRLPGDN|  LEFT  |  DOWN  | RIGHT  |  PgDn  |Zoom Out|
   |--------+--------+--------+--------+--------+--------+ +--------+--------+--------+--------+--------+--------|
   |        |  PLAY  |  PREV  |  NEXT  |        | ANSIUS | |        |CTLLARR |        |CTLRARR |        |        |
   |--------+--------+--------+--------+--------+--------+ +--------+--------+--------+--------+--------+--------|
@@ -315,8 +315,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   `-----------------------------------------------------+ +-----------------------------------------------------'
  */
 [_NAVCTRL] = KB_LAYOUT_LAYER(
-   ______ , XXXXXX , XXXXXX , CTLLARR, CTLRARR, XXXXXX  ,  CTLPGUP, PRVTABC, KC_UP  , NXTTABC, KC_PGUP, Z_OUTC ,\
-   ______ , KC_MUTE, KC_VOLD, KC_VOLU, XXXXXX , GAME1   ,  CTLPGDN, KC_LEFT, KC_DOWN, KC_RGHT, KC_PGDN, Z_INC  ,\
+   ______ , XXXXXX , XXXXXX , CTLLARR, CTLRARR, XXXXXX  ,  CTLPGUP, PRVTABC, KC_UP  , NXTTABC, KC_PGUP, Z_INC  ,\
+   ______ , KC_MUTE, KC_VOLD, KC_VOLU, XXXXXX , GAME1   ,  CTLPGDN, KC_LEFT, KC_DOWN, KC_RGHT, KC_PGDN, Z_OUTC ,\
    ______ , KC_MPLY, KC_MRWD, KC_MFFD, XXXXXX , ANSIUS  ,  XXXXXX , CTLLARR, XXXXXX , CTLRARR, XXXXXX , ______ ,\
    ______ , XXXXXX , ______ , ______ , ______ , ______  ,  ______ , ______ , ______ , ______ , XXXXXX , KC_BSPC \
 ),
@@ -327,7 +327,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   |--------+--------+--------+--------+--------+--------+ +--------+--------+--------+--------+--------+--------|
   | L_CTRL |        |        |        |        |        | |        |        |        |        |        |        |
   |--------+--------+--------+--------+--------+--------+ +--------+--------+--------+--------+--------+--------|
-  |        |        |        |        |        |        | |        |        |        |        |        |   UP   |
+  |        |        |        |        |        |        | |        |        |        |        |  UP    |        |
   |--------+--------+--------+--------+--------+--------+ +--------+--------+--------+--------+--------+--------|
   | SPACE  |NUM1MOD |        |        |        |        | |        |        |        |  LEFT  | RIGHT  |  DOWN  |
   `-----------------------------------------------------+ +-----------------------------------------------------'
@@ -335,8 +335,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 [_GAME1] = KB_LAYOUT_LAYER(
    ______ , ______ , ______ , ______ , ______ , ______  ,  ______ , ______ , ______ , ______ , ______ , ______ ,\
    KC_LCTL, ______ , ______ , ______ , ______ , ______  ,  ______ , ______ , ______ , ______ , ______ , ______ ,\
-   ______ , ______ , ______ , ______ , ______ , ______  ,  ______ , ______ , ______ , ______ , ______ , KC_UP  ,\
-   KC_SPC , NUM1MOD, ______ , ______ , ______ , ______  ,  ______ , ______ , ______ , KC_LEFT, KC_RGHT, KC_DOWN \
+   ______ , ______ , ______ , ______ , ______ , ______  ,  ______ , ______ , ______ , ______ , KC_UP  , ______ ,\
+   KC_SPC , NUM1MOD, ______ , ______ , ______ , ______  ,  ______ , ______ , ______ , KC_LEFT, KC_DOWN, KC_RGHT \
 ),
 
 /* Game layer (left/right [wasd]/[ijkl] swapped) {{{2
