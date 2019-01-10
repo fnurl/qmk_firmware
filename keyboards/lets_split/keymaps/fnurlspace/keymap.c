@@ -122,6 +122,9 @@ enum tap_dances {
 #define Z_INC    LCTL(KC_EQL)
 #define Z_OUTC   LCTL(KC_MINS)
 
+#define CMDLBRC  LGUI(KC_LBRC)
+#define CMDRBRC  LGUI(KC_RBRC)
+
 #define CMDLARR  LGUI(KC_LEFT)
 #define CMDRARR  LGUI(KC_RGHT)
 #define CMDPGDN  LGUI(KC_PGDN)
@@ -293,14 +296,14 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   |--------+--------+--------+--------+--------+--------+ +--------+--------+--------+--------+--------+--------|
   |        |  PLAY  |  PREV  |  NEXT  |        | ANSIUS | |        |CMDLARR |        |CMDRARR |        |        |
   |--------+--------+--------+--------+--------+--------+ +--------+--------+--------+--------+--------+--------|
-  |        |        |        |        |        |        | |        |        |        |        |        | BCKSPC |
+  |        |        |        |        |        |CMDLBRC | |CMDRBRC |        |        |        |        | BCKSPC |
   `-----------------------------------------------------+ +-----------------------------------------------------'
  */
 [_NAV] = KB_LAYOUT_LAYER(
    ______ , XXXXXX , XXXXXX , CMDLARR, CMDRARR, XXXXXX  ,  CMDPGUP, PRVTABG, KC_UP  , NXTTABG, KC_PGUP, Z_ING  ,\
    ______ , KC_MUTE, KC_VOLD, KC_VOLU, XXXXXX , GAME1   ,  CMDPGDN, KC_LEFT, KC_DOWN, KC_RGHT, KC_PGDN, Z_OUTG ,\
    ______ , KC_MPLY, KC_MRWD, KC_MFFD, XXXXXX , ANSIUS  ,  XXXXXX , CMDLARR, XXXXXX , CMDRARR, XXXXXX , ______ ,\
-   ______ , XXXXXX , ______ , ______ , ______ , ______  ,  ______ , ______ , ______ , ______ , XXXXXX , KC_BSPC \
+   ______ , XXXXXX , ______ , ______ , ______ , CMDLBRC ,  CMDRBRC, ______ , ______ , ______ , XXXXXX , KC_BSPC \
 ),
 
 /* Navigation layer (Variant: Using CTRL instead of GUI for modified keys) {{{2
