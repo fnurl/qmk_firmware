@@ -14,7 +14,8 @@
  * - Function key layer
  * - Keyboard hardware layer (DFU mode, Planck music mode etc)
  * - Navigational layer (using GUI modifier)
- * - Fallback navigation layer (using 
+ * - Fallback navigation layer (using CTRL as modifier)
+ *     - to enable fallback, double tap dance key in lower left corner
  * - Left handed gaming mode
  */
 
@@ -438,17 +439,19 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 // Audio {{{1
 // Notification sounds {{{2
-#define HYPER_ON_SONG    M__NOTE(_G5, 2),
-#define HYPER_OFF_SONG   M__NOTE(_G4, 2),
-#define GAME1_ON_SONG    M__NOTE(_A5, 2),
-#define GAME1_OFF_SONG   M__NOTE(_A4, 2),
-#define CAPS_SONG        M__NOTE(_E5, 2),
-#define MEH_ON_SONG      M__NOTE(_FS5, 2),
-#define MEH_OFF_SONG     M__NOTE(_FS4, 2),
-#define CMD_ON_SONG      M__NOTE(_F5, 2),
-#define CMD_OFF_SONG     M__NOTE(_F4, 2),
-#define ANSI_ON_SONG     M__NOTE(_E5, 2), M__NOTE(_E5, 2),
-#define ANSI_OFF_SONG    M__NOTE(_E4, 2), M__NOTE(_E4, 2)
+#define HYPER_ON_SONG    M__NOTE(_G5, 4),
+#define HYPER_OFF_SONG   M__NOTE(_G4, 4),
+#define GAME1_ON_SONG    M__NOTE(_A4, 8), M__NOTE(_A5, 8),
+#define GAME1_OFF_SONG   M__NOTE(_A5, 8), M__NOTE(_A4, 8),
+#define CAPS_SONG        M__NOTE(_E5, 4),
+#define MEH_ON_SONG      M__NOTE(_FS5, 4),
+#define MEH_OFF_SONG     M__NOTE(_FS4, 4),
+#define CMD_ON_SONG      M__NOTE(_F5, 4),
+#define CMD_OFF_SONG     M__NOTE(_F4, 4),
+#define ANSI_ON_SONG     M__NOTE(_E4, 8), M__NOTE(_E5, 8),
+#define ANSI_OFF_SONG    M__NOTE(_E5, 8), M__NOTE(_E4, 8),
+#define NAVCTRL_ON_SONG  M__NOTE(_D4, 8), M__NOTE(_D5, 8),
+#define NAVCTRL_OFF_SONG M__NOTE(_D5, 8), M__NOTE(_D4, 8)
 
 // Create song arrays {{{2
 #ifdef AUDIO_ENABLE
@@ -461,6 +464,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   float meh_off_song[][2]     = SONG(MEH_OFF_SONG);
   float cmd_on_song[][2]      = SONG(CMD_ON_SONG);
   float cmd_off_song[][2]     = SONG(CMD_OFF_SONG);
+  float navctrl_on_song[][2]  = SONG(NAVCTRL_ON_SONG);
+  float navctrl_off_song[][2] = SONG(NAVCTRL_OFF_SONG);
 #endif
 //}}}1
 
@@ -593,9 +598,10 @@ void cmdhyper_dance_finished(qk_tap_dance_state_t *state, void *user_data) {
       register_code(KC_LALT);
       register_code(KC_LSFT);
       register_code(KC_LCTL);
+
       #ifdef AUDIO_ENABLE
-      stop_all_notes();
-      PLAY_SONG(hyper_on_song);
+        stop_all_notes();
+        PLAY_SONG(hyper_on_song);
       #endif
       break;
   }
@@ -614,9 +620,10 @@ void cmdhyper_dance_reset(qk_tap_dance_state_t *state, void *user_data) {
       unregister_code(KC_LALT);
       unregister_code(KC_LSFT);
       unregister_code(KC_LCTL);
+
       #ifdef AUDIO_ENABLE
-      stop_all_notes();
-      PLAY_SONG(hyper_off_song);
+        stop_all_notes();
+        PLAY_SONG(hyper_off_song);
       #endif
       break;
   }
@@ -641,8 +648,8 @@ void altmeh_dance_finished(qk_tap_dance_state_t *state, void *user_data) {
       register_code(KC_LSFT);
 
       #ifdef AUDIO_ENABLE
-      stop_all_notes();
-      PLAY_SONG(meh_on_song);
+        stop_all_notes();
+        PLAY_SONG(meh_on_song);
       #endif
       break;
   }
@@ -662,8 +669,8 @@ void altmeh_dance_reset(qk_tap_dance_state_t *state, void *user_data) {
       unregister_code(KC_LSFT);
 
       #ifdef AUDIO_ENABLE
-      stop_all_notes();
-      PLAY_SONG(meh_off_song);
+        stop_all_notes();
+        PLAY_SONG(meh_off_song);
       #endif
       break;
   }
@@ -683,8 +690,16 @@ void ctrl_usectrl_dance_finished(qk_tap_dance_state_t *state, void *user_data) {
     case 2:
       if (IS_LAYER_ON(_USE_CTRL)) {
           layer_off(_USE_CTRL);
+          #ifdef AUDIO_ENABLE
+            stop_all_notes();
+            PLAY_SONG(navctrl_off_song);
+          # endif
       } else {
           layer_on(_USE_CTRL);
+          #ifdef AUDIO_ENABLE
+            stop_all_notes();
+            PLAY_SONG(navctrl_on_song);
+          # endif
       }
       break;
   }
