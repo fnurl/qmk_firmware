@@ -22,3 +22,16 @@ Flasha med appen `QMK Toolbox` (som du installerat i /Applications):
    på `q` för att sätta tangentbordet i DFU-läge.
 3. Klicka på "Flash". Klart!
 
+
+Du kan också göra allt från kommandoraden med `qmk flash`:
+
+```
+$ qmk flash -kb <my_keyboard> -km <my_keymap>
+```
+
+Man kan bara bygga också med t.ex.
+
+```
+$ qmk --color compile -kb planck/rev4 -km fnurlspace_swedish
+```
+

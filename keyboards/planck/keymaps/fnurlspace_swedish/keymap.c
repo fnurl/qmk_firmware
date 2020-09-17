@@ -81,7 +81,7 @@ extern keymap_config_t keymap_config;
 #define SE_UNDS LSFT(SE_MINS) // _
 
 // Alt (Opt) Row 1 (excluding non-ANSI glyphs) {{{3
-#define SE_AT   LALT(KC_1)         // @
+#define SE_AT   LALT(KC_2)         // @
 #define SE_DLR  LALT(KC_4)         // $
 #define SE_PIPE LALT(KC_7)         // |
 #define SE_LBRC LALT(KC_8)         // [
