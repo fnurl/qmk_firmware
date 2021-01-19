@@ -1,4 +1,4 @@
-/* 
+/*
  * The fnurlspace40_se keymap for 40% (4x12, 48 key) (ortholinear) keyboards
  * Uses swedish keymap to be compatible with ordinary swedish keyboard layout
  * setting.
@@ -105,10 +105,10 @@ extern keymap_config_t keymap_config;
 enum fnurlspace_layers {
   _QWERTY_SE,       // QWERTY. Swedish with ANSI slash (by @fnurl)
   _PLEFT_SE,        // Parens & symbols, left
-  _PRIGHT_SE,       // Parens & symbols, right 
+  _PRIGHT_SE,       // Parens & symbols, right
   _QWERTY_ANSI,     // QWERTY. ANSI, standard US variant
   _PLEFT_ANSI,        // Parens & symbols, left
-  _PRIGHT_ANSI,       // Parens & symbols, right 
+  _PRIGHT_ANSI,       // Parens & symbols, right
   _FN,              // F-keys (F1 through F12)
   _HYPER_MEH,       // Hyper/Meh (Shift+CTRL+ALT+GUI / Shift+CTRL+ALT) key compatability layer
   _USE_CTRL,        // used as a state indicator
@@ -127,10 +127,10 @@ enum fnurlspace_layers {
 //
 // Uncomment if config for the Lets Split
 //#define _HWDLAYER        _ADJUST
-//#define KB_LAYOUT_LAYER  LAYOUT_ortho_4x12 
+//#define KB_LAYOUT_LAYER  LAYOUT_ortho_4x12
 
 // Uncomment if config for the Planck
-#define _HWDLAYER        _PLANCK 
+#define _HWDLAYER        _PLANCK
 #define KB_LAYOUT_LAYER  LAYOUT_planck_grid
 
 // Custom keycodes, used in process_record_user() {{{2
@@ -146,7 +146,7 @@ enum custom_keycodes {
   VIMSAVE,               // Key for expanding macro for saving in Vim.
   NONE                   // NOOP key for readability.
 };
- 
+
 
 // Tap Dance aliases and IDs {{{2
 enum tap_dances {
@@ -224,7 +224,7 @@ enum tap_dances {
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 /* _QWERTY_SE: Base layer. Swedish layout with ANSI slash {{{2
-   Based on standard Swedish keyboard layout with åäö. 
+   Based on standard Swedish keyboard layout with åäö.
   ,-----------------------------------------------------+ +-----------------------------------------------------.
   |  Tab   |   Q    |   W    |   E    |   R    |   T    | |   Y    |   U    |   I    |   O    |   P    |   Å    |
   |--------+--------+--------+--------+--------+--------| |--------+--------+--------+--------+--------+--------|
@@ -232,7 +232,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   |--------+--------+--------+--------+--------+--------| |--------+--------+--------+--------+--------+--------|
   | Shift  |   Z    |   X    |   C    |   V    |   B    | |   N    |   M    |   ,    |   .    |   /    | Shift  |
   |--------+--------+--------+--------+--------+--------| |--------+--------+--------+--------+--------+--------|
-  |TD:CUSEC|  ESC   |  FN    |TD:ALTME|TD:CMDHY| PL/SPC | | PR/SPC |  NAV   |  CMD   |  ALT   | BCKSPC | ENTER  |
+  |TD:CUSEC|  SPC   |  FN    |TD:ALTME|TD:CMDHY| PL/SPC | | PR/SPC |  NAV   |  CMD   |  ALT   | BCKSPC | ENTER  |
   `-----------------------------------------------------+ +-----------------------------------------------------'
   NOTE: Right half, bottom row, second key from the right is broken on my Lets Split (i.e. BCKSPC above).
 */
@@ -240,7 +240,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
    KC_TAB , KC_Q   , KC_W   , KC_E   , KC_R   , KC_T    ,  KC_Y    , KC_U   , KC_I   , KC_O   , KC_P   , SE_ARNG,\
    ESC_CTL, KC_A   , KC_S   , KC_D   , KC_F   , KC_G    ,  KC_H    , KC_J   , KC_K   , KC_L   , SE_ODIA, SE_ADIA,\
    KC_LSFT, KC_Z   , KC_X   , KC_C   , KC_V   , KC_B    ,  KC_N    , KC_M   , KC_COMM, KC_DOT , SE_SLSH, KC_RSFT,\
-   TDCUSEC, KC_ESC , FN     , TDALTME, TDCMDHY, PL_SPCSE,  PR_SPCSE, NAV    , KC_RGUI, KC_RALT, KC_BSPC, KC_ENT  \
+   TDCUSEC, KC_SPC , FN     , TDALTME, TDCMDHY, PL_SPCSE,  PR_SPCSE, NAV    , KC_RGUI, KC_RALT, KC_BSPC, KC_ENT  \
 ),
 
 /* _PLEFT_SE: Paren Left Layer, Swedish {{{2
@@ -356,11 +356,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   The _HYPER_MEH layer is used for HYPER (GUI+CTRL+ALT+SHIFT) modified keys (both
   momentary and One-Shot). The HYPER layer is needed in order for HYPER + ESC
   to work.
-  
+
   When used for momentary keypresses, the layer is turned on and the HYPER
   modifier is registered (see tap dance related sections).
- 
-  One Shot is deprecated. 
+
+  One Shot is deprecated.
   For One-Shot HYPER modifications, the _HYPER_MEH layer is enabled and left on to
   indicate One-Shot mode (see tap dances). Upon keypress, the HYPER modifier
   is added to the registered keypress and the _HYPER_MEH layer is deactivated (see
@@ -589,10 +589,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * elapsed. I.e. no more taps will be counted as part of the current tap dance.
  * The tap dance key is still pressed and held when the _finished() function is
  * called.
- * 
+ *
  * The _reset() functions are called when the key is released and usually
  * contains some kind of conditional for different amount of taps.
- **/ 
+ **/
 
 /*
 // HYPER momentary modifier. Tap dance implementation. {{{2
@@ -606,7 +606,7 @@ void hyper_layer_finished(qk_tap_dance_state_t *state, void *user_data) {
       register_code(KC_LALT);
       register_code(KC_LCTL);
       register_code(KC_LSFT);
-      
+
       // enabled _HYPER_MEH layer for HYPER+ESC to work
       layer_on(_HYPER_MEH);
     break;
@@ -621,7 +621,7 @@ void hyper_layer_reset(qk_tap_dance_state_t *state, void *user_data) {
     unregister_code(KC_LALT);
     unregister_code(KC_LCTL);
     unregister_code(KC_LSFT);
-    
+
     // disable _HYPER_MEH layer
     layer_off(_HYPER_MEH);
   }
@@ -655,13 +655,13 @@ void hyper_and_hyperos_dance_finished(qk_tap_dance_state_t *state, void *user_da
       register_code(KC_LCTL);
       register_code(KC_LSFT);
       break;
-    
+
     // Second tap toggles HYPER layer lock for HYPER One-Shot
     case 2:
       // toggle OFF _HYPER_MEH layer and "un-arm" HYPER One-Shot
       if (IS_LAYER_ON(_HYPER_MEH)) {
         layer_off(_HYPER_MEH);
-        
+
         // HYPER disarm sound
         #ifdef AUDIO_ENABLE
         stop_all_notes();
@@ -672,7 +672,7 @@ void hyper_and_hyperos_dance_finished(qk_tap_dance_state_t *state, void *user_da
       // toggle ON _HYPER_MEH layer, i.e. "arm" HYPER One-Shot
       else {
         layer_on(_HYPER_MEH);
-        
+
         // HYPER arm sound
         #ifdef AUDIO_ENABLE
         stop_all_notes();
@@ -692,7 +692,7 @@ void hyper_and_hyperos_dance_reset(qk_tap_dance_state_t *state, void *user_data)
     unregister_code(KC_LCTL);
     unregister_code(KC_LSFT);
   }
-  
+
   // no state->count == 2 clause. all toggle stuff is handled during key press
 }
 // }}}2
@@ -777,7 +777,7 @@ void altmeh_dance_reset(qk_tap_dance_state_t *state, void *user_data) {
       unregister_code(KC_LALT);
       break;
     case 2:
-      // release momentary MEH 
+      // release momentary MEH
       unregister_code(KC_LCTL);
       unregister_code(KC_LALT);
       unregister_code(KC_LSFT);
@@ -795,7 +795,7 @@ void altmeh_dance_reset(qk_tap_dance_state_t *state, void *user_data) {
 // ctrl_usectrl_dance_finished() {{{3
 void ctrl_usectrl_dance_finished(qk_tap_dance_state_t *state, void *user_data) {
   switch (state->count) {
-     // Tapping/holding once is for the momentary CTRL. 
+     // Tapping/holding once is for the momentary CTRL.
     case 1:
       register_code(KC_LCTL);
       break;
@@ -826,7 +826,7 @@ void ctrl_usectrl_dance_reset(qk_tap_dance_state_t *state, void *user_data) {
     case 1:
       unregister_code(KC_LCTL);
       break;
-    
+
     // Its a toggle, so only do stuff on press
     case 2:
       break;
@@ -838,7 +838,7 @@ void ctrl_usectrl_dance_reset(qk_tap_dance_state_t *state, void *user_data) {
 // ctrl_navctrl_dance_finished() {{{3
 void ctrl_navctrl_dance_finished(qk_tap_dance_state_t *state, void *user_data) {
   switch (state->count) {
-     // Tapping/holding once is for the momentary FN-layer. 
+     // Tapping/holding once is for the momentary FN-layer.
     case 1:
       register_code(KC_LCTL);
       break;
@@ -864,7 +864,7 @@ void ctrl_navctrl_dance_reset(qk_tap_dance_state_t *state, void *user_data) {
     case 1:
       unregister_code(KC_LCTL);
       break;
-    
+
     // momentary _NAVCTRL off (if it is on)
     case 2:
       if (IS_LAYER_ON(_NAVCTRL)) {
@@ -937,7 +937,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
           update_tri_layer(_FN, _NAV, _HWDLAYER);
         }
       }
-      
+
       // key released
       else {
         // turn off the correct NAV layer depending on if the _USE_CTRL layer is
@@ -950,7 +950,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
           update_tri_layer(_FN, _NAV, _HWDLAYER);
         }
       }
-	  
+
       return false;
       break;
 
@@ -986,7 +986,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       default:      // HYPER One-Shot if _HYPER_MEH layer is on
         // add modifiers, register keycode and go back to default layer  {{{3
         if (IS_LAYER_ON(_HYPER_MEH)) {
-		
+
           // turn off hyper layer
           layer_off(_HYPER_MEH);
 
@@ -1005,7 +1005,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
           unregister_code(KC_LALT);
           unregister_code(KC_LCTL);
           unregister_code(KC_LSFT);
-        
+
           // done processing
           return false;
         }
